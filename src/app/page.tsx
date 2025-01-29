@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
+import "../styles/globals.css";
 import { useDarkMode } from "@/context/DarkModeContext";
 import {
   FaCode,
@@ -122,121 +123,63 @@ export default function Home() {
                     <title>Coding Ninjas</title>
                     <path
                       fill="currentColor"
-                      d="M23.198 0c-.499.264-1.209.675-1.79.984a542.82 542.82 0 000 6.242c.995-.526 1.761-.834 1.79-2.066V0zM8.743.181C7.298.144 5.613.65 4.47 1.414c-1.17.8-1.987 1.869-2.572 3.179A16.787 16.787 0 00.9 8.87c-.15 1.483-.128 3.079.025 4.677.27 1.855.601 3.724 1.616 5.456 1.57 2.62 4.313 4.109 7.262 4.19 3.41.246 7.233.53 11.411.807.022-2.005.01-5.418 0-6.25-3.206-.21-7.398-.524-11.047-.782-.443-.043-.896-.056-1.324-.172-1.086-.295-1.806-.802-2.374-1.757-.643-1.107-.875-2.832-.797-4.294.11-1.27.287-2.41 1.244-3.44.669-.56 1.307-.758 2.161-.84 5.17.345 7.609.53 12.137.858.032-1.133.01-3.46 0-6.229C16.561.752 12.776.474 8.743.181zm-.281 9.7c.174.675.338 1.305.729 1.903.537.832 1.375 1.127 2.388.877.76-.196 1.581-.645 2.35-1.282zm12.974 1.04l-5.447.689c.799.739 1.552 1.368 2.548 1.703.988.319 1.78.01 2.308-.777.209-.329.56-1.148.591-1.614zm.842 6.461c-.388.01-.665.198-.87.355.002 1.798 0 4.127 0 6.223.586-.297 1.135-.644 1.793-.998-.005-1.454.002-3.137-.005-4.707a.904.904 0 00-.917-.873z"
+                      d="M23.198 0c-.499.264-1.209.675-1.79.984a542.82 542.82 0 000 6.242c.995-.526 1.761-.834 1.79-2.066V0zM8.743.181C7.298.144 5.613.65 4.47 1.414c-1.17.8-1.987 1.869-2.572 3.179A16.787 16.787 0 00.9 8.87c-.15 1.483-.128 3.079.025 4.677.27 1.855.601 3.724 1.616 5.456 1.57 2.62 4.313 4.109 7.262 4.19 3.41.246 7.233.53 11.411.807.022-2.005.01-5.418 0-6.25-3.206-.21-7.398-.524-11.047-.782-.443-.043-.896-.056-1.324-.172-1.086-.295-1.806-.802-2.374-1.757-.643-1.107-.875-2.832-.797-4.294.11-1.27.287-2.41 1.244-3.44.669-.56 1.307-.758 2.161-.84 5.17.345 7.609.53 12.137.858.032-1.133.01-3.46 0-6.229C16.561.752 12.776.474 8.743.181zm-.281 9.7c.174.675.338 1.305.729 1.903.537.832 1.375 1.127 2.388.877.76-.196 1.581-.645 2.35-1.282z"
                     />
                   </svg>
                   <span>Recent Projects from dicoding.com</span>
                 </button>
               </Link>
-              <style jsx>{`
-                @keyframes glow {
-                  0% {
-                    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.6);
-                  }
-                  33% {
-                    box-shadow: 0 0 8px 2px rgba(0, 255, 0, 0.6);
-                  }
-                  66% {
-                    box-shadow: 0 0 8px 2px rgba(0, 0, 255, 0.6);
-                  }
-                  100% {
-                    box-shadow: 0 0 8px 2px rgba(255, 0, 0, 0.6);
-                  }
-                }
-
-                .animate-glow {
-                  animation: glow 3s infinite;
-                }
-              `}</style>
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-              <div
-                className={`p-2 rounded-xl ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
-                }`}
-              >
-                <div className="relative w-full h-28 rounded-lg overflow-hidden">
-                  <Image
-                    src="/studycourse/ai.png"
-                    alt="Article 1"
-                    layout="fill"
-                    objectFit="cover"
-                    quality={75}
-                  />
+              {[
+                {
+                  src: "/studycourse/ai.png",
+                  title: "Mux data integration for Expo",
+                  date: "2023-10-01",
+                },
+                {
+                  src: "/studycourse/android.png",
+                  title: "State - Next Js App Directory",
+                  date: "2023-09-15",
+                },
+                {
+                  src: "/studycourse/kotlin.png",
+                  title: "Props and State",
+                  date: "2023-08-20",
+                },
+              ].map((project, index) => (
+                <div
+                  key={index}
+                  className={`p-2 rounded-xl ${
+                    isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
+                  }`}
+                >
+                  <div className="relative w-full h-28 rounded-lg overflow-hidden">
+                    <Image
+                      src={project.src}
+                      alt={project.title}
+                      fill
+                      className="object-cover"
+                      quality={75}
+                    />
+                  </div>
+                  <h3
+                    className={`font-bold mt-4 ${
+                      isDarkMode ? "text-stone-200" : "text-stone-800"
+                    }`}
+                  >
+                    {project.title}
+                  </h3>
+                  <p
+                    className={`text-xs mt-2 ${
+                      isDarkMode ? "text-stone-400" : "text-stone-600"
+                    }`}
+                  >
+                    Started on: {project.date}
+                  </p>
                 </div>
-                <h3
-                  className={`font-bold mt-4 ${
-                    isDarkMode ? "text-stone-200" : "text-stone-800"
-                  }`}
-                >
-                  Mux data integration for Expo
-                </h3>
-                <p
-                  className={`text-xs mt-2 ${
-                    isDarkMode ? "text-stone-400" : "text-stone-600"
-                  }`}
-                >
-                  Started on: 2023-10-01
-                </p>
-              </div>
-              <div
-                className={`p-2 rounded-xl ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
-                }`}
-              >
-                <div className="relative w-full h-28 rounded-lg overflow-hidden">
-                  <Image
-                    src="/studycourse/android.png"
-                    alt="Article 2"
-                    layout="fill"
-                    objectFit="cover"
-                    quality={75}
-                  />
-                </div>
-                <h3
-                  className={`font-bold mt-4 ${
-                    isDarkMode ? "text-stone-200" : "text-stone-800"
-                  }`}
-                >
-                  State - Next Js App Directory
-                </h3>
-                <p
-                  className={`text-xs mt-2 ${
-                    isDarkMode ? "text-stone-400" : "text-stone-600"
-                  }`}
-                >
-                  Started on: 2023-09-15
-                </p>
-              </div>
-              <div
-                className={`p-2 rounded-xl ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
-                }`}
-              >
-                <div className="relative w-full h-28 rounded-lg overflow-hidden">
-                  <Image
-                    src="/studycourse/kotlin.png"
-                    alt="Article 3"
-                    layout="fill"
-                    objectFit="cover"
-                    quality={75}
-                  />
-                </div>
-                <h3
-                  className={`font-bold mt-4 ${
-                    isDarkMode ? "text-stone-200" : "text-stone-800"
-                  }`}
-                >
-                  Props and State
-                </h3>
-                <p
-                  className={`text-xs mt-2 ${
-                    isDarkMode ? "text-stone-400" : "text-stone-600"
-                  }`}
-                >
-                  Started on: 2023-08-20
-                </p>
-              </div>
+              ))}
             </div>
           </section>
 

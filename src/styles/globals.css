@@ -38,6 +38,49 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+@keyframes rgbOutlineMulti {
+  0% {
+    box-shadow: 
+      -4px -4px 10px #ff0000, /* Atas kiri (merah) */
+       4px -4px 10px #0000ff, /* Atas kanan (biru) */
+       4px  4px 10px #00ff00, /* Bawah kanan (hijau) */
+      -4px  4px 10px #ff00ff; /* Bawah kiri (ungu) */
+  }
+  25% {
+    box-shadow: 
+      -4px -4px 10px #00ff00, /* Atas kiri (hijau) */
+       4px -4px 10px #ff0000, /* Atas kanan (merah) */
+       4px  4px 10px #ff00ff, /* Bawah kanan (ungu) */
+      -4px  4px 10px #0000ff; /* Bawah kiri (biru) */
+  }
+  50% {
+    box-shadow: 
+      -4px -4px 10px #0000ff, /* Atas kiri (biru) */
+       4px -4px 10px #ff00ff, /* Atas kanan (ungu) */
+       4px  4px 10px #ff0000, /* Bawah kanan (merah) */
+      -4px  4px 10px #00ff00; /* Bawah kiri (hijau) */
+  }
+  75% {
+    box-shadow: 
+      -4px -4px 10px #ff00ff, /* Atas kiri (ungu) */
+       4px -4px 10px #00ff00, /* Atas kanan (hijau) */
+       4px  4px 10px #0000ff, /* Bawah kanan (biru) */
+      -4px  4px 10px #ff0000; /* Bawah kiri (merah) */
+  }
+  100% {
+    box-shadow: 
+      -4px -4px 10px #ff0000, /* Atas kiri (merah) */
+       4px -4px 10px #0000ff, /* Atas kanan (biru) */
+       4px  4px 10px #00ff00, /* Bawah kanan (hijau) */
+      -4px  4px 10px #ff00ff; /* Bawah kiri (ungu) */
+  }
+}
+
+.animate-glow {
+  animation: rgbOutlineMulti 1.5s infinite alternate;
+}
+
+
 /* Scrollbar styles */
 .main-content {
   margin-left: 16px; /* Sesuaikan dengan lebar sidebar saat tertutup */
