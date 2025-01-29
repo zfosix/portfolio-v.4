@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation"; 
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/menu";
+import "@/styles/globals.css"
 import { motion, AnimatePresence } from "framer-motion";
 
 const poppins = Poppins({

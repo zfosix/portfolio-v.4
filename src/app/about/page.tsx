@@ -38,41 +38,18 @@ import {
   SiMysql,
   SiPostgresql,
 } from "react-icons/si";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
 
 export default function AboutPage() {
   const { isDarkMode } = useDarkMode();
 
-  const skills = [
+  const frontendSkills = [
     { name: "HTML", icon: <FaHtml5 className="text-2xl text-orange-500" /> },
     { name: "CSS", icon: <FaCss3Alt className="text-2xl text-blue-500" /> },
     { name: "JavaScript", icon: <FaJs className="text-2xl text-yellow-400" /> },
     { name: "React", icon: <FaReact className="text-2xl text-blue-400" /> },
     { name: "Redux", icon: <SiRedux className="text-2xl text-purple-600" /> },
     { name: "SASS", icon: <FaSass className="text-2xl text-pink-400" /> },
-    { name: "GraphQL", icon: <SiGraphql className="text-2xl text-pink-500" /> },
-    {
-      name: "React Query",
-      icon: <SiReactquery className="text-2xl text-red-500" />,
-    },
-    { name: "Gulp", icon: <SiGulp className="text-2xl text-red-600" /> },
-    { name: "Node.js", icon: <FaNodeJs className="text-2xl text-green-500" /> },
-    { name: "Prisma", icon: <SiPrisma className="text-2xl text-teal-500" /> },
-    {
-      name: "TypeScript",
-      icon: <SiTypescript className="text-2xl text-blue-600" />,
-    },
-    { name: "Git", icon: <FaGitAlt className="text-2xl text-orange-600" /> },
-    {
-      name: "Express.js",
-      icon: <SiExpress className="text-2xl text-gray-500" />,
-    },
-    {
-      name: "GitHub",
-      icon: <FaGithubAlt className="text-2xl text-gray-700" />,
-    },
-    { name: "GitLab", icon: <FaGitlab className="text-2xl text-orange-500" /> },
-    { name: "Figma", icon: <FaFigma className="text-2xl text-purple-500" /> },
     {
       name: "Next.js",
       icon: <SiNextdotjs className="text-2xl text-black dark:text-white" />,
@@ -85,31 +62,42 @@ export default function AboutPage() {
       name: "TailwindCSS",
       icon: <SiTailwindcss className="text-2xl text-blue-400" />,
     },
+    { name: "Figma", icon: <FaFigma className="text-2xl text-purple-500" /> },
     {
-      name: "Laravel",
-      icon: <SiLaravel className="text-2xl text-red-600" />,
+      name: "React Query",
+      icon: <SiReactquery className="text-2xl text-red-500" />,
     },
     {
-      name: "MySQL",
-      icon: <SiMysql className="text-2xl text-blue-600" />,
+      name: "TypeScript",
+      icon: <SiTypescript className="text-2xl text-blue-600" />,
     },
+  ];
+  const backendSkills = [
+    { name: "Node.js", icon: <FaNodeJs className="text-2xl text-green-500" /> },
+    {
+      name: "Express.js",
+      icon: <SiExpress className="text-2xl text-gray-500" />,
+    },
+    { name: "Laravel", icon: <SiLaravel className="text-2xl text-red-600" /> },
+    { name: "MySQL", icon: <SiMysql className="text-2xl text-blue-600" /> },
     {
       name: "PostgreSQL",
       icon: <SiPostgresql className="text-2xl text-blue-800" />,
     },
+    { name: "Java", icon: <FaJava className="text-2xl text-red-700" /> },
+    { name: "Git", icon: <FaGitAlt className="text-2xl text-orange-600" /> },
     {
-      name: "Java",
-      icon: <FaJava className="text-2xl text-red-700" />,
+      name: "GitHub",
+      icon: <FaGithubAlt className="text-2xl text-gray-700" />,
     },
+    { name: "GitLab", icon: <FaGitlab className="text-2xl text-orange-500" /> },
+    { name: "Prisma", icon: <SiPrisma className="text-2xl text-teal-500" /> },
+    { name: "GraphQL", icon: <SiGraphql className="text-2xl text-pink-500" /> },
+    { name: "Gulp", icon: <SiGulp className="text-2xl text-red-600" /> },
   ];
 
-  // Split skills into two parts for top and bottom carousel
-  const skillsTop = skills.slice(0, Math.ceil(skills.length / 2));
-  const skillsBottom = skills.slice(Math.ceil(skills.length / 2));
-
-  // Gandakan daftar skills untuk infinite scroll
-  const skillsTopDouble = [...skillsTop, ...skillsTop];
-  const skillsBottomDouble = [...skillsBottom, ...skillsBottom];
+  const frontendInfinite = [...frontendSkills, ...frontendSkills];
+  const backendInfinite = [...backendSkills, ...backendSkills];
 
   return (
     <div
@@ -365,23 +353,27 @@ export default function AboutPage() {
             >
               My coding skills
             </p>
+
+            {/* Frontend Skills Marquee */}
             <div className="relative mt-6 overflow-hidden">
-              {/* Carousel Top */}
               <motion.div
-                className="flex space-x-4 whitespace-nowrap"
+                className="flex space-x-3 whitespace-nowrap"
                 animate={{
-                  x: ["0%", "-100%"], 
+                  x: [0, -100 * frontendSkills.length],
                 }}
                 transition={{
-                  duration: 10, 
-                  repeat: Infinity, 
-                  ease: "linear", 
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  width: "fit-content",
                 }}
               >
-                {skillsTopDouble.map((skill, index) => (
+                {frontendInfinite.map((skill, index) => (
                   <div
-                    key={index}
-                    className="flex flex-row items-center justify-start p-2 rounded-lg shadow-xl"
+                    key={`frontend-${index}`}
+                    className="flex flex-row items-center justify-start p-2 px-4 rounded-full shadow-xl"
                     style={{
                       backgroundColor: isDarkMode ? "#1E1E1E" : "#FFFFFF",
                       border: isDarkMode
@@ -389,9 +381,7 @@ export default function AboutPage() {
                         : "1px solid #E5E7EB",
                     }}
                   >
-                    {/* Icon */}
                     <div className="flex-shrink-0">{skill.icon}</div>
-                    {/* Text */}
                     <h4
                       className={`text-xs font-semibold ml-2 ${
                         isDarkMode ? "text-stone-200" : "text-gray-700"
@@ -402,23 +392,28 @@ export default function AboutPage() {
                   </div>
                 ))}
               </motion.div>
+            </div>
 
-              {/* Carousel Bottom */}
+            {/* Backend Skills Marquee */}
+            <div className="relative mt-6 overflow-hidden">
               <motion.div
-                className="flex space-x-4 whitespace-nowrap mt-4"
+                className="flex space-x-3 whitespace-nowrap"
                 animate={{
-                  x: ["-100%", "0%"], 
+                  x: [-100 * backendSkills.length, 0],
                 }}
                 transition={{
-                  duration: 10, 
-                  repeat: Infinity, 
-                  ease: "linear", 
+                  duration: 20,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+                style={{
+                  width: "fit-content",
                 }}
               >
-                {skillsBottomDouble.map((skill, index) => (
+                {backendInfinite.map((skill, index) => (
                   <div
-                    key={index}
-                    className="flex flex-row items-center justify-start p-2 rounded-lg shadow-xl"
+                    key={`backend-${index}`}
+                    className="flex flex-row items-center justify-start p-2 px-4 rounded-full shadow-xl"
                     style={{
                       backgroundColor: isDarkMode ? "#1E1E1E" : "#FFFFFF",
                       border: isDarkMode
@@ -426,9 +421,7 @@ export default function AboutPage() {
                         : "1px solid #E5E7EB",
                     }}
                   >
-                    {/* Icon */}
                     <div className="flex-shrink-0">{skill.icon}</div>
-                    {/* Text */}
                     <h4
                       className={`text-xs font-semibold ml-2 ${
                         isDarkMode ? "text-stone-200" : "text-gray-700"

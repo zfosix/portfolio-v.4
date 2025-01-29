@@ -3,7 +3,6 @@ import Image from "next/image";
 import Sidebar from "@/components/sidebar/menu";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
-import "../styles/globals.css";
 import { useDarkMode } from "@/context/DarkModeContext";
 import {
   FaCode,
@@ -24,11 +23,11 @@ export default function Home() {
       }`}
     >
       <Sidebar />
-      <main className="flex-1 flex justify-center p-8 px-6 md:px-12 lg:px-24 ml-16">
+      <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
         <div className="w-full max-w-4xl transition-all duration-500 ease-in-out">
           {/* Section 1: Introduction */}
           <section
-            className={`flex flex-col text-start border-b ${
+            className={`flex flex-col text-center md:text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
             } pb-6`}
           >
@@ -75,14 +74,14 @@ export default function Home() {
 
           {/* Section 2: Latest Articles */}
           <section
-            className={`flex flex-col text-start border-b ${
+            className={`flex flex-col text-center md:text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
             } py-6`}
           >
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-center">
               <div>
                 {/* Judul dan Ikon */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 justify-center md:justify-start">
                   <FaCode
                     className={`text-xl ${
                       isDarkMode ? "text-stone-200" : "text-stone-800"
@@ -110,7 +109,7 @@ export default function Home() {
               {/* Tombol */}
               <Link href="https://www.dicoding.com/academies/my" passHref>
                 <button
-                  className={`px-2 py-2 rounded-lg text-sm flex items-center gap-2 ${
+                  className={`px-2 py-2 rounded-lg text-sm flex items-center gap-2 mt-4 md:mt-0 ${
                     isDarkMode
                       ? "bg-neutral-900 text-stone-200"
                       : "bg-neutral-200 text-stone-800"
@@ -245,11 +244,11 @@ export default function Home() {
 
           {/* Section 3: Services */}
           <section
-            className={`flex flex-col text-start border-b ${
+            className={`flex flex-col text-center md:text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
             } py-6`}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 justify-center md:justify-start">
               <FaProjectDiagram
                 className={`text-xl ${
                   isDarkMode ? "text-stone-200" : "text-stone-800"

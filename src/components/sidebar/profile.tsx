@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
-import { FaCloudMoon, FaCloudSun, FaCheckCircle } from "react-icons/fa"; 
+import { FaCloudMoon, FaCloudSun, FaCheckCircle, FaCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 interface ProfileProps {
@@ -32,7 +32,7 @@ export default function Profile({
         </>
       )}
 
-      <div className="bg-gray-200 dark:bg-gray-700 mt-9 rounded-full overflow-hidden border-2 border-black transition-all h-30 w-30 z-10">
+      <div className="bg-gray-200 dark:bg-gray-700 mt-12 rounded-full overflow-hidden border-2 border-black transition-all h-30 w-30 z-10">
         <Image
           src="/image/profile2.jpg"
           alt="zfosix"
@@ -41,13 +41,22 @@ export default function Profile({
         />
       </div>
 
+      {isSidebarOpen && (
+        <button
+          className="absolute top-3 left-3 flex items-center space-x-1 px-1 py-0 bg-transparent border border-white text-white rounded-full z-10 hover:bg-white hover:text-black transition-all"
+        >
+          <FaCircle className="text-green-500" size={12} />
+          <span className="text-sm">Hire Me.</span>
+        </button>
+      )}
+
       {isSidebarOpen ? (
         <button
           className="absolute top-3 right-3 w-8 h-8 bg-neutral-200 dark:bg-neutral-800 text-gray-800 dark:text-white rounded-xl flex items-center justify-center z-10"
           onClick={toggleDarkMode}
         >
           {isDarkMode ? (
-            <FaCloudSun size={16} color="#FFD700" /> 
+            <FaCloudSun size={16} color="#FFD700" />
           ) : (
             <FaCloudMoon size={16} color="#2E4053" />
           )}
@@ -58,7 +67,7 @@ export default function Profile({
           onClick={toggleDarkMode}
         >
           {isDarkMode ? (
-            <FaCloudSun size={16} color="#FFD700" /> 
+            <FaCloudSun size={16} color="#FFD700" />
           ) : (
             <FaCloudMoon size={16} color="#2E4053" />
           )}
@@ -68,15 +77,15 @@ export default function Profile({
       {isSidebarOpen && (
         <motion.div
           className="text-center mt-4 z-10"
-          initial={{ opacity: 0, y: 10 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.5, delay: 0.2 }} 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <div className="font-normal text-lg text-gray-800 dark:text-white flex items-center justify-center">
             Fajar Fauzian
             <motion.div
               initial={{ opacity: 0.8 }}
-              animate={{ opacity: [0.5, 1, 0.5] }} 
+              animate={{ opacity: [0.5, 1, 0.5] }}
               transition={{ duration: 1.5, repeat: Infinity }}
               className="ml-2"
             >
