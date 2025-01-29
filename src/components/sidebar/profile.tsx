@@ -34,7 +34,7 @@ export default function Profile({
 
       <div className="bg-gray-200 dark:bg-gray-700 mt-12 rounded-full overflow-hidden border-2 border-black transition-all h-30 w-30 z-10">
         <Image
-          src="/image/profile2.jpg"
+          src="/image/hiccup1.jpeg"
           alt="zfosix"
           width={100}
           height={100}
