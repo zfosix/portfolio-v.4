@@ -1,6 +1,5 @@
 "use client";
 
-// import Sidebar from "@/components/sidebar/menu";
 import { motion } from "framer-motion";
 import { RiRoadMapLine } from "react-icons/ri";
 import { useDarkMode } from "@/context/DarkModeContext";
@@ -25,7 +24,7 @@ import {
   SiGraphql,
   SiDocker,
 } from "react-icons/si";
-import Link from "next/link"; // Import Link dari next/link
+import Link from "next/link"; 
 
 type CategoryKey = "frontend" | "backend";
 
@@ -37,105 +36,90 @@ export default function RoadmapPage() {
     frontend: [
       {
         title: "HTML",
-        // description: "Learn the basics of HTML.",
         icon: <FaHtml5 className="text-3xl text-orange-500" />,
         level: "Pemula (Beginner)",
         link: "https://example.com/html-tutorial",
       },
       {
         title: "CSS Dasar",
-        // description: "Understand the fundamentals of CSS.",
         icon: <FaCss3Alt className="text-3xl text-blue-500" />,
         level: "Pemula (Beginner)",
         link: "https://example.com/css-basic-tutorial",
       },
       {
         title: "CSS Layouting",
-        // description: "Master CSS layout techniques.",
         icon: <FaCss3Alt className="text-3xl text-blue-500" />,
         level: "Menengah (Intermediate)",
         link: "https://example.com/css-layout-tutorial",
       },
       {
         title: "CSS 3",
-        // description: "Explore advanced CSS3 features.",
         icon: <FaCss3Alt className="text-3xl text-blue-500" />,
         level: "Menengah (Intermediate)",
         link: "https://example.com/css3-tutorial",
       },
       {
         title: "Bootstrap",
-        // description: "Learn to use Bootstrap for responsive design.",
         icon: <FaBootstrap className="text-3xl text-purple-500" />,
         level: "Mahir (Advanced)",
         link: "https://example.com/bootstrap-tutorial",
       },
       {
         title: "Flexbox CSS",
-        // description: "Understand Flexbox for layout design.",
         icon: <FaCss3Alt className="text-3xl text-blue-500" />,
         level: "Menengah (Intermediate)",
         link: "https://example.com/flexbox-tutorial",
       },
       {
         title: "Git & Github",
-        // description: "Learn version control with Git and GitHub.",
         icon: <FaGitAlt className="text-3xl text-red-500" />,
         level: "Mahir (Advanced)",
         link: "https://example.com/git-github-tutorial",
       },
       {
         title: "Tailwind CSS",
-        // description: "Master utility-first CSS with Tailwind.",
         icon: <SiTailwindcss className="text-3xl text-teal-500" />,
         level: "Ahli (Expert)",
         link: "https://example.com/tailwind-tutorial",
       },
       {
         title: "Javascript Dasar",
-        // description: "Learn the basics of JavaScript.",
         icon: <SiJavascript className="text-3xl text-yellow-500" />,
         level: "Pemula (Beginner)",
         link: "https://example.com/javascript-basic-tutorial",
       },
       {
         title: "Javascript DOM",
-        // description: "Understand DOM manipulation with JavaScript.",
         icon: <SiJavascript className="text-3xl text-yellow-500" />,
         level: "Menengah (Intermediate)",
         link: "https://example.com/javascript-dom-tutorial",
       },
       {
         title: "Javascript Lanjutan",
-        // description: "Explore advanced JavaScript concepts.",
         icon: <SiJavascript className="text-3xl text-yellow-500" />,
         level: "Mahir (Advanced)",
         link: "https://example.com/javascript-advanced-tutorial",
       },
       {
         title: "React JS",
-        // description: "Learn to build user interfaces with React.",
         icon: <FaReact className="text-3xl text-blue-500" />,
         level: "Ahli (Expert)",
         link: "https://example.com/react-tutorial",
       },
       {
         title: "Typescript",
-        // description: "Understand TypeScript for type-safe code.",
         icon: <SiTypescript className="text-3xl text-blue-500" />,
         level: "Mahir (Advanced)",
         link: "https://example.com/typescript-tutorial",
       },
       {
         title: "React Typescript",
-        // description: "Combine React with TypeScript.",
         icon: <SiTypescript className="text-3xl text-blue-500" />,
         level: "Ahli (Expert)",
         link: "https://example.com/react-typescript-tutorial",
       },
       {
         title: "Next JS",
-        // description: "Learn server-side rendering with Next.js.",
         icon: <SiNextdotjs className="text-3xl text-black dark:text-white" />,
         level: "Mastery/Spesialis",
         link: "https://example.com/nextjs-tutorial",
@@ -144,56 +128,48 @@ export default function RoadmapPage() {
     backend: [
       {
         title: "Node.js",
-        // description: "Learn the basics of Node.js.",
         icon: <FaNodeJs className="text-3xl text-green-500" />,
         level: "Pemula (Beginner)",
         link: "https://example.com/nodejs-tutorial",
       },
       {
         title: "Express.js",
-        // description: "Understand the fundamentals of Express.js.",
         icon: <SiExpress className="text-3xl text-black dark:text-white" />,
         level: "Menengah (Intermediate)",
         link: "https://example.com/expressjs-tutorial",
       },
       {
         title: "RESTful APIs",
-        // description: "Master creating RESTful APIs.",
         icon: <FaDatabase className="text-3xl text-blue-500" />,
         level: "Mahir (Advanced)",
         link: "https://example.com/restful-api-tutorial",
       },
       {
         title: "MongoDB",
-        // description: "Learn to use MongoDB for database management.",
         icon: <SiMongodb className="text-3xl text-green-500" />,
         level: "Menengah (Intermediate)",
         link: "https://example.com/mongodb-tutorial",
       },
       {
         title: "SQL",
-        // description: "Understand SQL for relational databases.",
         icon: <FaDatabase className="text-3xl text-blue-500" />,
         level: "Mahir (Advanced)",
         link: "https://example.com/sql-tutorial",
       },
       {
         title: "Authentication",
-        // description: "Learn user authentication techniques.",
         icon: <FaDatabase className="text-3xl text-blue-500" />,
         level: "Ahli (Expert)",
         link: "https://example.com/authentication-tutorial",
       },
       {
         title: "Docker",
-        // description: "Understand containerization with Docker.",
         icon: <SiDocker className="text-3xl text-blue-500" />,
         level: "Ahli (Expert)",
         link: "https://example.com/docker-tutorial",
       },
       {
         title: "GraphQL",
-        // description: "Explore GraphQL for API development.",
         icon: <SiGraphql className="text-3xl text-pink-500" />,
         level: "Mastery/Spesialis",
         link: "https://example.com/graphql-tutorial",
@@ -271,7 +247,7 @@ export default function RoadmapPage() {
 
               {/* Animasi untuk konten kategori */}
               <motion.div
-                key={activeCategory} // Key untuk memicu animasi ulang saat kategori berubah
+                key={activeCategory} 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
@@ -311,9 +287,6 @@ export default function RoadmapPage() {
                         </div>
                         <FaLink className="text-xl text-gray-600 dark:text-gray-300" />
                       </div>
-                      {/* <p className="text-sm text-gray-600 dark:text-gray-300">
-                        {item.description}
-                      </p> */}
                     </Link>
                   ))}
                 </div>

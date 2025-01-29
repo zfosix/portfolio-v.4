@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import Sidebar from "@/components/sidebar/menu";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
 import { useDarkMode } from "@/context/DarkModeContext";
@@ -22,7 +21,6 @@ export default function Home() {
         isDarkMode ? "bg-[#0B0A0A]" : "bg-white"
       }`}
     >
-      <Sidebar />
       <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
         <div className="w-full max-w-4xl transition-all duration-500 ease-in-out">
           {/* Section 1: Introduction */}

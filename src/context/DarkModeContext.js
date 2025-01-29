@@ -1,29 +1,32 @@
-// context/DarkModeContext.js
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
 
-const DarkModeContext = createContext();
+const DarkModeContext = createContext({
+  isDarkMode: false, // Nilai default untuk mencegah undefined
+  toggleDarkMode: () => {}, // Placeholder function
+});
 
 export function DarkModeProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(null); 
-
-  const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    localStorage.setItem("darkMode", JSON.stringify(newMode)); 
-  };
+  const [isDarkMode, setIsDarkMode] = useState(false); // Default ke false agar tidak null
 
   useEffect(() => {
-    const savedMode = JSON.parse(localStorage.getItem("darkMode"));
-    if (savedMode !== null) {
-      setIsDarkMode(savedMode); 
+    if (typeof window !== "undefined") {
+      // Cek apakah ada nilai tersimpan di localStorage
+      const savedMode = localStorage.getItem("darkMode");
+      if (savedMode !== null) {
+        setIsDarkMode(JSON.parse(savedMode));
+      }
     }
   }, []);
 
-  if (isDarkMode === null) {
-    return null; 
-  }
+  const toggleDarkMode = () => {
+    setIsDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem("darkMode", JSON.stringify(newMode));
+      return newMode;
+    });
+  };
 
   return (
     <DarkModeContext.Provider value={{ isDarkMode, toggleDarkMode }}>

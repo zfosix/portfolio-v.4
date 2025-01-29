@@ -29,7 +29,6 @@ export default function Sidebar() {
     { name: "Blog", icon: PenTool, href: "/blog" },
     { name: "Projects", icon: ClipboardList, href: "/projects" },
     { name: "Roadmap", icon: MapPin, href: "/roadmap" },
-    // { name: "Task Board", icon: ListChecks, href: "/taskboard" },
     { name: "Chat Room", icon: MessageCircle, href: "/chatroom" },
     { name: "Contact", icon: Mail, href: "/contact" },
     { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },

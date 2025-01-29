@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-// import Sidebar from "@/components/sidebar/menu";
 import { Card } from "@heroui/react";
 import {
   FaBriefcase,
@@ -105,7 +104,6 @@ export default function AboutPage() {
         isDarkMode ? "bg-[#0B0A0A]" : "bg-white"
       }`}
     >
-      {/* <Sidebar /> */}
       <main className="flex-1 flex justify-center p-8 px-6 md:px-12 lg:px-24 ml-16">
         <div className="max-w-4xl mx-auto">
           {/* Section 1: Introduction */}
