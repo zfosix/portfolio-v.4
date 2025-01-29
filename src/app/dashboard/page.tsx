@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useDarkMode } from "@/context/DarkModeContext";
-import Sidebar from "@/components/sidebar/menu";
+// import Sidebar from "@/components/sidebar/menu";
 import { MdOutlineSpaceDashboard, MdSpeed, MdCode, MdBarChart } from "react-icons/md";
 
 const DashboardPage = () => {
@@ -10,7 +10,7 @@ const DashboardPage = () => {
 
   return (
     <div className={`flex min-h-screen ${isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"}`}>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main className="flex-1 p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
         <div className="max-w-4xl mx-auto w-full">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-start mb-8">

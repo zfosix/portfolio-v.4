@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "@/components/sidebar/menu";
+// import Sidebar from "@/components/sidebar/menu";
 import { motion } from "framer-motion";
 import { RiRoadMapLine } from "react-icons/ri";
 import { useDarkMode } from "@/context/DarkModeContext";
@@ -207,7 +207,7 @@ export default function RoadmapPage() {
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
         <div className="max-w-4xl mx-auto w-full">
           <div className="flex-1 p-4">

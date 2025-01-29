@@ -4,10 +4,10 @@ import { Poppins } from "next/font/google";
 import { DarkModeProvider, useDarkMode } from "@/context/DarkModeContext";
 import "../styles/globals.css";
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation"; 
+import { usePathname } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/menu";
-import "@/styles/globals.css"
+import "@/styles/globals.css";
 import { motion, AnimatePresence } from "framer-motion";
 
 const poppins = Poppins({
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isLoading, setIsLoading] = useState(false);
-  const pathname = usePathname(); 
+  const pathname = usePathname();
 
   const getPageTitle = (path: string) => {
     switch (path) {
@@ -43,7 +43,7 @@ export default function RootLayout({
       case "/taskboard":
         return "TaskBoard | Zian's Code";
       default:
-        return "Zian's Code"; 
+        return "Zian's Code";
     }
   };
 
@@ -54,14 +54,18 @@ export default function RootLayout({
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
-        document.title = getPageTitle(pathname); 
-        const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+        document.title = getPageTitle(pathname);
+        const favicon = document.querySelector(
+          "link[rel*='icon']"
+        ) as HTMLLinkElement;
         if (favicon) {
           favicon.href = "/f.png";
         }
       } else {
         document.title = "Come Back To Portfolio";
-        const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+        const favicon = document.querySelector(
+          "link[rel*='icon']"
+        ) as HTMLLinkElement;
         if (favicon) {
           favicon.href = "/favhand.png";
         }
