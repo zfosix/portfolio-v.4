@@ -1,20 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+/* Global Variables */
+:root {
+  --background: #ffffff; /* Warna latar belakang default */
+  --foreground: #000000; /* Warna teks default */
+  --radius: 0.5rem; /* Radius border */
+}
 
+/* Tailwind default styles */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Root Variables */
-:root {
-  --font-family: 'Poppins', sans-serif;
-  --radius: 0.5rem;
-  --sb-track-color: #262626;
-  --sb-thumb-color: #6d6d6d;
-  --sb-size: 17px;
-}
-
 body {
-  font-family: var(--font-family);
+  font-family: 'Poppins', sans-serif;
   --sb-track-color: #545454;
   --sb-thumb-color: #262626;
   --sb-size: 15px;
@@ -38,30 +35,28 @@ body::-webkit-scrollbar-thumb {
 @supports not selector(::-webkit-scrollbar) {
   body {
     scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-    scrollbar-width: thin;
   }
 }
 
-/* Sidebar Animation */
+/* Scrollbar styles */
 .main-content {
-  margin-left: 16px;
+  margin-left: 16px; /* Sesuaikan dengan lebar sidebar saat tertutup */
   transition: margin-left 0.5s ease-in-out;
 }
 
 .sidebar-open .main-content {
-  margin-left: 240px;
+  margin-left: 240px; /* Sesuaikan dengan lebar sidebar saat terbuka */
 }
 
-/* Multi-line Ellipsis */
+/* Other custom styles */
 .ellipsis-2-lines {
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 2; /* Batasi teks menjadi 2 baris */
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+  text-overflow: ellipsis; /* Tambahkan elipsis (...) */
 }
 
-/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -82,16 +77,11 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+/* Animations */
 .fade-in {
   animation: fadeIn 0.5s ease-in-out;
 }
 
 .slide-in-right {
   animation: slideInFromRight 0.5s ease-in-out;
-}
-
-@layer base {
-  :root {
-    --radius: 0.5rem;
-  }
 }
