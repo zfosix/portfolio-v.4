@@ -55,8 +55,8 @@ const ContactPage = () => {
             {/* 4 Cards Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {/* GitHub Card */}
-              <div className="flex items-center space-x-4 border bg-slate-300 border-gray-800 dark:bg-slate-950 rounded-lg p-4">
-                <FaGithub className="text-2xl" />
+              <div className="flex flex-row-reverse items-center justify-between border bg-slate-300 border-gray-800 dark:bg-slate-950 rounded-lg p-4">
+                <FaGithub className="text-6xl" />
                 <div>
                   <h2 className="text-xl font-semibold">Explore the code</h2>
                   <p className="text-gray-500">
@@ -73,8 +73,8 @@ const ContactPage = () => {
               </div>
 
               {/* LinkedIn Card */}
-              <div className="flex items-center space-x-4 border bg-blue-300 border-blue-600 dark:bg-blue-950 rounded-lg p-4">
-                <FaLinkedin className="text-2xl" />
+              <div className="flex flex-row-reverse items-center justify-between border bg-blue-300 border-blue-600 dark:bg-blue-950 rounded-lg p-4">
+                <FaLinkedin className="text-6xl" />
                 <div>
                   <h2 className="text-xl font-semibold">Let&rsquo;s connect</h2>
                   <p className="text-gray-500">
@@ -94,8 +94,8 @@ const ContactPage = () => {
               </div>
 
               {/* Spotify Card */}
-              <div className="flex items-center space-x-4 border bg-green-300 border-green-600 dark:bg-green-950 rounded-lg p-4">
-                <FaSpotify className="text-2xl" />
+              <div className="flex flex-row-reverse items-center justify-between border bg-green-300 border-green-600 dark:bg-green-950 rounded-lg p-4">
+                <FaSpotify className="text-6xl" />
                 <div>
                   <h2 className="text-xl font-semibold">
                     Listen to my playlist
@@ -114,8 +114,8 @@ const ContactPage = () => {
               </div>
 
               {/* Discord Card */}
-              <div className="flex items-center space-x-4 border bg-violet-300 border-violet-600 dark:bg-violet-950 rounded-lg p-4">
-                <FaDiscord className="text-2xl" />
+              <div className="flex flex-row-reverse items-center justify-between border bg-violet-300 border-violet-600 dark:bg-violet-950 rounded-lg p-4">
+                <FaDiscord className="text-6xl" />
                 <div>
                   <h2 className="text-xl font-semibold">
                     Chat with the community

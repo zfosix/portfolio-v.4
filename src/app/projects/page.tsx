@@ -50,60 +50,6 @@ const ProjectsPage = () => {
       image: "/projects/ciudigital.png",
       link: "#",
     },
-    // {
-    //   id: 3,
-    //   title: "AI-Powered Chatbot",
-    //   description:
-    //     "An AI chatbot integrated with natural language processing to provide customer support.",
-    //   technologies: ["Python", "TensorFlow", "Flask"],
-    //   image: "/images/chatbot.jpg",
-    //   link: "#",
-    // },
-    // {
-    //   id: 4,
-    //   title: "Portfolio Website",
-    //   description:
-    //     "A personal portfolio website showcasing projects, skills, and contact information.",
-    //   technologies: ["React", "TypeScript", "Framer Motion"],
-    //   image: "/images/portfolio.jpg",
-    //   link: "#",
-    // },
-    // {
-    //   id: 5,
-    //   title: "Task Management App",
-    //   description:
-    //     "A task management application with drag-and-drop functionality and real-time updates.",
-    //   technologies: ["Vue.js", "Firebase", "Tailwind CSS"],
-    //   image: "/images/task-management.jpg",
-    //   link: "#",
-    // },
-    // {
-    //   id: 6,
-    //   title: "Weather Forecast App",
-    //   description:
-    //     "A weather forecasting app that provides real-time weather updates and forecasts.",
-    //   technologies: ["React Native", "OpenWeather API"],
-    //   image: "/images/weather-app.jpg",
-    //   link: "#",
-    // },
-    // {
-    //   id: 7,
-    //   title: "Blog Platform",
-    //   description:
-    //     "A blogging platform with markdown support, user authentication, and SEO optimization.",
-    //   technologies: ["Next.js", "GraphQL", "Prisma"],
-    //   image: "/images/blog-platform.jpg",
-    //   link: "#",
-    // },
-    // {
-    //   id: 8,
-    //   title: "Fitness Tracker",
-    //   description:
-    //     "A fitness tracking app that logs workouts, tracks progress, and provides analytics.",
-    //   technologies: ["Flutter", "Firebase", "Google Fit API"],
-    //   image: "/images/fitness-tracker.jpg",
-    //   link: "#",
-    // },
   ];
 
   const certificates: Certificate[] = [

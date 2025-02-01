@@ -101,11 +101,11 @@ export default function AboutPage() {
   return (
     <div
       className={`flex flex-col min-h-screen ${
-        isDarkMode ? "bg-[#0B0A0A]" : "bg-white"
+        isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
-      <main className="flex-1 flex justify-center p-8 px-6 md:px-12 lg:px-24 ml-16">
-        <div className="max-w-4xl mx-auto">
+      <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
+        <div className="max-w-4xl mx-auto w-full">
           {/* Section 1: Introduction */}
           <section
             className={`border-b ${
@@ -213,7 +213,7 @@ export default function AboutPage() {
             </div>
 
             {/* Card Section */}
-            <div className="flex flex-row space-x-4 mt-4">
+            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 mt-4">
               {/* Card 1: SMK Wikrama Bogor */}
               <Card
                 className="flex-1 rounded-xl p-4"
