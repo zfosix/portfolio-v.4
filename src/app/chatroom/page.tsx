@@ -56,8 +56,8 @@ const ChatroomPage = () => {
             style={{ 
               maxHeight: '400px', 
               overflowY: 'auto',
-              scrollbarWidth: 'none', // Untuk Firefox
-              msOverflowStyle: 'none', // Untuk IE dan Edge
+              scrollbarWidth: 'none', 
+              msOverflowStyle: 'none',
             }}
           >
             {/* Menambahkan CSS untuk menyembunyikan scrollbar di WebKit (Chrome, Safari) */}

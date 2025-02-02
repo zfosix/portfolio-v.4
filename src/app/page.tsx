@@ -7,12 +7,9 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import {
   FaCode,
   FaProjectDiagram,
-  FaGlobe,
-  FaMobileAlt,
-  FaChartLine,
-  FaSearch,
 } from "react-icons/fa";
-
+import WebIlustration from "@/components/about/WebIlustration";
+import MobileIlustration from "@/components/about/MobileIlustration";
 export default function Home() {
   const { isDarkMode } = useDarkMode();
 
@@ -211,117 +208,117 @@ export default function Home() {
               I can deliver the following services
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+
+              {/* Card 1: Website Development */}
               <div
-                className={`p-4 rounded-lg ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
+                className={`p-4 rounded-lg shadow-lg ${
+                  isDarkMode ? "bg-neutral-900" : "bg-neutral-200"
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <FaGlobe
-                    className={`text-xl ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
-                    }`}
-                  />
-                  <h3
-                    className={`font-bold ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
-                    }`}
-                  >
-                    Website Development
-                  </h3>
+                <div className="flex justify-center">
+                  <WebIlustration />
                 </div>
+                <h3
+                  className={`text-lg font-semibold mt-4 ${
+                    isDarkMode ? "text-neutral-200" : "text-neutral-800"
+                  }`}
+                >
+                  Website Development
+                </h3>
                 <p
-                  className={`text-sm mt-2 ${
-                    isDarkMode ? "text-stone-300" : "text-stone-700"
+                  className={`mt-2 ${
+                    isDarkMode ? "text-neutral-300" : "text-neutral-700"
                   }`}
                 >
                   Create stunning, user-friendly fullstack web applications
                   using modern technologies.
                 </p>
-              </div>
-              <div
-                className={`p-4 rounded-lg ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <FaMobileAlt
-                    className={`text-xl ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
-                    }`}
-                  />
-                  <h3
-                    className={`font-bold ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      isDarkMode
+                        ? "bg-neutral-700 text-neutral-200"
+                        : "bg-neutral-200 text-neutral-800"
                     }`}
                   >
-                    Mobile Development
-                  </h3>
+                    React
+                  </span>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      isDarkMode
+                        ? "bg-neutral-700 text-neutral-200"
+                        : "bg-neutral-200 text-neutral-800"
+                    }`}
+                  >
+                    Node.js
+                  </span>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      isDarkMode
+                        ? "bg-neutral-700 text-neutral-200"
+                        : "bg-neutral-200 text-neutral-800"
+                    }`}
+                  >
+                    Tailwind CSS
+                  </span>
                 </div>
+              </div>
+
+              {/* Card 2: Mobile Development */}
+              <div
+                className={`p-4 rounded-lg shadow-lg ${
+                  isDarkMode ? "bg-neutral-900" : "bg-neutral-200"
+                }`}
+              >
+                <div className="flex justify-center">
+                  <MobileIlustration />
+                </div>
+                <h3
+                  className={`text-lg font-semibold mt-4 ${
+                    isDarkMode ? "text-neutral-200" : "text-neutral-800"
+                  }`}
+                >
+                  Mobile Development
+                </h3>
                 <p
-                  className={`text-sm mt-2 ${
-                    isDarkMode ? "text-stone-300" : "text-stone-700"
+                  className={`mt-2 ${
+                    isDarkMode ? "text-neutral-300" : "text-neutral-700"
                   }`}
                 >
                   Create smooth and cross-platform mobile applications using
                   React Native.
                 </p>
-              </div>
-              <div
-                className={`p-4 rounded-lg ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <FaChartLine
-                    className={`text-xl ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
-                    }`}
-                  />
-                  <h3
-                    className={`font-bold ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      isDarkMode
+                        ? "bg-neutral-700 text-neutral-200"
+                        : "bg-neutral-200 text-neutral-800"
                     }`}
                   >
-                    Analytic Integration
-                  </h3>
-                </div>
-                <p
-                  className={`text-sm mt-2 ${
-                    isDarkMode ? "text-stone-300" : "text-stone-700"
-                  }`}
-                >
-                  Implement Google Tag Manager, Google Analytics, and Mixpanel
-                  for data-driven insights.
-                </p>
-              </div>
-              <div
-                className={`p-4 rounded-lg ${
-                  isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
-                }`}
-              >
-                <div className="flex items-center gap-2">
-                  <FaSearch
-                    className={`text-xl ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
-                    }`}
-                  />
-                  <h3
-                    className={`font-bold ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
+                    React Native
+                  </span>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      isDarkMode
+                        ? "bg-neutral-700 text-neutral-200"
+                        : "bg-neutral-200 text-neutral-800"
                     }`}
                   >
-                    Search Engine Optimization
-                  </h3>
+                    Flutter
+                  </span>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      isDarkMode
+                        ? "bg-neutral-700 text-neutral-200"
+                        : "bg-neutral-200 text-neutral-800"
+                    }`}
+                  >
+                    Swift
+                  </span>
                 </div>
-                <p
-                  className={`text-sm mt-2 ${
-                    isDarkMode ? "text-stone-300" : "text-stone-700"
-                  }`}
-                >
-                  Improve Search Engine Optimization and web performance.
-                </p>
               </div>
+
             </div>
           </section>
         </div>

@@ -10,34 +10,19 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* Menyembunyikan scrollbar di seluruh halaman */
+html, body {
   font-family: 'Poppins', sans-serif;
-  --sb-track-color: #545454;
-  --sb-thumb-color: #262626;
-  --sb-size: 15px;
+  scrollbar-width: none; /* Untuk Firefox */
+  -ms-overflow-style: none; /* Untuk Internet Explorer dan Edge */
 }
 
-body::-webkit-scrollbar {
-  width: var(--sb-size);
+/* Menyembunyikan scrollbar di WebKit (Chrome, Safari) */
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Menyembunyikan scrollbar */
 }
 
-body::-webkit-scrollbar-track {
-  background: var(--sb-track-color);
-  border-radius: 0px;
-}
-
-body::-webkit-scrollbar-thumb {
-  background: var(--sb-thumb-color);
-  border-radius: 8px;
-  border: 1px solid #545454;
-}
-
-@supports not selector(::-webkit-scrollbar) {
-  body {
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-  }
-}
-
+/* Animasi dan gaya lainnya */
 @keyframes rgbOutlineMulti {
   0% {
     box-shadow: 
@@ -79,7 +64,6 @@ body::-webkit-scrollbar-thumb {
 .animate-glow {
   animation: rgbOutlineMulti 1.5s infinite alternate;
 }
-
 
 /* Scrollbar styles */
 .main-content {
@@ -128,3 +112,109 @@ body::-webkit-scrollbar-thumb {
 .slide-in-right {
   animation: slideInFromRight 0.5s ease-in-out;
 }
+
+
+/* :root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --radius: 0.5rem;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Poppins', sans-serif;
+  --sb-track-color: #545454;
+  --sb-thumb-color: #262626;
+  --sb-size: 15px;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 0px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 8px;
+  border: 1px solid #545454;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
+
+@keyframes rgbOutlineMulti {
+  0% {
+    box-shadow: -4px -4px 10px #ff0000, 4px -4px 10px #0000ff, 4px 4px 10px #00ff00, -4px 4px 10px #ff00ff;
+  }
+  25% {
+    box-shadow: -4px -4px 10px #00ff00, 4px -4px 10px #ff0000, 4px 4px 10px #ff00ff, -4px 4px 10px #0000ff;
+  }
+  50% {
+    box-shadow: -4px -4px 10px #0000ff, 4px -4px 10px #ff00ff, 4px 4px 10px #ff0000, -4px 4px 10px #00ff00;
+  }
+  75% {
+    box-shadow: -4px -4px 10px #ff00ff, 4px -4px 10px #00ff00, 4px 4px 10px #0000ff, -4px 4px 10px #ff0000;
+  }
+  100% {
+    box-shadow: -4px -4px 10px #ff0000, 4px -4px 10px #0000ff, 4px 4px 10px #00ff00, -4px 4px 10px #ff00ff;
+  }
+}
+
+.animate-glow {
+  animation: rgbOutlineMulti 1.5s infinite alternate;
+}
+
+.main-content {
+  margin-left: 16px;
+  transition: margin-left 0.5s ease-in-out;
+}
+
+.sidebar-open .main-content {
+  margin-left: 240px;
+}
+
+.ellipsis-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide-in-right {
+  animation: slideInFromRight 0.5s ease-in-out;
+} */
