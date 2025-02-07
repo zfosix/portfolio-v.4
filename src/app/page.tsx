@@ -4,12 +4,12 @@ import Typewriter from "typewriter-effect";
 import Link from "next/link";
 import "../styles/globals.css";
 import { useDarkMode } from "@/context/DarkModeContext";
-import {
-  FaCode,
-  FaProjectDiagram,
-} from "react-icons/fa";
+import { FaCode, FaProjectDiagram } from "react-icons/fa";
+import { FaDonate } from "react-icons/fa";
 import WebIlustration from "@/components/about/WebIlustration";
 import MobileIlustration from "@/components/about/MobileIlustration";
+import "react-multi-carousel/lib/styles.css";
+
 export default function Home() {
   const { isDarkMode } = useDarkMode();
 
@@ -23,7 +23,7 @@ export default function Home() {
         <div className="w-full max-w-4xl transition-all duration-500 ease-in-out">
           {/* Section 1: Introduction */}
           <section
-            className={`flex flex-col text-center md:text-start border-b ${
+            className={`flex flex-col text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
             } pb-6`}
           >
@@ -50,34 +50,57 @@ export default function Home() {
                 />
               </span>
             </h1>
-            <p className="text-lg mt-2 text-stone-500 text-sm">
-              <span className="font-bold text-2xl relative top-[-4px]">.</span>{" "}
-              Students{" "}
-              <span className="font-bold text-2xl relative top-[-4px]">.</span>{" "}
-              Based in Bogor 🇮🇩
-            </p>
+
+            {/* Flex container untuk teks dan ikon Saweria */}
+            <div className="flex justify-between items-center mt-2">
+              {/* Teks "Students" dan "Based in Bogor" */}
+              <p className="text-lg text-stone-500 text-sm">
+                <span className="font-bold text-2xl relative top-[-4px]">
+                  .
+                </span>{" "}
+                Students{" "}
+                <span className="font-bold text-2xl relative top-[-4px]">
+                  .
+                </span>{" "}
+                Based in Bogor 🇮🇩
+              </p>
+
+              {/* Ikon Saweria di pojok kanan */}
+              <div className="ml-4">
+                <Link href="/donate">
+                  <FaDonate
+                    className={`text-xl ${
+                      isDarkMode
+                        ? "text-stone-500 hover:text-stone-400"
+                        : "text-stone-700 hover:text-stone-600"
+                    } transition-colors cursor-pointer`}
+                  />
+                </Link>
+              </div>
+            </div>
+
             <p
               className={`mt-2 ${
                 isDarkMode ? "text-stone-300" : "text-stone-700"
               }`}
             >
               I am a student at SMK Wikrama Bogor specializing in Frontend and
-              Web Development, skilled in JavaScript, PHP, various frameworks,
-              and passionate about UI/UX design and mobile app development using
-              Flutter and Kotlin.
+              Web Development. I have skills in JavaScript, PHP, and frameworks
+              like Vue.js, React.js, and Laravel. I am passionate about UI/UX
+              design and enjoy developing mobile apps using Flutter and Kotlin.
             </p>
           </section>
 
           {/* Section 2: Latest Articles */}
           <section
-            className={`flex flex-col text-center md:text-start border-b ${
+            className={`flex flex-col text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
             } py-6`}
           >
-            <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between items-start">
               <div>
                 {/* Judul dan Ikon */}
-                <div className="flex items-center gap-2 justify-center md:justify-start">
+                <div className="flex items-center gap-2">
                   <FaCode
                     className={`text-xl ${
                       isDarkMode ? "text-stone-200" : "text-stone-800"
@@ -128,31 +151,45 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
               {[
                 {
-                  src: "/studycourse/ai.png",
-                  title: "Mux data integration for Expo",
+                  src: "/studycourse/gsap.png",
+                  title: "Draw SVG - GSAP",
                   date: "2023-10-01",
+                  isNew: true,
                 },
                 {
                   src: "/studycourse/android.png",
-                  title: "State - Next Js App Directory",
+                  title: "State - Next Js App Libary",
                   date: "2023-09-15",
+                  isNew: false,
                 },
                 {
                   src: "/studycourse/kotlin.png",
-                  title: "Props and State",
+                  title: "Props and State Next Js",
                   date: "2023-08-20",
+                  isNew: false,
                 },
               ].map((project, index) => (
                 <div
                   key={index}
-                  className={`p-2 rounded-xl ${
-                    isDarkMode ? "bg-neutral-800" : "bg-neutral-100"
+                  className={`rounded-md relative overflow-hidden ${
+                    isDarkMode ? "bg-neutral-950" : "bg-neutral"
                   }`}
                 >
-                  <div className="relative w-full h-28 rounded-lg overflow-hidden">
+                  {/* Badge New */}
+                  {project.isNew && (
+                    <div className="absolute -right-7 top-5 w-28 bg-yellow-400 text-center text-black text-xs font-bold py-1 transform rotate-45 z-10 shadow-md">
+                      <span className="relative">
+                        NEW
+                        {/* Tambah garis dekoratif */}
+                        <div className="absolute -left-4 top-0 w-4 h-full bg-yellow-500/30 transform skew-x-45"></div>
+                      </span>
+                    </div>
+                  )}
+
+                  <div className="relative w-full h-28 overflow-hidden">
                     <Image
                       src={project.src}
                       alt={project.title}
@@ -161,20 +198,23 @@ export default function Home() {
                       quality={75}
                     />
                   </div>
-                  <h3
-                    className={`font-bold mt-4 ${
-                      isDarkMode ? "text-stone-200" : "text-stone-800"
-                    }`}
-                  >
-                    {project.title}
-                  </h3>
-                  <p
-                    className={`text-xs mt-2 ${
-                      isDarkMode ? "text-stone-400" : "text-stone-600"
-                    }`}
-                  >
-                    Started on: {project.date}
-                  </p>
+
+                  <div className="pt-3">
+                    <h3
+                      className={`font-bold ${
+                        isDarkMode ? "text-stone-200" : "text-stone-800"
+                      }`}
+                    >
+                      {project.title}
+                    </h3>
+                    <p
+                      className={`text-xs mt-2 ${
+                        isDarkMode ? "text-stone-400" : "text-stone-600"
+                      }`}
+                    >
+                      Started on: {project.date}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -182,11 +222,11 @@ export default function Home() {
 
           {/* Section 3: Services */}
           <section
-            className={`flex flex-col text-center md:text-start border-b ${
+            className={`flex flex-col text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
             } py-6`}
           >
-            <div className="flex items-center gap-2 justify-center md:justify-start">
+            <div className="flex items-center gap-2">
               <FaProjectDiagram
                 className={`text-xl ${
                   isDarkMode ? "text-stone-200" : "text-stone-800"
@@ -208,117 +248,63 @@ export default function Home() {
               I can deliver the following services
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-
               {/* Card 1: Website Development */}
               <div
-                className={`p-4 rounded-lg shadow-lg ${
-                  isDarkMode ? "bg-neutral-900" : "bg-neutral-200"
-                }`}
+                className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-700 ${
+                  isDarkMode ? "bg-neutral-950" : "bg-neutral"
+                } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
               >
-                <div className="flex justify-center">
-                  <WebIlustration />
+                <div className="flex justify-center relative">
+                  <div className="relative inline-block">
+                    <WebIlustration />
+                    {/* Gradient Outline */}
+                  </div>
                 </div>
                 <h3
-                  className={`text-lg font-semibold mt-4 ${
+                  className={`text-lg font-semibold mt-7 ${
                     isDarkMode ? "text-neutral-200" : "text-neutral-800"
                   }`}
                 >
                   Website Development
                 </h3>
                 <p
-                  className={`mt-2 ${
+                  className={`my-2 ${
                     isDarkMode ? "text-neutral-300" : "text-neutral-700"
                   }`}
                 >
                   Create stunning, user-friendly fullstack web applications
                   using modern technologies.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      isDarkMode
-                        ? "bg-neutral-700 text-neutral-200"
-                        : "bg-neutral-200 text-neutral-800"
-                    }`}
-                  >
-                    React
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      isDarkMode
-                        ? "bg-neutral-700 text-neutral-200"
-                        : "bg-neutral-200 text-neutral-800"
-                    }`}
-                  >
-                    Node.js
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      isDarkMode
-                        ? "bg-neutral-700 text-neutral-200"
-                        : "bg-neutral-200 text-neutral-800"
-                    }`}
-                  >
-                    Tailwind CSS
-                  </span>
-                </div>
               </div>
 
               {/* Card 2: Mobile Development */}
               <div
-                className={`p-4 rounded-lg shadow-lg ${
-                  isDarkMode ? "bg-neutral-900" : "bg-neutral-200"
-                }`}
+                className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-700 ${
+                  isDarkMode ? "bg-neutral-950" : "bg-neutral"
+                } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
               >
-                <div className="flex justify-center">
-                  <MobileIlustration />
+                <div className="flex justify-center relative">
+                  <div className="relative inline-block">
+                    {/* Gradient Outline */}
+                    <MobileIlustration />
+                  </div>
                 </div>
                 <h3
-                  className={`text-lg font-semibold mt-4 ${
+                  className={`text-lg font-semibold mt-7 ${
                     isDarkMode ? "text-neutral-200" : "text-neutral-800"
                   }`}
                 >
                   Mobile Development
                 </h3>
                 <p
-                  className={`mt-2 ${
+                  className={`my-2 ${
                     isDarkMode ? "text-neutral-300" : "text-neutral-700"
                   }`}
                 >
                   Create smooth and cross-platform mobile applications using
                   React Native.
                 </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      isDarkMode
-                        ? "bg-neutral-700 text-neutral-200"
-                        : "bg-neutral-200 text-neutral-800"
-                    }`}
-                  >
-                    React Native
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      isDarkMode
-                        ? "bg-neutral-700 text-neutral-200"
-                        : "bg-neutral-200 text-neutral-800"
-                    }`}
-                  >
-                    Flutter
-                  </span>
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm ${
-                      isDarkMode
-                        ? "bg-neutral-700 text-neutral-200"
-                        : "bg-neutral-200 text-neutral-800"
-                    }`}
-                  >
-                    Swift
-                  </span>
-                </div>
               </div>
-
             </div>
           </section>
         </div>

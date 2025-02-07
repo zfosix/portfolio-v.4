@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 
-import WebContainer from '@/components/about/WebContainer'
+import WebContainer from './WebContainer'
 
 export default function WebIlustration() {
   return (
@@ -17,7 +17,7 @@ export default function WebIlustration() {
           }}
           animate={{
             borderRadius: ['50%', '50%', '4px', '4px', '4px', '50%'],
-            width: ['20px', '20px', '40px', '40px', '40px', '20px'], // Small circle, large square
+            width: ['20px', '20px', '40px', '40px', '40px', '20px'], 
             height: ['20px', '20px', '40px', '40px', '40px', '20px']
           }}
           transition={{
