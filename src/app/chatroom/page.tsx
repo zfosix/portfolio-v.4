@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { FaPaperPlane } from "react-icons/fa";
 import { useDarkMode } from "@/context/DarkModeContext";
-import { db, auth} from "@/lib/firebaseConfig";
+import { db, auth, loginWithGoogle } from "@/lib/firebaseConfig";
 import {
   collection,
   addDoc,
@@ -15,9 +15,7 @@ import {
   serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
-import { onAuthStateChanged, signOut, signInWithRedirect } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
-
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 interface Message {
   id: string;
@@ -34,7 +32,6 @@ interface User {
 }
 
 const ChatroomPage = () => {
-  const provider = new GoogleAuthProvider();
   const { isDarkMode } = useDarkMode();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState("");
@@ -42,9 +39,6 @@ const ChatroomPage = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const signInWithGoogle = () => {
-    signInWithRedirect(auth, provider);
-  };
   // Handle automatic logout on page unload/refresh
   useEffect(() => {
     const handleBeforeUnload = () => {
@@ -242,7 +236,7 @@ const ChatroomPage = () => {
           {!user && (
             <div className="mt-6 flex justify-center">
               <button
-                onClick={signInWithGoogle}
+                onClick={loginWithGoogle}
                 className={`flex items-center justify-center space-x-2 w-full py-3 px-4 rounded-lg ${
                   isDarkMode
                     ? "bg-neutral-900 text-white"
