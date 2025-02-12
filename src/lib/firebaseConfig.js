@@ -1,11 +1,11 @@
-"use client"; // Pastikan Firebase hanya berjalan di sisi klien
+"use client";
 
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import { initializeApp, getApps } from "firebase/app";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, limit } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 
-// Konfigurasi Firebase dari .env
+// Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -16,86 +16,75 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Inisialisasi Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Fungsi Login dan Logout
-const loginWithGoogle = () => signInWithPopup(auth, provider);
-const logout = () => signOut(auth);
+// Auth functions
+const loginWithGoogle = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    toast.success("Successfully logged in!");
+    return result;
+  } catch (error) {
+    console.error("Login error:", error);
+    toast.error("Failed to login. Please try again.");
+    throw error;
+  }
+};
 
-// Fungsi untuk mengambil pesan secara real-time
+const logout = async () => {
+  try {
+    await signOut(auth);
+    toast.success("Logged out successfully");
+  } catch (error) {
+    console.error("Logout error:", error);
+    toast.error("Failed to logout. Please try again.");
+    throw error;
+  }
+};
+
+// Firestore functions
 const getMessages = (callback) => {
-  const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "asc"));
+  const messagesQuery = query(
+    collection(db, "messages"), 
+    orderBy("timestamp", "desc"),
+    limit(100)
+  );
+  
   return onSnapshot(messagesQuery, (snapshot) => {
-    const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const messages = snapshot.docs
+      .map((doc) => ({ id: doc.id, ...doc.data() }))
+      .reverse();
     callback(messages);
   });
 };
 
-// Fungsi untuk mengirim pesan
-const sendMessage = async (userName, message) => {
+const sendMessage = async (userName, message, photo) => {
   if (!message.trim()) return;
-  await addDoc(collection(db, "messages"), {
-    name: userName,
-    text: message,
-    timestamp: new Date(),
-  });
-};
-
-const ChatroomPage = () => {
-  const [user] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Ambil pesan dari Firestore secara real-time
-  useEffect(() => {
-    setIsLoading(true);
-    const unsubscribe = getMessages((fetchedMessages) => {
-      setMessages(fetchedMessages);
-      setIsLoading(false);
+  
+  try {
+    await addDoc(collection(db, "messages"), {
+      username: userName,
+      message: message.trim(),
+      photo: photo,
+      timestamp: serverTimestamp(),
     });
-    return () => unsubscribe();
-  }, []);
-
-  // Fungsi untuk mengirim pesan
-  const handleSendMessage = async () => {
-    if (!user || !newMessage.trim()) return;
-    await sendMessage(user.name, newMessage);
-    setNewMessage("");
-  };
-
-  return (
-    <div className="chatroom-container">
-      {!user ? (
-        <button onClick={loginWithGoogle}>Login with Google</button>
-      ) : (
-        <div>
-          <button onClick={logout}>Logout</button>
-          <div className="messages">
-            {isLoading ? (
-              <p>Loading...</p>
-            ) : (
-              messages.map((msg) => (
-                <p key={msg.id}><strong>{msg.name}:</strong> {msg.text}</p>
-              ))
-            )}
-          </div>
-          <input
-            type="text"
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            placeholder="Type a message"
-          />
-          <button onClick={handleSendMessage}>Send</button>
-        </div>
-      )}
-    </div>
-  );
+    return true;
+  } catch (error) {
+    console.error("Error sending message:", error);
+    toast.error("Failed to send message. Please try again.");
+    throw error;
+  }
 };
 
-export default ChatroomPage;
-export { db, auth, loginWithGoogle, logout, getMessages, sendMessage };
+export { 
+  db, 
+  auth, 
+  loginWithGoogle, 
+  logout, 
+  getMessages, 
+  sendMessage 
+};
