@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function WebContainer({
+export default function LandingContainer({
   children,
 }: {
   children: React.ReactNode;
@@ -11,6 +11,7 @@ export default function WebContainer({
         <div className="absolute inset-0 bg-[conic-gradient(from_90deg_at_50%_50%,#3B82F6_0%,#EC4899_50%,#3B82F6_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-rotate-gradient"></div>
         <div className="absolute inset-[2px] rounded-lg bg-neutral-100 dark:bg-neutral-950"></div>
       </div>
+
       <div className="relative flex items-center justify-start gap-1 border-b bg-neutral-200 px-2 py-1 dark:border-neutral-700 dark:bg-neutral-900">
         {[1, 2, 3].map((item) => (
           <div

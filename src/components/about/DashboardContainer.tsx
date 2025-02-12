@@ -1,6 +1,5 @@
 import React from "react";
-
-export default function WebContainer({
+export default function DashboardContainer({
   children,
 }: {
   children: React.ReactNode;

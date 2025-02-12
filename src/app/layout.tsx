@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/menu";
 import { motion, AnimatePresence } from "framer-motion";
-import StarryBackground from "@/components/Star";
+import ParticleBackground from "@/components/ParticleBackground";
 
 const poppins = Poppins({
   weight: ["400", "600"],
@@ -143,7 +143,7 @@ function AppContent({
         )}
       </AnimatePresence>
 
-      <StarryBackground />
+      <ParticleBackground /> 
 
       <div style={{ display: "flex", backgroundColor: backgroundColor }}>
         <div style={{ zIndex: 1001, position: "relative" }}>

@@ -1,97 +1,126 @@
-// components/LoadingSpinner.tsx
 import React from 'react';
 
-const LoadingSpinner = () => {
-  return (
-    <div
-      style={{
-        position: 'relative',
-        width: '150px',
-        height: '150px',
-      }}
-    >
-      {/* Planet (Bumi - Desain Manual) */}
-      <div
-        style={{
-          width: '70px',
-          height: '70px',
-          borderRadius: '50%',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          background:
-            'radial-gradient(circle at 30% 40%, #0077be, #005f8c 40%, #003366 70%, #001f3f), ' + // Gradien untuk efek laut
-            'linear-gradient(145deg, rgba(34, 139, 34, 0.6) 10%, transparent 30%), ' + // Efek daratan hijau 1
-            'linear-gradient(45deg, rgba(50, 205, 50, 0.6) 10%, transparent 30%), ' + // Efek daratan hijau 2
-            'linear-gradient(225deg, rgba(0, 100, 0, 0.6) 10%, transparent 30%)', // Efek daratan hijau 3
-          boxShadow:
-            'inset 0 0 20px rgba(255, 255, 255, 0.3), ' + // Efek cahaya dalam
-            '0 0 30px rgba(0, 119, 190, 0.8)', // Efek cahaya luar
-          border: '2px solid rgba(255, 255, 255, 0.1)', // Garis tepi halus
-        }}
-      ></div>
+const SolarSystem = () => {
+  const stars = Array.from({ length: 150 }).map(() => ({
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 3,
+    delay: Math.random() * 5
+  }));
 
-      {/* Orbit */}
-      <div
-        style={{
-          width: '140px',
-          height: '140px',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
-          borderRadius: '50%',
+  return (
+    <div style={{
+      position: 'relative',
+      width: '100vw',
+      height: '100vh',
+      background: 'radial-gradient(circle at center,rgb(7, 7, 7) 0%,rgb(7, 7, 7) 100%)',
+      overflow: 'hidden',
+    }}>
+      {/* Bintang-bintang */}
+      {stars.map((star, i) => (
+        <div key={i} style={{
           position: 'absolute',
-          top: '50%',
+          left: `${star.x}%`,
+          top: `${star.y}%`,
+          width: `${star.size}px`,
+          height: `${star.size}px`,
+          borderRadius: '50%',
+          background: 'white',
+          animation: `twinkle ${2 + Math.random() * 3}s infinite`,
+          animationDelay: `${star.delay}s`,
+          opacity: 0.7
+        }} />
+      ))}
+
+      {/* Matahari */}
+      <div style={{
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '100px',
+        height: '100px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle at 30% 30%, #ffff00, #ffaa00)',
+        boxShadow: '0 0 50px #ffaa00',
+        animation: 'sun-pulse 2s infinite alternate'
+      }} />
+
+      {/* Planet-planet */}
+      {[
+        { name: 'Mercury', color: '#A0522D', size: 12, orbit: 80, speed: 8 },
+        { name: 'Venus', color: '#DEB887', size: 16, orbit: 120, speed: 7 },
+        { name: 'Earth', color: '#4169E1', size: 18, orbit: 160, speed: 6 },
+        { name: 'Mars', color: '#CD5C5C', size: 14, orbit: 200, speed: 5 },
+        { name: 'Jupiter', color: '#DAA520', size: 32, orbit: 260, speed: 4 },
+        { name: 'Saturn', color: '#F4A460', size: 28, orbit: 320, speed: 3 },
+        { name: 'Uranus', color: '#87CEEB', size: 24, orbit: 380, speed: 2.5 },
+        { name: 'Neptune', color: '#1E90FF', size: 22, orbit: 440, speed: 2 }
+      ].map((planet) => (
+        <div key={planet.name} style={{
+          position: 'absolute',
           left: '50%',
+          top: '50%',
+          width: `${planet.orbit * 2}px`,
+          height: `${planet.orbit * 2}px`,
           transform: 'translate(-50%, -50%)',
-          animation: 'orbit-spin 4s linear infinite',
-        }}
-      >
-        {/* Moon */}
-        <div
-          style={{
-            width: '20px',
-            height: '20px',
-            borderRadius: '50%',
+          borderRadius: '50%',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          animation: `orbit ${planet.speed}s linear infinite`
+        }}>
+          <div style={{
             position: 'absolute',
-            top: '-10px',
+            top: '-5px',
             left: '50%',
             transform: 'translateX(-50%)',
-            background: 'radial-gradient(circle, #ffffff, #cccccc)',
-            boxShadow:
-              '0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4)',
-            animation: 'moon-glow 2s infinite alternate, moon-rotate 5s linear infinite',
-          }}
-        ></div>
-      </div>
+            width: `${planet.size}px`,
+            height: `${planet.size}px`,
+            borderRadius: '50%',
+            background: `radial-gradient(circle at 30% 30%, ${planet.color}, #000000)`,
+            boxShadow: `0 0 20px rgba(255, 255, 255, 0.3)`,
+            animation: `rotate ${planet.speed * 2}s linear infinite`
+          }}>
+            {/* Cincin Saturnus */}
+            {planet.name === 'Saturn' && (
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%) rotateX(60deg)',
+                width: '150%',
+                height: '150%',
+                borderRadius: '50%',
+                border: '4px solid rgba(210, 180, 140, 0.5)',
+                borderTopColor: 'transparent',
+                borderBottomColor: 'transparent'
+              }} />
+            )}
+          </div>
+        </div>
+      ))}
 
-      {/* Keyframes untuk animasi orbit-spin, moon-glow, dan moon-rotate */}
+      {/* Keyframes */}
       <style>
         {`
-          @keyframes orbit-spin {
-            0% {
-              transform: translate(-50%, -50%) rotate(0deg);
-            }
-            100% {
-              transform: translate(-50%, -50%) rotate(360deg);
-            }
+          @keyframes orbit {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
           }
 
-          @keyframes moon-glow {
-            0% {
-              box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
-            }
-            100% {
-              box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.6);
-            }
+          @keyframes rotate {
+            from { transform: translateX(-50%) rotate(0deg); }
+            to { transform: translateX(-50%) rotate(360deg); }
           }
 
-          @keyframes moon-rotate {
-            0% {
-              transform: translateX(-50%) rotate(0deg);
-            }
-            100% {
-              transform: translateX(-50%) rotate(360deg);
-            }
+          @keyframes sun-pulse {
+            from { box-shadow: 0 0 50px #ffaa00; }
+            to { box-shadow: 0 0 70px #ffaa00; }
+          }
+
+          @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
           }
         `}
       </style>
@@ -99,4 +128,4 @@ const LoadingSpinner = () => {
   );
 };
 
-export default LoadingSpinner;
+export default SolarSystem;

@@ -9,9 +9,67 @@ import { FaDonate } from "react-icons/fa";
 import WebIlustration from "@/components/about/WebIlustration";
 import MobileIlustration from "@/components/about/MobileIlustration";
 import "react-multi-carousel/lib/styles.css";
+import LandingIllustration from "@/components/about/LandingIlustration";
+import DashboardIllustration from "@/components/about/DashboardIlustration";
+import { useEffect, useState } from "react";
+
+const projects = [
+  {
+    src: "/studycourse/gsap.png",
+    title: "Draw SVG - GSAP",
+    date: "2023-10-01",
+    isNew: true,
+  },
+  {
+    src: "/studycourse/android.png",
+    title: "State - Next Js App Libary",
+    date: "2023-09-15",
+    isNew: false,
+  },
+  {
+    src: "/studycourse/gsap.png",
+    title: "Draw SVG - GSAP",
+    date: "2023-10-01",
+    isNew: true,
+  },
+  {
+    src: "/studycourse/kotlin.png",
+    title: "Props and State Next Js",
+    date: "2023-08-20",
+    isNew: false,
+  },
+  {
+    src: "/studycourse/android.png",
+    title: "State - Next Js App Libary",
+    date: "2023-09-15",
+    isNew: false,
+  },
+  {
+    src: "/studycourse/kotlin.png",
+    title: "Props and State Next Js",
+    date: "2023-08-20",
+    isNew: false,
+  },
+];
 
 export default function Home() {
   const { isDarkMode } = useDarkMode();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const visibleCards = 3;
+
+  useEffect(() => {
+    if (isPaused) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex(
+        (prevIndex) => (prevIndex + 1) % (projects.length - visibleCards + 1)
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [isPaused]);
 
   return (
     <div
@@ -51,9 +109,7 @@ export default function Home() {
               </span>
             </h1>
 
-            {/* Flex container untuk teks dan ikon Saweria */}
             <div className="flex justify-between items-center mt-2">
-              {/* Teks "Students" dan "Based in Bogor" */}
               <p className="text-lg text-stone-500 text-sm">
                 <span className="font-bold text-2xl relative top-[-4px]">
                   .
@@ -65,7 +121,6 @@ export default function Home() {
                 Based in Bogor 🇮🇩
               </p>
 
-              {/* Ikon Saweria di pojok kanan */}
               <div className="ml-4">
                 <Link href="/donate">
                   <FaDonate
@@ -91,7 +146,7 @@ export default function Home() {
             </p>
           </section>
 
-          {/* Section 2: Latest Articles */}
+          {/* Section 2: Recent Projects (Carousel) */}
           <section
             className={`flex flex-col text-start border-b ${
               isDarkMode ? "border-stone-700" : "border-stone-300"
@@ -99,7 +154,6 @@ export default function Home() {
           >
             <div className="flex flex-col md:flex-row justify-between items-start">
               <div>
-                {/* Judul dan Ikon */}
                 <div className="flex items-center gap-2">
                   <FaCode
                     className={`text-xl ${
@@ -114,8 +168,6 @@ export default function Home() {
                     Recent Projects
                   </h2>
                 </div>
-
-                {/* Teks "course by dicoding.com" */}
                 <p
                   className={`text-sm pt-2 ${
                     isDarkMode ? "text-stone-400" : "text-stone-600"
@@ -124,11 +176,9 @@ export default function Home() {
                   course by dicoding.com
                 </p>
               </div>
-
-              {/* Tombol */}
               <Link href="https://www.dicoding.com/academies/my" passHref>
                 <button
-                  className={`px-2 py-2 rounded-lg text-sm flex items-center gap-2 mt-4 md:mt-0 ${
+                  className={`px-2 py-1 rounded-sm text-sm flex items-center gap-2 mt-4 md:mt-0 ${
                     isDarkMode
                       ? "bg-neutral-900 text-stone-200"
                       : "bg-neutral-200 text-stone-800"
@@ -151,72 +201,68 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-4">
-              {[
-                {
-                  src: "/studycourse/gsap.png",
-                  title: "Draw SVG - GSAP",
-                  date: "2023-10-01",
-                  isNew: true,
-                },
-                {
-                  src: "/studycourse/android.png",
-                  title: "State - Next Js App Libary",
-                  date: "2023-09-15",
-                  isNew: false,
-                },
-                {
-                  src: "/studycourse/kotlin.png",
-                  title: "Props and State Next Js",
-                  date: "2023-08-20",
-                  isNew: false,
-                },
-              ].map((project, index) => (
-                <div
-                  key={index}
-                  className={`rounded-md relative overflow-hidden ${
-                    isDarkMode ? "bg-neutral-950" : "bg-neutral"
-                  }`}
-                >
-                  {/* Badge New */}
-                  {project.isNew && (
-                    <div className="absolute -right-7 top-5 w-28 bg-yellow-400 text-center text-black text-xs font-bold py-1 transform rotate-45 z-10 shadow-md">
-                      <span className="relative">
-                        NEW
-                        {/* Tambah garis dekoratif */}
-                        <div className="absolute -left-4 top-0 w-4 h-full bg-yellow-500/30 transform skew-x-45"></div>
-                      </span>
+            <div
+              className="relative overflow-hidden mt-4"
+              onMouseEnter={() => setIsPaused(true)}
+              onMouseLeave={() => setIsPaused(false)}
+            >
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${
+                    currentIndex * (100 / visibleCards)
+                  }%)`,
+                  width: `${(projects.length / visibleCards) * 50}%`,
+                }}
+              >
+                {projects.map((project, index) => (
+                  <div
+                    key={index}
+                    className="w-full flex-shrink-0 px-2"
+                    style={{ width: `${100 / visibleCards}%` }}
+                  >
+                    <div
+                      className={`rounded-sm relative overflow-hidden ${
+                        isDarkMode ? "bg-neutral-950" : "bg-neutral"
+                      }`}
+                    >
+                      {project.isNew && (
+                        <div className="absolute -right-7 top-5 w-28 bg-yellow-400 text-center text-black text-xs font-bold py-1 transform rotate-45 z-10 shadow-md">
+                          <span className="relative">
+                            NEW
+                            <div className="absolute -left-4 top-0 w-4 h-full bg-yellow-500/30 transform skew-x-45"></div>
+                          </span>
+                        </div>
+                      )}
+                      <div className="relative w-full h-28 overflow-hidden">
+                        <Image
+                          src={project.src}
+                          alt={project.title}
+                          fill
+                          className="object-cover"
+                          quality={75}
+                        />
+                      </div>
+                      <div className="pt-3">
+                        <h3
+                          className={`font-bold ${
+                            isDarkMode ? "text-stone-200" : "text-stone-800"
+                          }`}
+                        >
+                          {project.title}
+                        </h3>
+                        <p
+                          className={`text-xs mt-2 ${
+                            isDarkMode ? "text-stone-400" : "text-stone-600"
+                          }`}
+                        >
+                          Started on: {project.date}
+                        </p>
+                      </div>
                     </div>
-                  )}
-
-                  <div className="relative w-full h-28 overflow-hidden">
-                    <Image
-                      src={project.src}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      quality={75}
-                    />
                   </div>
-
-                  <div className="pt-3">
-                    <h3
-                      className={`font-bold ${
-                        isDarkMode ? "text-stone-200" : "text-stone-800"
-                      }`}
-                    >
-                      {project.title}
-                    </h3>
-                    <p
-                      className={`text-xs mt-2 ${
-                        isDarkMode ? "text-stone-400" : "text-stone-600"
-                      }`}
-                    >
-                      Started on: {project.date}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </section>
 
@@ -251,13 +297,12 @@ export default function Home() {
               {/* Card 1: Website Development */}
               <div
                 className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-700 ${
-                  isDarkMode ? "bg-neutral-950" : "bg-neutral"
+                  isDarkMode ? "bg-neutral-950/70" : "bg-neutral"
                 } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
               >
                 <div className="flex justify-center relative">
                   <div className="relative inline-block">
                     <WebIlustration />
-                    {/* Gradient Outline */}
                   </div>
                 </div>
                 <h3
@@ -272,20 +317,19 @@ export default function Home() {
                     isDarkMode ? "text-neutral-300" : "text-neutral-700"
                   }`}
                 >
-                  Create stunning, user-friendly fullstack web applications
-                  using modern technologies.
+                  Build responsive and scalable websites tailored to your
+                  business needs, using the latest web technologies.
                 </p>
               </div>
 
               {/* Card 2: Mobile Development */}
               <div
                 className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-700 ${
-                  isDarkMode ? "bg-neutral-950" : "bg-neutral"
+                  isDarkMode ? "bg-neutral-950/70" : "bg-neutral"
                 } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
               >
                 <div className="flex justify-center relative">
                   <div className="relative inline-block">
-                    {/* Gradient Outline */}
                     <MobileIlustration />
                   </div>
                 </div>
@@ -301,8 +345,64 @@ export default function Home() {
                     isDarkMode ? "text-neutral-300" : "text-neutral-700"
                   }`}
                 >
-                  Create smooth and cross-platform mobile applications using
-                  React Native.
+                  Develop high-performance mobile applications for iOS and
+                  Android platforms using React Native.
+                </p>
+              </div>
+
+              {/* Card 3: Landing Page */}
+              <div
+                className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-700 ${
+                  isDarkMode ? "bg-neutral-950/70" : "bg-neutral"
+                } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
+              >
+                <div className="flex justify-center relative">
+                  <div className="relative inline-block">
+                    <LandingIllustration />
+                  </div>
+                </div>
+                <h3
+                  className={`text-lg font-semibold mt-7 ${
+                    isDarkMode ? "text-neutral-200" : "text-neutral-800"
+                  }`}
+                >
+                  Landing Page Design
+                </h3>
+                <p
+                  className={`my-2 ${
+                    isDarkMode ? "text-neutral-300" : "text-neutral-700"
+                  }`}
+                >
+                  Design and develop high-converting landing pages that capture
+                  leads and drive sales.
+                </p>
+              </div>
+
+              {/* Card 4: Dashboard Development */}
+              <div
+                className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-700 ${
+                  isDarkMode ? "bg-neutral-950/70" : "bg-neutral"
+                } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
+              >
+                <div className="flex justify-center relative">
+                  <div className="relative inline-block">
+                    <DashboardIllustration />
+                  </div>
+                </div>
+                <h3
+                  className={`text-lg font-semibold mt-7 ${
+                    isDarkMode ? "text-neutral-200" : "text-neutral-800"
+                  }`}
+                >
+                  Dashboard Management
+                </h3>
+                <p
+                  className={`my-2 ${
+                    isDarkMode ? "text-neutral-300" : "text-neutral-700"
+                  }`}
+                >
+                  Create intuitive and powerful dashboards to visualize data and
+                  manage your business operations efficiently.
                 </p>
               </div>
             </div>

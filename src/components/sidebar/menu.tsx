@@ -13,8 +13,8 @@ import {
   Mail,
   LayoutDashboard,
   MapPin,
-  Menu, 
-  X, 
+  Menu,
+  X,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -22,7 +22,7 @@ import { motion } from "framer-motion";
 export default function Sidebar() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isMobileOpen, setIsMobileOpen] = useState(false); 
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
 
   const menuItems = [
@@ -61,9 +61,9 @@ export default function Sidebar() {
       <motion.div
         className={`fixed left-0 top-0 h-screen hidden md:flex flex-col p-3 transition-all duration-500 ease-in-out ${
           isDarkMode
-            ? "bg-[#0B0A0A] text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
-            : "bg-neutral-100 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
-        } ${isSidebarOpen ? "w-60" : "w-16"} border-b`}
+            ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
+            : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
+        } ${isSidebarOpen ? "w-60" : "w-16"} border-b backdrop-blur-md`} // Tambahkan backdrop-blur-md dan bg-opacity-50
         onMouseEnter={() => setIsSidebarOpen(true)}
         onMouseLeave={() => setIsSidebarOpen(false)}
       >
@@ -107,7 +107,9 @@ export default function Sidebar() {
                     : isDarkMode
                     ? "text-stone-400"
                     : "text-stone-600"
-                } ${isSidebarOpen ? "opacity-100" : "opacity-0"} transition-opacity duration-300 whitespace-nowrap`}
+                } ${
+                  isSidebarOpen ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-300 whitespace-nowrap`}
               >
                 {item.name}
               </span>
@@ -128,10 +130,10 @@ export default function Sidebar() {
             animate={{ x: 0 }}
             exit={{ x: -300 }}
             transition={{ duration: 0.3 }}
-            className={`fixed left-0 top-0 h-screen w-60 p-3 flex flex-col bg-neutral-100 dark:bg-[#0B0A0A] text-stone-800 dark:text-stone-200 shadow-lg z-50`}
-            onClick={(e) => e.stopPropagation()} 
+            className={`fixed left-0 top-0 h-screen w-60 p-3 flex flex-col bg-neutral-100/50 dark:bg-[#0B0A0A]/50 text-stone-800 dark:text-stone-200 shadow-lg z-50 backdrop-blur-md`} // Tambahkan backdrop-blur-md dan bg-opacity-50
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* 🔹 TOMBOL CLOSE */}
+            {/* TOMBOL CLOSE */}
             <button
               className="absolute top-4 right-4 text-stone-800 dark:text-stone-200"
               onClick={() => setIsMobileOpen(false)}
@@ -139,10 +141,14 @@ export default function Sidebar() {
               <X className="h-6 w-6" />
             </button>
 
-            {/* 🔹 PROFILE */}
-            <Profile isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} isSidebarOpen={true} />
+            {/* PROFILE */}
+            <Profile
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+              isSidebarOpen={true}
+            />
 
-            {/* 🔹 MENU LIST */}
+            {/* MENU LIST */}
             <div className="space-y-3 flex-grow py-7">
               {menuItems.map((item, index) => (
                 <motion.a
@@ -159,7 +165,7 @@ export default function Sidebar() {
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsMobileOpen(false)} 
+                  onClick={() => setIsMobileOpen(false)}
                 >
                   <item.icon className="h-5 w-5 text-stone-600 dark:text-stone-400" />
                   <span>{item.name}</span>
@@ -167,7 +173,7 @@ export default function Sidebar() {
               ))}
             </div>
 
-            {/* 🔹 FOOTER */}
+            {/* FOOTER */}
             <Footer isSidebarOpen={true} />
           </motion.div>
         </div>
