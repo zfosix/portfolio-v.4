@@ -1,8 +1,8 @@
-"use client"; 
+"use client"; // Pastikan Firebase hanya berjalan di sisi klien
 
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
 
 // Konfigurasi Firebase dari .env
@@ -13,31 +13,18 @@ const firebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  // measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-// Inisialisasi Firebase (Hindari inisialisasi ganda)
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+// Inisialisasi Firebase
+const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 // Fungsi Login dan Logout
-const loginWithGoogle = async () => {
-  try {
-    await signInWithPopup(auth, provider);
-  } catch (error) {
-    console.error("Login failed:", error);
-  }
-};
-
-const logout = async () => {
-  try {
-    await signOut(auth);
-  } catch (error) {
-    console.error("Logout failed:", error);
-  }
-};
+const loginWithGoogle = () => signInWithPopup(auth, provider);
+const logout = () => signOut(auth);
 
 // Fungsi untuk mengambil pesan secara real-time
 const getMessages = (callback) => {
@@ -51,31 +38,18 @@ const getMessages = (callback) => {
 // Fungsi untuk mengirim pesan
 const sendMessage = async (userName, message) => {
   if (!message.trim()) return;
-  try {
-    await addDoc(collection(db, "messages"), {
-      name: userName,
-      text: message,
-      timestamp: serverTimestamp(), // Gunakan serverTimestamp() agar kompatibel dengan Firestore
-    });
-  } catch (error) {
-    console.error("Error sending message:", error);
-  }
+  await addDoc(collection(db, "messages"), {
+    name: userName,
+    text: message,
+    timestamp: new Date(),
+  });
 };
 
 const ChatroomPage = () => {
-  const [user, setUser] = useState(null);
+  const [user] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
-
-  // Cek status login user secara real-time
-  useEffect(() => {
-    const unsubscribeAuth = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-
-    return () => unsubscribeAuth();
-  }, []);
 
   // Ambil pesan dari Firestore secara real-time
   useEffect(() => {
@@ -90,7 +64,7 @@ const ChatroomPage = () => {
   // Fungsi untuk mengirim pesan
   const handleSendMessage = async () => {
     if (!user || !newMessage.trim()) return;
-    await sendMessage(user.displayName, newMessage);
+    await sendMessage(user.name, newMessage);
     setNewMessage("");
   };
 
