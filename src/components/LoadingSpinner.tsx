@@ -1,6 +1,9 @@
 import React from 'react';
+import { useDarkMode } from '@/context/DarkModeContext'; // Sesuaikan path
 
 const SolarSystem = () => {
+  const { isDarkMode } = useDarkMode(); // Ambil nilai isDarkMode dari konteks
+
   const stars = Array.from({ length: 150 }).map(() => ({
     x: Math.random() * 100,
     y: Math.random() * 100,
@@ -13,7 +16,9 @@ const SolarSystem = () => {
       position: 'relative',
       width: '100vw',
       height: '100vh',
-      background: 'radial-gradient(circle at center,rgb(7, 7, 7) 0%,rgb(7, 7, 7) 100%)',
+      background: isDarkMode 
+        ? 'radial-gradient(circle at center, rgb(7, 7, 7) 0%, rgb(7, 7, 7) 100%)' 
+        : 'radial-gradient(circle at center, #ffffff 0%, #f0f0f0 100%)',
       overflow: 'hidden',
     }}>
       {/* Bintang-bintang */}
@@ -25,7 +30,7 @@ const SolarSystem = () => {
           width: `${star.size}px`,
           height: `${star.size}px`,
           borderRadius: '50%',
-          background: 'white',
+          background: isDarkMode ? 'white' : '#333',
           animation: `twinkle ${2 + Math.random() * 3}s infinite`,
           animationDelay: `${star.delay}s`,
           opacity: 0.7
@@ -65,7 +70,7 @@ const SolarSystem = () => {
           height: `${planet.orbit * 2}px`,
           transform: 'translate(-50%, -50%)',
           borderRadius: '50%',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'}`,
           animation: `orbit ${planet.speed}s linear infinite`
         }}>
           <div style={{
@@ -77,7 +82,7 @@ const SolarSystem = () => {
             height: `${planet.size}px`,
             borderRadius: '50%',
             background: `radial-gradient(circle at 30% 30%, ${planet.color}, #000000)`,
-            boxShadow: `0 0 20px rgba(255, 255, 255, 0.3)`,
+            boxShadow: `0 0 20px ${isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.3)'}`,
             animation: `rotate ${planet.speed * 2}s linear infinite`
           }}>
             {/* Cincin Saturnus */}
@@ -90,7 +95,7 @@ const SolarSystem = () => {
                 width: '150%',
                 height: '150%',
                 borderRadius: '50%',
-                border: '4px solid rgba(210, 180, 140, 0.5)',
+                border: `4px solid ${isDarkMode ? 'rgba(210, 180, 140, 0.5)' : 'rgba(210, 180, 140, 0.5)'}`,
                 borderTopColor: 'transparent',
                 borderBottomColor: 'transparent'
               }} />
