@@ -1,3 +1,5 @@
+"use client"; // Pastikan Firebase hanya berjalan di sisi klien
+
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
