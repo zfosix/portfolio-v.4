@@ -1,10 +1,22 @@
 const nextConfig = {
-    reactStrictMode: true,
-    compress: true,
-    images: {
-    domains: ["lh3.googleusercontent.com"], 
+  reactStrictMode: true,
+  compress: true,
+  images: {
+    domains: ["lh3.googleusercontent.com"],
   },
-  };
-  
-  module.exports = nextConfig;
-  
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "frame-ancestors 'self' https://accounts.google.com;",
+          },
+        ],
+      },
+    ];
+  },
+};
+
+module.exports = nextConfig;
