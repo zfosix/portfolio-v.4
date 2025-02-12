@@ -219,7 +219,7 @@ const ChatroomPage = () => {
           <div
             className={`rounded-xl p-6 border ${
               isDarkMode ? "border-neutral-800" : "border-neutral-200"
-            } max-h-[calc(100vh-400px)] overflow-y-auto`}
+            } max-h-[calc(100vh-400px)] overflow-y-auto scrollbar-none`}
           >
             {isLoading ? (
               <div className="flex justify-center items-center h-32">

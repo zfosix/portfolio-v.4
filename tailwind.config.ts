@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindScrollbar from "tailwind-scrollbar";
 
 const config: Config = {
   content: [
@@ -6,21 +7,21 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: ["class"], // Dark mode berdasarkan kelas
+  darkMode: ["class"],
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)', // Pastikan variabel ini ada di file CSS
-        foreground: 'var(--foreground)', // Pastikan variabel ini ada di file CSS
+        background: "var(--background)",
+        foreground: "var(--foreground)",
       },
       borderRadius: {
-        lg: 'var(--radius)', // Pastikan variabel ini ada di file CSS
-        md: 'calc(var(--radius) - 2px)', 
-        sm: 'calc(var(--radius) - 4px)', 
-      }
-    }
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
   },
-  plugins: [],
+  plugins: [tailwindScrollbar],
 };
 
 export default config;
