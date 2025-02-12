@@ -3,6 +3,7 @@ import { collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from 
 
 const messagesRef = collection(db, "messages");
 
+
 export const sendMessage = async (username, message) => {
   if (!message.trim()) return;
   try {

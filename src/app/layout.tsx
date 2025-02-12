@@ -3,7 +3,7 @@
 import { Poppins } from "next/font/google";
 import { DarkModeProvider, useDarkMode } from "@/context/DarkModeContext";
 import "../styles/globals.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/menu";
@@ -16,76 +16,71 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
+const PAGE_TITLES = {
+  "/about": "About | Zian's Code",
+  "/blog": "Blog | Zian's Code",
+  "/chatroom": "ChatRoom | Zian's Code",
+  "/contact": "Contact | Zian's Code",
+  "/dashboard": "Dashboard | Zian's Code",
+  "/projects": "Projects | Zian's Code",
+  "/roadmap": "Roadmap | Zian's Code",
+} as const;
+
+const LOADING_DURATION = 3000;
+const DEFAULT_TITLE = "Zian's Code";
+const AWAY_TITLE = "Come Back To Portfolio";
+const DEFAULT_FAVICON = "/f.png";
+const AWAY_FAVICON = "/favhand.png";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const [isLoading, setIsLoading] = useState(false);
-    const pathname = usePathname();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const pathname = usePathname();
 
-  const getPageTitle = (path: string) => {
-    switch (path) {
-      case "/about":
-        return "About | Zian's Code";
-      case "/blog":
-        return "Blog | Zian's Code";
-      case "/chatroom":
-        return "ChatRoom | Zian's Code";
-      case "/contact":
-        return "Contact | Zian's Code";
-      case "/dashboard":
-        return "Dashboard | Zian's Code";
-      case "/projects":
-        return "Projects | Zian's Code";
-      case "/roadmap":
-        return "Roadmap | Zian's Code";
-      default:
-        return "Zian's Code";
+  const getPageTitle = useCallback((path: string) => {
+    return PAGE_TITLES[path as keyof typeof PAGE_TITLES] || DEFAULT_TITLE;
+  }, []);
+
+  const updateFavicon = useCallback((href: string) => {
+    const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
+    if (favicon) {
+      favicon.href = href;
     }
-  };
+  }, []);
 
   useEffect(() => {
     document.title = getPageTitle(pathname);
-  }, [pathname]);
+  }, [pathname, getPageTitle]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         document.title = getPageTitle(pathname);
-        const favicon = document.querySelector(
-          "link[rel*='icon']"
-        ) as HTMLLinkElement;
-        if (favicon) {
-          favicon.href = "/f.png";
-        }
+        updateFavicon(DEFAULT_FAVICON);
       } else {
-        document.title = "Come Back To Portfolio";
-        const favicon = document.querySelector(
-          "link[rel*='icon']"
-        ) as HTMLLinkElement;
-        if (favicon) {
-          favicon.href = "/favhand.png";
-        }
+        document.title = AWAY_TITLE;
+        updateFavicon(AWAY_FAVICON);
       }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
-
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [pathname]);
+  }, [pathname, getPageTitle, updateFavicon]);
 
   useEffect(() => {
     setIsLoading(true);
     const timeout = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, LOADING_DURATION);
     return () => clearTimeout(timeout);
   }, [pathname]);
 
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   useEffect(() => {
     setIsInitialLoad(false);
   }, []);
@@ -103,37 +98,23 @@ export default function RootLayout({
   );
 }
 
-function AppContent({
-  isLoading,
-  isInitialLoad,
-  children,
-}: {
+interface AppContentProps {
   isLoading: boolean;
   isInitialLoad: boolean;
   children: React.ReactNode;
-}) {
-  const { isDarkMode } = useDarkMode();
+}
 
+function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
+  const { isDarkMode } = useDarkMode();
   const backgroundColor = isDarkMode ? "#0B0A0A" : "#FFFFFF";
 
   return (
     <>
-      {/* Loading Spinner */}
       <AnimatePresence>
         {!isInitialLoad && isLoading && (
           <motion.div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: backgroundColor,
-              zIndex: 1000,
-            }}
+            className="fixed inset-0 flex items-center justify-center z-[1000]"
+            style={{ backgroundColor }}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
@@ -143,16 +124,14 @@ function AppContent({
         )}
       </AnimatePresence>
 
-      <ParticleBackground /> 
+      <ParticleBackground />
 
-      <div style={{ display: "flex", backgroundColor: backgroundColor }}>
-        <div style={{ zIndex: 1001, position: "relative" }}>
+      <div className="flex" style={{ backgroundColor }}>
+        <div className="relative z-[1001]">
           <Sidebar />
         </div>
         <motion.div
-          style={{
-            flex: 1,
-          }}
+          className="flex-1"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
