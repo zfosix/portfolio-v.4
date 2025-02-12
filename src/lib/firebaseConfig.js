@@ -1,4 +1,4 @@
-"use client"; // Pastikan Firebase hanya berjalan di sisi klien
+"use client"; 
 
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "firebase/firestore";

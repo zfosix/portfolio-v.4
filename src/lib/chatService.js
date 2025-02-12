@@ -17,7 +17,7 @@ export const sendMessage = async (username, message) => {
 };
 
 export const getMessages = (callback) => {
-  const q = query(messagesRef, orderBy("timestamp", "asc")); // Urutkan dari yang paling lama
+  const q = query(messagesRef, orderBy("timestamp", "asc")); 
   return onSnapshot(q, (snapshot) => {
     const messages = snapshot.docs.map((doc) => ({
       id: doc.id,
