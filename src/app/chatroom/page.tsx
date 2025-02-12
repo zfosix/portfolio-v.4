@@ -21,6 +21,7 @@ interface Message {
   id: string;
   username: string;
   message: string;
+  photo: string;
   timestamp: Timestamp;
 }
 
@@ -46,9 +47,9 @@ const ChatroomPage = () => {
       }
     };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [user]);
 
@@ -65,6 +66,7 @@ const ChatroomPage = () => {
           id: doc.id,
           username: doc.data().username,
           message: doc.data().message,
+          photo: doc.data().photo || "/default-profile.png", // Pastikan selalu ada foto
           timestamp: doc.data().timestamp,
         }));
         setMessages(fetchedMessages);
@@ -108,8 +110,10 @@ const ChatroomPage = () => {
       await addDoc(collection(db, "messages"), {
         username: user.name,
         message: newMessage.trim(),
+        photo: user.photo, // Simpan foto profil pengguna
         timestamp: serverTimestamp(),
       });
+
       setNewMessage("");
     } catch (error) {
       console.error("Error sending message: ", error);
@@ -157,7 +161,11 @@ const ChatroomPage = () => {
                 />
                 <h1 className="text-3xl font-bold">Chat Room</h1>
               </div>
-              <p className={`mt-2 ${isDarkMode ? "text-gray-300" : "text-gray-600"}`}>
+              <p
+                className={`mt-2 ${
+                  isDarkMode ? "text-gray-300" : "text-gray-600"
+                }`}
+              >
                 Leave your impression or suggestion about this website here.
               </p>
             </div>
@@ -177,7 +185,7 @@ const ChatroomPage = () => {
                 <span className="font-medium">{user.name}</span>
                 <button
                   onClick={handleLogout}
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg"
+                  className="bg-red-900 text-white py-1 px-4 rounded-lg"
                 >
                   Logout
                 </button>
@@ -186,7 +194,7 @@ const ChatroomPage = () => {
           )}
 
           {/* Chat Messages */}
-          <div 
+          <div
             className={`rounded-xl p-6 border ${
               isDarkMode ? "border-neutral-800" : "border-neutral-200"
             } max-h-96 overflow-y-auto`}
@@ -196,12 +204,21 @@ const ChatroomPage = () => {
             ) : messages.length > 0 ? (
               messages.map((msg) => (
                 <div key={msg.id} className="flex items-start space-x-3 mb-4">
-                  <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm">
-                    {msg.username[0]}
-                  </div>
+                  <Image
+                    src={msg.photo || "/default-profile.png"} // Gunakan foto dari akun Google atau default
+                    alt={msg.username}
+                    width={32}
+                    height={32}
+                    className="w-8 h-8 rounded-full border border-gray-300 object-cover"
+                  />
+
                   <div>
                     <p className="font-semibold">{msg.username}</p>
-                    <p className={`text-sm ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>
+                    <p
+                      className={`text-sm ${
+                        isDarkMode ? "text-gray-300" : "text-gray-700"
+                      }`}
+                    >
                       {msg.message}
                     </p>
                   </div>
@@ -257,7 +274,9 @@ const ChatroomPage = () => {
                 disabled={!newMessage.trim()}
                 className={`p-3 rounded-lg ${
                   isDarkMode ? "bg-blue-600" : "bg-blue-500"
-                } text-white ${!newMessage.trim() && "opacity-50 cursor-not-allowed"}`}
+                } text-white ${
+                  !newMessage.trim() && "opacity-50 cursor-not-allowed"
+                }`}
               >
                 <FaPaperPlane />
               </button>
