@@ -5,6 +5,11 @@ import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "fi
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { useState, useEffect } from "react";
 
+// Debug: Cek apakah environment variables terbaca
+console.log("Firebase API Key:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
+console.log("Firebase Auth Domain:", process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN);
+console.log("Firebase Project ID:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
+
 // Konfigurasi Firebase dari .env
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,6 +20,11 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
+
+// Cek apakah API Key tersedia sebelum menginisialisasi Firebase
+if (!firebaseConfig.apiKey) {
+  throw new Error("Firebase API Key tidak ditemukan! Pastikan environment variables sudah diset.");
+}
 
 // Inisialisasi Firebase
 const app = initializeApp(firebaseConfig);
@@ -50,6 +60,11 @@ const ChatroomPage = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  // Debug: Cek apakah Firebase Auth bekerja
+  useEffect(() => {
+    console.log("Firebase Auth Initialized:", auth);
+  }, []);
 
   // Ambil pesan dari Firestore secara real-time
   useEffect(() => {
