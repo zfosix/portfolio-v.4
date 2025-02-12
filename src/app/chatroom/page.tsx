@@ -164,8 +164,8 @@ const ChatroomPage = () => {
           </motion.div>
 
           {/* Login / Logout Section */}
-          <div className="mb-4 flex justify-between items-center">
-            {user ? (
+          {user && (
+            <div className="mb-4 flex justify-between items-center">
               <div className="flex items-center space-x-3">
                 <Image
                   src={user.photo || "/default-profile.png"}
@@ -182,25 +182,8 @@ const ChatroomPage = () => {
                   Logout
                 </button>
               </div>
-            ) : (
-              <button
-                onClick={loginWithGoogle}
-                className={`flex items-center justify-center space-x-2 w-full py-3 px-4 rounded-lg ${
-                  isDarkMode
-                    ? "bg-neutral-900 text-white"
-                    : "bg-white text-black border border-gray-300"
-                }`}
-              >
-                <Image
-                  src="/google.png"
-                  alt="Google Icon"
-                  width={20}
-                  height={20}
-                />
-                <span className="text-sm">Login with Google to Chat</span>
-              </button>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Chat Messages */}
           <div 
@@ -231,6 +214,28 @@ const ChatroomPage = () => {
             )}
             <div ref={messagesEndRef}></div>
           </div>
+
+          {/* Login with Google Button - Only show when not logged in */}
+          {!user && (
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={loginWithGoogle}
+                className={`flex items-center justify-center space-x-2 w-full py-3 px-4 rounded-lg ${
+                  isDarkMode
+                    ? "bg-neutral-900 text-white"
+                    : "bg-white text-black border border-gray-300"
+                }`}
+              >
+                <Image
+                  src="/google.png"
+                  alt="Google Icon"
+                  width={20}
+                  height={20}
+                />
+                <span className="text-sm">Login with Google to Chat</span>
+              </button>
+            </div>
+          )}
 
           {/* Chat Input - Only show when logged in */}
           {user && (

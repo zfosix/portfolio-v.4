@@ -1,8 +1,9 @@
-"use client"; // Penting agar Firebase hanya berjalan di sisi klien
+"use client"; // Pastikan Firebase hanya berjalan di sisi klien
 
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { useState, useEffect } from "react";
 
 // Konfigurasi Firebase dari .env
 const firebaseConfig = {
@@ -25,4 +26,76 @@ const provider = new GoogleAuthProvider();
 const loginWithGoogle = () => signInWithPopup(auth, provider);
 const logout = () => signOut(auth);
 
-export { db, auth, loginWithGoogle, logout };
+// Fungsi untuk mengambil pesan secara real-time
+const getMessages = (callback) => {
+  const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "asc"));
+  return onSnapshot(messagesQuery, (snapshot) => {
+    const messages = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    callback(messages);
+  });
+};
+
+// Fungsi untuk mengirim pesan
+const sendMessage = async (userName, message) => {
+  if (!message.trim()) return;
+  await addDoc(collection(db, "messages"), {
+    name: userName,
+    text: message,
+    timestamp: new Date(),
+  });
+};
+
+const ChatroomPage = () => {
+  const [user] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Ambil pesan dari Firestore secara real-time
+  useEffect(() => {
+    setIsLoading(true);
+    const unsubscribe = getMessages((fetchedMessages) => {
+      setMessages(fetchedMessages);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Fungsi untuk mengirim pesan
+  const handleSendMessage = async () => {
+    if (!user || !newMessage.trim()) return;
+    await sendMessage(user.name, newMessage);
+    setNewMessage("");
+  };
+
+  return (
+    <div className="chatroom-container">
+      {!user ? (
+        <button onClick={loginWithGoogle}>Login with Google</button>
+      ) : (
+        <div>
+          <button onClick={logout}>Logout</button>
+          <div className="messages">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : (
+              messages.map((msg) => (
+                <p key={msg.id}><strong>{msg.name}:</strong> {msg.text}</p>
+              ))
+            )}
+          </div>
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type a message"
+          />
+          <button onClick={handleSendMessage}>Send</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default ChatroomPage;
+export { db, auth, loginWithGoogle, logout, getMessages, sendMessage };
