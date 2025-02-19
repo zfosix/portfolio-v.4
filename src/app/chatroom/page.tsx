@@ -40,6 +40,8 @@ const ChatroomPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const unsubscribeRef = useRef<(() => void) | null>(null);
 
@@ -65,42 +67,38 @@ const ChatroomPage = () => {
     setIsLoading(true);
     setError(null);
 
-    try {
-      const messagesRef = collection(db, "messages");
-      const q = query(
-        messagesRef,
-        orderBy("timestamp", "desc"),
-        limit(100) // Limit to last 100 messages for performance
-      );
+    const messagesRef = collection(db, "messages");
+    const q = query(
+      messagesRef,
+      orderBy("timestamp", "desc"),
+      limit(100)
+    );
 
-      unsubscribeRef.current = onSnapshot(
-        q,
-        (snapshot) => {
-          const fetchedMessages: Message[] = snapshot.docs
-            .map((doc) => ({
-              id: doc.id,
-              username: doc.data().username,
-              message: doc.data().message,
-              photo: doc.data().photo || "/default-profile.png",
-              timestamp: doc.data().timestamp,
-            }))
-            .reverse(); // Reverse to show newest messages at bottom
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const fetchedMessages: Message[] = snapshot.docs
+          .map((doc) => ({
+            id: doc.id,
+            username: doc.data().username,
+            message: doc.data().message,
+            photo: doc.data().photo || "/default-profile.png",
+            timestamp: doc.data().timestamp,
+          }))
+          .reverse();
 
-          setMessages(fetchedMessages);
-          setIsLoading(false);
-          setError(null);
-        },
-        (error) => {
-          console.error("Error fetching messages: ", error);
-          setError("Failed to load messages. Please try again later.");
-          setIsLoading(false);
-        }
-      );
-    } catch (error) {
-      console.error("Error setting up messages listener: ", error);
-      setError("Failed to connect to chat. Please try again later.");
-      setIsLoading(false);
-    }
+        setMessages(fetchedMessages);
+        setIsLoading(false);
+        setError(null);
+      },
+      (error) => {
+        console.error("Error fetching messages: ", error);
+        setError("Failed to load messages. Please try again later.");
+        setIsLoading(false);
+      }
+    );
+
+    unsubscribeRef.current = unsubscribe;
 
     return () => {
       if (unsubscribeRef.current) {
@@ -111,17 +109,16 @@ const ChatroomPage = () => {
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    const scrollToBottom = () => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
     if (messages.length > 0) {
-      scrollToBottom();
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages]);
+  }, [messages.length]);
 
+  // Handle sending a new message
   const handleSendMessage = useCallback(async () => {
-    if (!user || !newMessage.trim()) return;
+    if (!user || !newMessage.trim() || isSending) return;
+
+    setIsSending(true);
 
     try {
       const messageData = {
@@ -136,17 +133,27 @@ const ChatroomPage = () => {
     } catch (error) {
       console.error("Error sending message: ", error);
       toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSending(false);
     }
-  }, [user, newMessage]);
+  }, [user, newMessage, isSending]);
 
-  const handleKeyPress = useCallback((e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
-    }
-  }, [handleSendMessage]);
+  // Handle Enter key press for sending message
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        handleSendMessage();
+      }
+    },
+    [handleSendMessage]
+  );
 
+  // Handle user logout
   const handleLogout = async () => {
+    const confirmLogout = window.confirm("Are you sure you want to logout?");
+    if (!confirmLogout) return;
+
     try {
       await signOut(auth);
       toast.success("Logged out successfully");
@@ -224,9 +231,18 @@ const ChatroomPage = () => {
             {isLoading ? (
               <div className="flex justify-center items-center h-32">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-500"></div>
+                <span className="ml-2">Loading messages...</span>
               </div>
             ) : error ? (
-              <div className="text-center text-red-500 py-4">{error}</div>
+              <div className="text-center text-red-500 py-4">
+                {error} <br />
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-2 text-sm text-blue-500 hover:underline"
+                >
+                  Try Again
+                </button>
+              </div>
             ) : messages.length > 0 ? (
               messages.map((msg) => (
                 <motion.div
@@ -266,17 +282,23 @@ const ChatroomPage = () => {
           {!user && (
             <div className="mt-6 flex justify-center">
               <button
-                onClick={() => {
-                  loginWithGoogle().catch((error) => {
+                onClick={async () => {
+                  setIsLoggingIn(true);
+                  try {
+                    await loginWithGoogle();
+                  } catch (error) {
                     console.error("Login error:", error);
                     toast.error("Failed to login. Please try again.");
-                  });
+                  } finally {
+                    setIsLoggingIn(false);
+                  }
                 }}
                 className={`flex items-center justify-center space-x-2 w-full py-3 px-4 rounded-lg transition-colors ${
                   isDarkMode
                     ? "bg-neutral-900 hover:bg-neutral-800 text-white"
                     : "bg-white hover:bg-gray-50 text-black border border-gray-300"
                 }`}
+                disabled={isLoggingIn}
               >
                 <Image
                   src="/google.png"
@@ -285,7 +307,9 @@ const ChatroomPage = () => {
                   height={20}
                   priority
                 />
-                <span className="text-sm">Login with Google to Chat</span>
+                <span className="text-sm">
+                  {isLoggingIn ? "Logging in..." : "Login with Google to Chat"}
+                </span>
               </button>
             </div>
           )}
@@ -307,11 +331,11 @@ const ChatroomPage = () => {
               />
               <button
                 onClick={handleSendMessage}
-                disabled={!newMessage.trim()}
+                disabled={!newMessage.trim() || isSending}
                 className={`p-3 rounded-lg transition-colors ${
                   isDarkMode ? "bg-blue-600 hover:bg-blue-700" : "bg-blue-500 hover:bg-blue-600"
                 } text-white ${
-                  !newMessage.trim() && "opacity-50 cursor-not-allowed"
+                  (!newMessage.trim() || isSending) && "opacity-50 cursor-not-allowed"
                 }`}
               >
                 <FaPaperPlane />

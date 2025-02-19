@@ -38,6 +38,7 @@ export default function Profile({
           alt="zfosix"
           width={100}
           height={100}
+          priority // Tambahkan properti priority di sini
         />
       </div>
 

@@ -240,7 +240,7 @@ export default function Home() {
                           alt={project.title}
                           fill
                           className="object-cover"
-                          quality={75}
+                          sizes="(max-width: 768px) 100vw, 50vw"
                         />
                       </div>
                       <div className="pt-3">

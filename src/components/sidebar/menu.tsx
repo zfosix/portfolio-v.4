@@ -58,7 +58,7 @@ export default function Sidebar() {
         const link = document.createElement("link");
         link.rel = "prefetch";
         link.href = item.href;
-        document.head.appendChild(link);
+        link.as = "document"; 
       }
     });
   }, [pathname, menuItems]);
@@ -70,10 +70,7 @@ export default function Sidebar() {
   }, [isSidebarOpen, isMobileOpen, prefetchNextPages]);
 
   const MenuItem = ({ item, isMobile = false }: MenuItemProps) => (
-    <Link
-      href={item.href}
-      className="text-decoration-none"
-    >
+    <Link href={item.href} className="text-decoration-none">
       <motion.div
         className={`flex items-center gap-3 p-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer ${
           pathname === item.href
@@ -129,7 +126,11 @@ export default function Sidebar() {
         }}
         transition={{ duration: 0.2 }}
       >
-        {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        {isMobileOpen ? (
+          <X className="h-6 w-6" />
+        ) : (
+          <Menu className="h-6 w-6" />
+        )}
       </motion.button>
 
       <motion.div
@@ -148,7 +149,11 @@ export default function Sidebar() {
         />
         <div className="space-y-3 flex-grow py-7">
           {menuItems.map((item, index) => (
-            <MenuItem key={index} item={item} />
+            <div key={index} className="mb-4">
+              {" "}
+              {/* Tambahkan margin-bottom */}
+              <MenuItem item={item} />
+            </div>
           ))}
         </div>
         <Footer isSidebarOpen={isSidebarOpen} />
