@@ -2,7 +2,12 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
-import { FaCloudMoon, FaCloudSun, FaCheckCircle, FaCircle } from "react-icons/fa";
+import {
+  FaCloudMoon,
+  FaCloudSun,
+  FaCheckCircle,
+  FaCircle,
+} from "react-icons/fa";
 import { motion } from "framer-motion";
 
 interface ProfileProps {
@@ -21,7 +26,7 @@ export default function Profile({
   }, [isDarkMode]);
 
   return (
-    <div className="flex flex-col items-center justify-center py-6 border-b border-black dark:border-white relative transition-all">
+    <div className="flex flex-col items-center justify-center py-6 border-b border-black dark:border-neutral-700 relative transition-all">
       {isSidebarOpen && (
         <>
           <div
@@ -34,19 +39,23 @@ export default function Profile({
 
       <div className="bg-gray-200 dark:bg-gray-700 mt-12 rounded-full overflow-hidden border-2 border-black transition-all h-30 w-30 z-10">
         <Image
-          src="/image/hiccup1.jpeg"
+          src="/image/profile2.jpg"
           alt="zfosix"
           width={100}
           height={100}
-          priority // Tambahkan properti priority di sini
+          priority
         />
       </div>
 
       {isSidebarOpen && (
-        <button
-          className="absolute top-3 left-3 flex items-center space-x-1 px-1 py-0 bg-transparent border border-white text-white rounded-full z-10 hover:bg-white hover:text-black transition-all"
-        >
-          <FaCircle className="text-green-500" size={12} />
+        <button className="absolute top-3 left-3 flex items-center space-x-1 px-1 py-0 bg-transparent border border-white text-white rounded-full z-10 hover:bg-white hover:text-black transition-all">
+          <motion.div
+            initial={{ opacity: 1 }}
+            animate={{ opacity: [1, 0.7, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <FaCircle className="text-green-500" size={12} />
+          </motion.div>
           <span className="text-sm">Hire Me.</span>
         </button>
       )}

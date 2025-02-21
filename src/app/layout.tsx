@@ -9,6 +9,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/menu";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleBackground from "@/components/ParticleBackground";
+import Head from 'next/head'; 
 
 const poppins = Poppins({
   weight: ["400", "600"],
@@ -28,9 +29,7 @@ const PAGE_TITLES = {
 
 const LOADING_DURATION = 3000;
 const DEFAULT_TITLE = "Zian's Code";
-const AWAY_TITLE = "Come Back To Portfolio";
-const DEFAULT_FAVICON = "/f.png";
-const AWAY_FAVICON = "/favhand.png";
+const DEFAULT_FAVICON = "/icon_title.png"; 
 
 export default function RootLayout({
   children,
@@ -57,21 +56,8 @@ export default function RootLayout({
   }, [pathname, getPageTitle]);
 
   useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") {
-        document.title = getPageTitle(pathname);
-        updateFavicon(DEFAULT_FAVICON);
-      } else {
-        document.title = AWAY_TITLE;
-        updateFavicon(AWAY_FAVICON);
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-    };
-  }, [pathname, getPageTitle, updateFavicon]);
+    updateFavicon(DEFAULT_FAVICON);
+  }, [pathname, updateFavicon]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -89,6 +75,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
         <DarkModeProvider>
+          <Head>
+            <link rel="icon" href="/icon_title.png" /> 
+          </Head>
           <AppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>
             {children}
           </AppContent>

@@ -38,6 +38,7 @@ import {
   SiPostgresql,
 } from "react-icons/si";
 import { motion } from "framer-motion";
+import "@/styles/globals.css";
 
 export default function AboutPage() {
   const { isDarkMode } = useDarkMode();
@@ -354,42 +355,45 @@ export default function AboutPage() {
 
             {/* Frontend Skills Marquee */}
             <div className="relative mt-6 overflow-hidden">
-              <motion.div
-                className="flex space-x-3 whitespace-nowrap"
-                animate={{
-                  x: [0, -100 * frontendSkills.length],
-                }}
-                transition={{
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                style={{
-                  width: "fit-content",
-                }}
-              >
-                {frontendInfinite.map((skill, index) => (
-                  <div
-                    key={`frontend-${index}`}
-                    className="flex flex-row items-center justify-start p-2 px-4 rounded-full shadow-xl"
-                    style={{
-                      backgroundColor: isDarkMode ? "#1E1E1E" : "#FFFFFF",
-                      border: isDarkMode
-                        ? "1px solid #3f3f3f"
-                        : "1px solid #E5E7EB",
-                    }}
-                  >
-                    <div className="flex-shrink-0">{skill.icon}</div>
-                    <h4
-                      className={`text-xs font-semibold ml-2 ${
-                        isDarkMode ? "text-stone-200" : "text-gray-700"
-                      }`}
+              <div className="marquee">
+                <motion.div
+                  className="flex space-x-3 whitespace-nowrap"
+                  animate={{
+                    x: [0, -100 * frontendSkills.length],
+                  }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                    repeatType: "loop",
+                  }}
+                  style={{
+                    width: "fit-content",
+                  }}
+                >
+                  {frontendInfinite.map((skill, index) => (
+                    <div
+                      key={`frontend-${index}`}
+                      className="flex flex-row items-center justify-start p-2 px-4 rounded-full shadow-xl"
+                      style={{
+                        backgroundColor: isDarkMode ? "#1E1E1E" : "#FFFFFF",
+                        border: isDarkMode
+                          ? "1px solid #3f3f3f"
+                          : "1px solid #E5E7EB",
+                      }}
                     >
-                      {skill.name}
-                    </h4>
-                  </div>
-                ))}
-              </motion.div>
+                      <div className="flex-shrink-0">{skill.icon}</div>
+                      <h4
+                        className={`text-xs font-semibold ml-2 ${
+                          isDarkMode ? "text-stone-200" : "text-gray-700"
+                        }`}
+                      >
+                        {skill.name}
+                      </h4>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
 
             {/* Backend Skills Marquee */}

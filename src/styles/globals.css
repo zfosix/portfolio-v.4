@@ -118,6 +118,24 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   animation: rotate-gradient 3s linear infinite;
 }
 
+/* marquw - page about */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+
+
+
 /* :root {
   --background: #ffffff;
   --foreground: #000000;
