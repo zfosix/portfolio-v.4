@@ -5,9 +5,79 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import { IoMdContacts } from "react-icons/io";
 import { FaGithub, FaLinkedin, FaSpotify, FaDiscord } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
+import emailjs from "emailjs-com";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+emailjs.init("ZXrDuxiUPkMDDZYZV");
 
 const ContactPage = () => {
   const { isDarkMode } = useDarkMode();
+  const [formData, setFormData] = useState({
+    to: "fajarfauzian53@gmail.com",
+    sendername: "",
+    replyto: "",
+    subject: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log("Data yang dikirim:", formData);
+
+    emailjs
+      .send(
+        "service_j59muzp",
+        "template_5hx5nq1",
+        formData
+      )
+      .then(
+        (response) => {
+          console.log("SUCCESS!", response.status, response.text);
+          toast.success("Message sent successfully!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          setFormData({
+            to: "fajarfauzian53@gmail.com",
+            sendername: "",
+            replyto: "",
+            subject: "",
+            message: "",
+          });
+        },
+        (err) => {
+          console.log("FAILED...", err);
+          console.log("Error details:", err.response);
+          toast.error("Failed to send the message, please try again.", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      );
+  };
 
   return (
     <div
@@ -15,6 +85,19 @@ const ContactPage = () => {
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
+      {/* Toast Notification Container */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
       <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24">
         <div className="max-w-4xl mx-auto w-full">
           <motion.div
@@ -63,7 +146,7 @@ const ContactPage = () => {
                     Explore the source code for all my projects on GitHub.
                   </p>
                   <button
-                    onClick={() => window.open("https://github.com", "_blank")}
+                    onClick={() => window.open("https://github.com/zfosix", "_blank")}
                     className="mt-2 bg-gray-800 text-white py-1 px-4 rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 flex items-center"
                   >
                     Go to GitHub
@@ -83,7 +166,7 @@ const ContactPage = () => {
                   </p>
                   <button
                     onClick={() =>
-                      window.open("https://linkedin.com", "_blank")
+                      window.open("https://www.linkedin.com/in/fajar-fauzian-153220277/", "_blank")
                     }
                     className="mt-2 bg-blue-600 text-white py-1 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 flex items-center"
                   >
@@ -104,7 +187,7 @@ const ContactPage = () => {
                     Check out my favorite tracks and playlists on Spotify.
                   </p>
                   <button
-                    onClick={() => window.open("https://spotify.com", "_blank")}
+                    onClick={() => window.open("https://open.spotify.com/user/31kj3hpqmaeuws6chgvj4dfblkyi?si=b5a858dd2f2845e8", "_blank")}
                     className="mt-2 bg-green-600 text-white py-1 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center"
                   >
                     Go to Spotify
@@ -124,7 +207,7 @@ const ContactPage = () => {
                     Join over 1,000+ other developers on The Code Bayu Discord.
                   </p>
                   <button
-                    onClick={() => window.open("https://discord.com", "_blank")}
+                    onClick={() => window.open("https://discordapp.com/users/creamnotsix", "_blank")}
                     className="mt-2 bg-violet-600 text-white py-1 px-4 rounded-md hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 flex items-center"
                   >
                     Go to Discord
@@ -137,23 +220,26 @@ const ContactPage = () => {
             {/* Form Section */}
             <div className="space-y-6">
               <h2 className="text-xl font-semibold">Or send me a message</h2>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 {/* Container untuk Name dan Email */}
                 <div className="flex flex-col md:flex-row gap-4">
-                  {/* Input Name */}
+                  {/* Input Nama Pengirim */}
                   <div className="flex-1">
                     <label
-                      htmlFor="name"
+                      htmlFor="sendername"
                       className={`block text-sm font-medium ${
                         isDarkMode ? "text-stone-300" : "text-gray-700"
                       }`}
                     >
-                      Name
+                      Your Name
                     </label>
                     <input
                       type="text"
-                      id="name"
+                      id="sendername"
+                      name="sendername"
                       placeholder="Enter your name"
+                      value={formData.sendername}
+                      onChange={handleChange}
                       className={`mt-1 block w-full px-3 py-2 border ${
                         isDarkMode
                           ? "border-neutral-800 bg-neutral-950 text-stone-200"
@@ -162,20 +248,23 @@ const ContactPage = () => {
                     />
                   </div>
 
-                  {/* Input Email */}
+                  {/* Input Email Balasan */}
                   <div className="flex-1">
                     <label
-                      htmlFor="email"
+                      htmlFor="replyto"
                       className={`block text-sm font-medium ${
                         isDarkMode ? "text-stone-300" : "text-gray-700"
                       }`}
                     >
-                      Email
+                      Your Email
                     </label>
                     <input
                       type="email"
-                      id="email"
+                      id="replyto"
+                      name="replyto"
                       placeholder="Enter your email"
+                      value={formData.replyto}
+                      onChange={handleChange}
                       className={`mt-1 block w-full px-3 py-2 border ${
                         isDarkMode
                           ? "border-neutral-800 bg-neutral-950 text-stone-200"
@@ -185,7 +274,32 @@ const ContactPage = () => {
                   </div>
                 </div>
 
-                {/* Input Message */}
+                {/* Input Subjek */}
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className={`block text-sm font-medium ${
+                      isDarkMode ? "text-stone-300" : "text-gray-700"
+                    }`}
+                  >
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    placeholder="Enter the subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className={`mt-1 block w-full px-3 py-2 border ${
+                      isDarkMode
+                        ? "border-neutral-800 bg-neutral-950 text-stone-200"
+                        : "border-gray-300 bg-white text-gray-800"
+                    } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+                  />
+                </div>
+
+                {/* Input Pesan */}
                 <div>
                   <label
                     htmlFor="message"
@@ -197,8 +311,11 @@ const ContactPage = () => {
                   </label>
                   <textarea
                     id="message"
+                    name="message"
                     rows={4}
                     placeholder="Send your message"
+                    value={formData.message}
+                    onChange={handleChange}
                     className={`mt-1 block w-full px-3 py-2 border ${
                       isDarkMode
                         ? "border-neutral-800 bg-neutral-950 text-stone-200"
