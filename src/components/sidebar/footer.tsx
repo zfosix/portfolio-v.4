@@ -8,7 +8,7 @@ interface FooterProps {
 
 export default function Footer({ isSidebarOpen }: FooterProps) {
   return (
-    <div className="border-t border-neutral-700 py-4 text-stone-400 mt-auto text-center">
+    <div className="border-neutral-700 py-4 text-stone-400 mt-auto text-center">
       <AnimatePresence mode="wait">
         {isSidebarOpen ? (
           <motion.span

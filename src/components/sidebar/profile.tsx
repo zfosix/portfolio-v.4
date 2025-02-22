@@ -26,29 +26,47 @@ export default function Profile({
   }, [isDarkMode]);
 
   return (
-    <div className="flex flex-col items-center justify-center py-6 border-b border-black dark:border-neutral-700 relative transition-all">
+    <div className="flex flex-col items-center justify-center py-6 relative transition-all">
       {isSidebarOpen && (
         <>
           <div
-            className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-lg"
-            style={{ backgroundImage: "url('/image/bg.jpg')" }}
-          ></div>
-          <div className="absolute inset-x-0 top-0 h-1/2 bg-black opacity-50 z-0 rounded-lg"></div>
+            className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-t-lg"
+            style={{ 
+              backgroundImage: "url('/image/bg.jpg')",
+              margin: "10px", // Memberikan jarak pada background
+            }}
+          />
+          <div 
+            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-t-lg" 
+            style={{ margin: "10px" }} // Memberikan jarak pada overlay
+          />
         </>
       )}
 
-      <div className="bg-gray-200 dark:bg-gray-700 mt-12 rounded-full overflow-hidden border-2 border-black transition-all h-30 w-30 z-10">
+      <motion.div
+        className="relative mt-12 rounded-full overflow-hidden border-2 border-neutral-700 transition-all z-10"
+        initial={false}
+        animate={{
+          width: isSidebarOpen ? "100px" : "40px",
+          height: isSidebarOpen ? "100px" : "40px"
+        }}
+        transition={{
+          duration: 0.3,
+          ease: "easeInOut"
+        }}
+      >
         <Image
           src="/image/profile2.jpg"
           alt="zfosix"
           width={100}
           height={100}
           priority
+          className="object-cover w-full h-full"
         />
-      </div>
+      </motion.div>
 
       {isSidebarOpen && (
-        <button className="absolute top-3 left-3 flex items-center space-x-1 px-1 py-0 bg-transparent border border-white text-white rounded-full z-10 hover:bg-white hover:text-black transition-all">
+        <button className="absolute top-4 left-4 flex items-center space-x-1 px-2 py-1 bg-transparent border border-white text-white rounded-full z-10 hover:bg-white hover:text-black transition-all">
           <motion.div
             initial={{ opacity: 1 }}
             animate={{ opacity: [1, 0.7, 1] }}
@@ -56,33 +74,23 @@ export default function Profile({
           >
             <FaCircle className="text-green-500" size={12} />
           </motion.div>
-          <span className="text-sm">Hire Me.</span>
+          <span className="text-sm">Hire Me</span>
         </button>
       )}
 
-      {isSidebarOpen ? (
-        <button
-          className="absolute top-3 right-3 w-8 h-8 bg-neutral-200 dark:bg-neutral-800 text-gray-800 dark:text-white rounded-xl flex items-center justify-center z-10"
-          onClick={toggleDarkMode}
-        >
-          {isDarkMode ? (
-            <FaCloudSun size={16} color="#FFD700" />
-          ) : (
-            <FaCloudMoon size={16} color="#2E4053" />
-          )}
-        </button>
-      ) : (
-        <button
-          className="mt-4 w-8 h-8 bg-neutral-200 dark:bg-neutral-800 text-gray-800 dark:text-white rounded-xl flex items-center justify-center z-10"
-          onClick={toggleDarkMode}
-        >
-          {isDarkMode ? (
-            <FaCloudSun size={16} color="#FFD700" />
-          ) : (
-            <FaCloudMoon size={16} color="#2E4053" />
-          )}
-        </button>
-      )}
+      <button
+        className={`${
+          isSidebarOpen ? "absolute top-4 right-4" : "mt-4"
+        } w-8 h-8 bg-neutral-200 dark:bg-neutral-800 text-gray-800 dark:text-white rounded-xl flex items-center justify-center z-10 transition-all hover:bg-neutral-300 dark:hover:bg-neutral-700`}
+        onClick={toggleDarkMode}
+        aria-label="Toggle dark mode"
+      >
+        {isDarkMode ? (
+          <FaCloudSun size={16} className="text-yellow-400" />
+        ) : (
+          <FaCloudMoon size={16} className="text-gray-700" />
+        )}
+      </button>
 
       {isSidebarOpen && (
         <motion.div

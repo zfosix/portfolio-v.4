@@ -19,7 +19,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface MenuItem {
   name: string;
@@ -30,6 +30,7 @@ interface MenuItem {
 interface MenuItemProps {
   item: MenuItem;
   isMobile?: boolean;
+  isOpen: boolean;
 }
 
 export default function Sidebar() {
@@ -58,7 +59,7 @@ export default function Sidebar() {
         const link = document.createElement("link");
         link.rel = "prefetch";
         link.href = item.href;
-        link.as = "document"; 
+        document.head.appendChild(link);
       }
     });
   }, [pathname, menuItems]);
@@ -69,14 +70,14 @@ export default function Sidebar() {
     }
   }, [isSidebarOpen, isMobileOpen, prefetchNextPages]);
 
-  const MenuItem = ({ item, isMobile = false }: MenuItemProps) => (
-    <Link href={item.href} className="text-decoration-none">
+  const MenuItem = ({ item, isMobile = false, isOpen }: MenuItemProps) => (
+    <Link href={item.href} className="text-decoration-none w-full block">
       <motion.div
-        className={`flex items-center gap-3 p-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer ${
+        className={`flex items-center gap-3 p-2 rounded-xl transition-colors duration-300 ease-in-out cursor-pointer relative overflow-hidden ${
           pathname === item.href
             ? isDarkMode
               ? "bg-neutral-800 text-white"
-              : "bg-neutral-500 text-stone-800"
+              : "bg-neutral-500 text-white"
             : isDarkMode
             ? "hover:bg-neutral-700 hover:text-white"
             : "hover:bg-neutral-300 hover:text-stone-800"
@@ -96,19 +97,27 @@ export default function Sidebar() {
         >
           <item.icon className="h-5 w-5" />
         </div>
-        <span
+        <motion.span
+          initial={false}
+          animate={{
+            opacity: !isMobile && !isOpen ? 0 : 1,
+            x: !isMobile && !isOpen ? -20 : 0,
+            width: !isMobile && !isOpen ? 0 : "auto"
+          }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut"
+          }}
           className={`${
             pathname === item.href
               ? "text-white"
               : isDarkMode
               ? "text-stone-400"
               : "text-stone-600"
-          } ${
-            !isMobile && !isSidebarOpen ? "opacity-0" : "opacity-100"
-          } transition-opacity duration-300 whitespace-nowrap`}
+          } whitespace-nowrap overflow-hidden`}
         >
           {item.name}
-        </span>
+        </motion.span>
       </motion.div>
     </Link>
   );
@@ -126,81 +135,79 @@ export default function Sidebar() {
         }}
         transition={{ duration: 0.2 }}
       >
-        {isMobileOpen ? (
-          <X className="h-6 w-6" />
-        ) : (
-          <Menu className="h-6 w-6" />
-        )}
+        {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </motion.button>
 
       <motion.div
-        className={`fixed left-0 top-0 h-screen hidden md:flex flex-col p-3 transition-all duration-500 ease-in-out ${
+        className={`fixed left-0 top-0 h-screen hidden md:flex flex-col transition-all duration-500 ease-in-out ${
           isDarkMode
             ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
             : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
-        } ${isSidebarOpen ? "w-60" : "w-16"} border-r backdrop-blur-md`}
+        } border-r backdrop-blur-md`}
+        initial={false}
+        animate={{
+          width: isSidebarOpen ? "240px" : "64px"
+        }}
+        transition={{
+          duration: 0.3,
+          ease: "easeInOut"
+        }}
         onMouseEnter={() => setIsSidebarOpen(true)}
         onMouseLeave={() => setIsSidebarOpen(false)}
       >
-        <Profile
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          isSidebarOpen={isSidebarOpen}
-        />
-        <div className="space-y-3 flex-grow py-7">
-          {menuItems.map((item, index) => (
-            <div key={index} className="mb-4">
-              {" "}
-              {/* Tambahkan margin-bottom */}
-              <MenuItem item={item} />
-            </div>
-          ))}
+        {/* Profile Section */}
+        <div className="flex-shrink-0 relative mb-9">
+          <Profile
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            isSidebarOpen={isSidebarOpen}
+          />
+          {/* Border Bawah Tidak Full */}
+          <div
+            className="absolute bottom-0 left-4 right-4 h-px bg-neutral-700"
+            style={{ width: "calc(100% - 32px)" }} 
+          />
         </div>
-        <Footer isSidebarOpen={isSidebarOpen} />
-      </motion.div>
 
-      <AnimatePresence>
-        {isMobileOpen && (
+        {/* Menu Section */}
+        <motion.nav 
+          className="flex-grow py-4 px-3" // Mengurangi padding-top dan padding-bottom
+          animate={{
+            opacity: 1
+          }}
+          transition={{
+            delay: 0.1
+          }}
+        >
           <motion.div
-            className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsMobileOpen(false)}
+            className="space-y-3"
+            initial={false}
+            animate={{
+              opacity: 1,
+              transition: {
+                staggerChildren: 0.05,
+                delayChildren: 0.1
+              }
+            }}
           >
-            <motion.div
-              key="mobile-sidebar"
-              initial={{ x: -300 }}
-              animate={{ x: 0 }}
-              exit={{ x: -300 }}
-              transition={{ duration: 0.3 }}
-              className="fixed left-0 top-0 h-screen w-60 p-3 flex flex-col bg-neutral-100/50 dark:bg-[#0B0A0A]/50 text-stone-800 dark:text-stone-200 shadow-lg z-50 backdrop-blur-md"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                className="absolute top-4 right-4 text-stone-800 dark:text-stone-200"
-                onClick={() => setIsMobileOpen(false)}
+            {menuItems.map((item) => (
+              <motion.div
+                key={item.href}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                <X className="h-6 w-6" />
-              </button>
-
-              <Profile
-                isDarkMode={isDarkMode}
-                toggleDarkMode={toggleDarkMode}
-                isSidebarOpen={true}
-              />
-
-              <div className="space-y-3 flex-grow py-7">
-                {menuItems.map((item, index) => (
-                  <MenuItem key={index} item={item} isMobile={true} />
-                ))}
-              </div>
-
-              <Footer isSidebarOpen={true} />
-            </motion.div>
+                <MenuItem item={item} isOpen={isSidebarOpen} />
+              </motion.div>
+            ))}
           </motion.div>
-        )}
-      </AnimatePresence>
+        </motion.nav>
+
+        {/* Footer Section */}
+        <div className="flex-shrink-1">
+          <Footer isSidebarOpen={isSidebarOpen} />
+        </div>
+      </motion.div>
     </>
   );
 }

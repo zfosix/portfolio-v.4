@@ -73,56 +73,57 @@ export const projects = [
 ];
 
 export const frontendSkills = [
-  { name: "HTML", icon: <FaHtml5 className="text-2xl text-orange-500" /> },
-  { name: "CSS", icon: <FaCss3Alt className="text-2xl text-blue-500" /> },
-  { name: "JavaScript", icon: <FaJs className="text-2xl text-yellow-400" /> },
-  { name: "React", icon: <FaReact className="text-2xl text-blue-400" /> },
-  { name: "Redux", icon: <SiRedux className="text-2xl text-purple-600" /> },
-  { name: "SASS", icon: <FaSass className="text-2xl text-pink-400" /> },
+  { name: "HTML", icon: <FaHtml5 className="text-2xl " /> },
+  { name: "CSS", icon: <FaCss3Alt className="text-2xl " /> },
+  { name: "JavaScript", icon: <FaJs className="text-2xl " /> },
+  { name: "React", icon: <FaReact className="text-2xl " /> },
+  { name: "Redux", icon: <SiRedux className="text-2xl " /> },
+  { name: "SASS", icon: <FaSass className="text-2xl " /> },
   {
     name: "Next.js",
-    icon: <SiNextdotjs className="text-2xl text-black dark:text-white" />,
+    icon: <SiNextdotjs className="text-2xl " />,
   },
   {
     name: "Bootstrap",
-    icon: <FaBootstrap className="text-2xl text-purple-600" />,
+    icon: <FaBootstrap className="text-2xl " />,
   },
   {
     name: "TailwindCSS",
-    icon: <SiTailwindcss className="text-2xl text-blue-400" />,
+    icon: <SiTailwindcss className="text-2xl " />,
   },
-  { name: "Figma", icon: <FaFigma className="text-2xl text-purple-500" /> },
+  { name: "Figma", icon: <FaFigma className="text-2xl " /> },
   {
     name: "React Query",
-    icon: <SiReactquery className="text-2xl text-red-500" />,
+    icon: <SiReactquery className="text-2xl " />,
   },
   {
     name: "TypeScript",
-    icon: <SiTypescript className="text-2xl text-blue-600" />,
+    icon: <SiTypescript className="text-2xl" />,
   },
 ];
+
 export const backendSkills = [
-  { name: "Node.js", icon: <FaNodeJs className="text-2xl text-green-500" /> },
+  { name: "Node.js", icon: <FaNodeJs className="text-2xl" /> },
   {
     name: "Express.js",
-    icon: <SiExpress className="text-2xl text-gray-500" />,
+    icon: <SiExpress className="text-2xl " />,
   },
-  { name: "Laravel", icon: <SiLaravel className="text-2xl text-red-600" /> },
-  { name: "MySQL", icon: <SiMysql className="text-2xl text-blue-600" /> },
+  { name: "Laravel", icon: <SiLaravel className="text-2xl " /> },
+  { name: "MySQL", icon: <SiMysql className="text-2xl " /> },
   {
     name: "PostgreSQL",
-    icon: <SiPostgresql className="text-2xl text-blue-800" />,
+    icon: <SiPostgresql className="text-2xl " />,
   },
-  { name: "Java", icon: <FaJava className="text-2xl text-red-700" /> },
-  { name: "Git", icon: <FaGitAlt className="text-2xl text-orange-600" /> },
+  { name: "Java", icon: <FaJava className="text-2xl " /> },
+  { name: "Git", icon: <FaGitAlt className="text-2xl " /> },
   {
     name: "GitHub",
-    icon: <FaGithubAlt className="text-2xl text-gray-700" />,
+    icon: <FaGithubAlt className="text-2xl " />,
   },
-  { name: "GitLab", icon: <FaGitlab className="text-2xl text-orange-500" /> },
-  { name: "Prisma", icon: <SiPrisma className="text-2xl text-teal-500" /> },
-  { name: "GraphQL", icon: <SiGraphql className="text-2xl text-pink-500" /> },
-  { name: "Gulp", icon: <SiGulp className="text-2xl text-red-600" /> },
+  { name: "GitLab", icon: <FaGitlab className="text-2xl " /> },
+  { name: "Prisma", icon: <SiPrisma className="text-2xl " /> },
+  { name: "GraphQL", icon: <SiGraphql className="text-2xl " /> },
+  { name: "Gulp", icon: <SiGulp className="text-2xl " /> },
 ];
 
 // Data categories
