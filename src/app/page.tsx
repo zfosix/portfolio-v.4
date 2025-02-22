@@ -18,8 +18,23 @@ export default function Home() {
   const { isDarkMode } = useDarkMode();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
+  const [isClient, setIsClient] = useState(false); // Track if the component has mounted
 
   const visibleCards = 3;
+
+  useEffect(() => {
+    // Set isClient to true after mounting
+    setIsClient(true);
+
+    // Update window width
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
 
   useEffect(() => {
     if (isPaused) return;
@@ -163,75 +178,78 @@ export default function Home() {
               </Link>
             </div>
 
-            <div
-              className="relative overflow-hidden mt-4"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
-            >
+            {/* Render the carousel only on the client side */}
+            {isClient && (
               <div
-                className="flex transition-transform duration-500 ease-in-out"
-                style={{
-                  transform: `translateX(-${
-                    currentIndex * (100 / visibleCards)
-                  }%)`,
-                  width: `${(projects.length / visibleCards) * 50}%`,
-                }}
+                className="relative overflow-hidden mt-4"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
               >
-                {projects.map((project, index) => (
-                  <div
-                    key={index}
-                    className="w-full flex-shrink-0 px-2"
-                    style={{
-                      width: `${
-                        window.innerWidth < 768
-                          ? 300 / visibleCards
-                          : 100 / visibleCards
-                      }%`,
-                    }}
-                  >
+                <div
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{
+                    transform: `translateX(-${
+                      currentIndex * (100 / visibleCards)
+                    }%)`,
+                    width: `${(projects.length / visibleCards) * 50}%`,
+                  }}
+                >
+                  {projects.map((project, index) => (
                     <div
-                      className={`rounded-sm relative overflow-hidden ${
-                        isDarkMode ? "bg-neutral-950" : "bg-neutral"
-                      }`}
+                      key={index}
+                      className="w-full flex-shrink-0 px-2"
+                      style={{
+                        width: `${
+                          windowWidth < 768
+                            ? 300 / visibleCards
+                            : 100 / visibleCards
+                        }%`,
+                      }}
                     >
-                      {project.isNew && (
-                        <div className="absolute -right-7 top-5 w-28 bg-yellow-400 text-center text-black text-xs font-bold py-1 transform rotate-45 z-10 shadow-md">
-                          <span className="relative">
-                            NEW
-                            <div className="absolute -left-4 top-0 w-4 h-full bg-yellow-500/30 transform skew-x-45"></div>
-                          </span>
+                      <div
+                        className={`rounded-sm relative overflow-hidden ${
+                          isDarkMode ? "bg-neutral-950" : "bg-neutral"
+                        }`}
+                      >
+                        {project.isNew && (
+                          <div className="absolute -right-7 top-5 w-28 bg-yellow-400 text-center text-black text-xs font-bold py-1 transform rotate-45 z-10 shadow-md">
+                            <span className="relative">
+                              NEW
+                              <div className="absolute -left-4 top-0 w-4 h-full bg-yellow-500/30 transform skew-x-45"></div>
+                            </span>
+                          </div>
+                        )}
+                        <div className="relative w-full h-28 overflow-hidden">
+                          <Image
+                            src={project.src}
+                            alt={project.title}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                          />
                         </div>
-                      )}
-                      <div className="relative w-full h-28 overflow-hidden">
-                        <Image
-                          src={project.src}
-                          alt={project.title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
-                      </div>
-                      <div className="pt-3">
-                        <h3
-                          className={`font-bold ${
-                            isDarkMode ? "text-stone-200" : "text-stone-800"
-                          }`}
-                        >
-                          {project.title}
-                        </h3>
-                        <p
-                          className={`text-xs mt-2 ${
-                            isDarkMode ? "text-stone-400" : "text-stone-600"
-                          }`}
-                        >
-                          Started on: {project.date}
-                        </p>
+                        <div className="pt-3">
+                          <h3
+                            className={`font-bold ${
+                              isDarkMode ? "text-stone-200" : "text-stone-800"
+                            }`}
+                          >
+                            {project.title}
+                          </h3>
+                          <p
+                            className={`text-xs mt-2 ${
+                              isDarkMode ? "text-stone-400" : "text-stone-600"
+                            }`}
+                          >
+                            Started on: {project.date}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </section>
 
           {/* Section 3: Services */}
