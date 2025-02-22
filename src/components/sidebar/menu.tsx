@@ -19,7 +19,7 @@ import {
   LucideIcon,
 } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface MenuItem {
   name: string;
@@ -124,6 +124,7 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* Hamburger Button for Mobile */}
       <motion.button
         className="fixed top-4 right-4 z-50 md:hidden p-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-stone-800 dark:text-stone-200"
         onClick={() => setIsMobileOpen(!isMobileOpen)}
@@ -135,19 +136,16 @@ export default function Sidebar() {
         }}
         transition={{ duration: 0.2 }}
       >
-        {isMobileOpen ? (
-          <X className="h-6 w-6" />
-        ) : (
-          <Menu className="h-6 w-6" />
-        )}
+        {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </motion.button>
 
+      {/* Desktop Sidebar */}
       <motion.div
         className={`fixed left-0 top-0 h-screen hidden md:flex flex-col transition-all duration-500 ease-in-out ${
           isDarkMode
             ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
             : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
-        } border-r backdrop-blur-md rounded-tr-xl rounded-br-xl`} 
+        } border-r backdrop-blur-md rounded-tr-xl rounded-br-xl`}
         initial={false}
         animate={{
           width: isSidebarOpen ? "240px" : "64px",
@@ -175,7 +173,7 @@ export default function Sidebar() {
 
         {/* Menu Section */}
         <motion.nav
-          className="flex-grow py-4 px-3" // Mengurangi padding-top dan padding-bottom
+          className="flex-grow py-4 px-3"
           animate={{
             opacity: 1,
           }}
@@ -212,6 +210,54 @@ export default function Sidebar() {
           <Footer isSidebarOpen={isSidebarOpen} />
         </div>
       </motion.div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileOpen && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsMobileOpen(false)}
+            />
+
+            {/* Mobile Sidebar */}
+            <motion.div
+              key="mobile-sidebar"
+              className="fixed left-0 top-0 h-screen w-64 p-3 flex flex-col bg-neutral-100/50 dark:bg-[#0B0A0A]/50 text-stone-800 dark:text-stone-200 shadow-lg z-50 backdrop-blur-md"
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Profile
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
+                isSidebarOpen={true}
+              />
+
+              <nav className="flex-grow py-4">
+                {menuItems.map((item) => (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="mb-4"
+                  >
+                    <MenuItem item={item} isMobile={true} isOpen={true} />
+                  </motion.div>
+                ))}
+              </nav>
+
+              <Footer isSidebarOpen={true} />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }
