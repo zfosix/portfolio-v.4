@@ -1,6 +1,36 @@
 // Import semua ikon yang diperlukan
-import { FaHtml5, FaCss3Alt, FaJs, FaReact, FaSass, FaBootstrap, FaFigma, FaNodeJs, FaJava, FaGitAlt, FaGithubAlt, FaGitlab, FaDatabase } from 'react-icons/fa';
-import { SiRedux, SiNextdotjs, SiTailwindcss, SiReactquery, SiTypescript, SiExpress, SiLaravel, SiMysql, SiPostgresql, SiPrisma, SiGraphql, SiGulp, SiJavascript, SiMongodb, SiDocker } from 'react-icons/si';
+import {
+  FaHtml5,
+  FaCss3Alt,
+  FaJs,
+  FaReact,
+  FaSass,
+  FaBootstrap,
+  FaFigma,
+  FaNodeJs,
+  FaJava,
+  FaGitAlt,
+  FaGithubAlt,
+  FaGitlab,
+  FaDatabase,
+} from "react-icons/fa";
+import {
+  SiRedux,
+  SiNextdotjs,
+  SiTailwindcss,
+  SiReactquery,
+  SiTypescript,
+  SiExpress,
+  SiLaravel,
+  SiMysql,
+  SiPostgresql,
+  SiPrisma,
+  SiGraphql,
+  SiGulp,
+  SiJavascript,
+  SiMongodb,
+  SiDocker,
+} from "react-icons/si";
 
 // Data projects
 export const projects = [
@@ -42,7 +72,6 @@ export const projects = [
   },
 ];
 
-// Data frontend skills
 export const frontendSkills = [
   { name: "HTML", icon: <FaHtml5 className="text-2xl text-orange-500" /> },
   { name: "CSS", icon: <FaCss3Alt className="text-2xl text-blue-500" /> },
@@ -72,8 +101,6 @@ export const frontendSkills = [
     icon: <SiTypescript className="text-2xl text-blue-600" />,
   },
 ];
-
-// Data backend skills
 export const backendSkills = [
   { name: "Node.js", icon: <FaNodeJs className="text-2xl text-green-500" /> },
   {
@@ -261,7 +288,8 @@ export const certificates = [
   {
     id: 3,
     title: "Front-End with VUE JS",
-    description: "Front-end Development with The Progressive JavaScript Framework Vue.js",
+    description:
+      "Front-end Development with The Progressive JavaScript Framework Vue.js",
     issuedBy: "Wanteknologi",
     date: "2023-10-30",
     image: "/certificates/vuejs.png",
@@ -270,7 +298,8 @@ export const certificates = [
   {
     id: 4,
     title: "Back-End with JavaScript Framework",
-    description: "Joining the Backend Development with Javascript Framework Training with PT.Laskar Teknologi Mulia (Cyberlabs).",
+    description:
+      "Joining the Backend Development with Javascript Framework Training with PT.Laskar Teknologi Mulia (Cyberlabs).",
     issuedBy: "PT Laskar Teknologi Mulia",
     date: "2023-11-10",
     image: "/certificates/express.png",
@@ -288,7 +317,8 @@ export const certificates = [
   {
     id: 6,
     title: "Belajar Membuat Front-End Web untuk Pemula",
-    description: "Certification for completing the Frontend Web course Dicoding.",
+    description:
+      "Certification for completing the Frontend Web course Dicoding.",
     issuedBy: "Dicoding",
     date: "2023-11-24",
     image: "/certificates/dicfepml.png",
@@ -314,7 +344,7 @@ export const certificates = [
   },
 ];
 
-// Data categories dengan level
+// Data skill categories dengan level
 export const skillCategories = {
   frontend: [
     {
