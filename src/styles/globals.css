@@ -118,7 +118,7 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   animation: rotate-gradient 3s linear infinite;
 }
 
-/* marquw - page about */
+/* marque - page about */
 @keyframes marquee {
   0% {
     transform: translateX(0%);
@@ -134,6 +134,18 @@ html::-webkit-scrollbar, body::-webkit-scrollbar {
   animation: marquee 20s linear infinite;
 }
 
+/* responsive section 2 - page home */
+/* @media (max-width: 768px) {
+  .carousel-card {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .carousel-card {
+    width: 33.33% !important;
+  }
+} */
 
 
 /* :root {

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
 import Link from "next/link";
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import { useDarkMode } from "@/context/DarkModeContext";
 import { FaCode, FaProjectDiagram } from "react-icons/fa";
 import { FaDonate } from "react-icons/fa";
@@ -12,45 +12,7 @@ import "react-multi-carousel/lib/styles.css";
 import LandingIllustration from "@/components/about/LandingIlustration";
 import DashboardIllustration from "@/components/about/DashboardIlustration";
 import { useEffect, useState } from "react";
-
-const projects = [
-  {
-    src: "/studycourse/gsap.png",
-    title: "Draw SVG - GSAP",
-    date: "2023-10-01",
-    isNew: true,
-  },
-  {
-    src: "/studycourse/android.png",
-    title: "State - Next Js App Libary",
-    date: "2023-09-15",
-    isNew: false,
-  },
-  {
-    src: "/studycourse/gsap.png",
-    title: "Draw SVG - GSAP",
-    date: "2023-10-01",
-    isNew: true,
-  },
-  {
-    src: "/studycourse/kotlin.png",
-    title: "Props and State Next Js",
-    date: "2023-08-20",
-    isNew: false,
-  },
-  {
-    src: "/studycourse/android.png",
-    title: "State - Next Js App Libary",
-    date: "2023-09-15",
-    isNew: false,
-  },
-  {
-    src: "/studycourse/kotlin.png",
-    title: "Props and State Next Js",
-    date: "2023-08-20",
-    isNew: false,
-  },
-];
+import { projects } from "@/data/resume";
 
 export default function Home() {
   const { isDarkMode } = useDarkMode();
@@ -219,7 +181,13 @@ export default function Home() {
                   <div
                     key={index}
                     className="w-full flex-shrink-0 px-2"
-                    style={{ width: `${100 / visibleCards}%` }}
+                    style={{
+                      width: `${
+                        window.innerWidth < 768
+                          ? 300 / visibleCards
+                          : 100 / visibleCards
+                      }%`,
+                    }}
                   >
                     <div
                       className={`rounded-sm relative overflow-hidden ${

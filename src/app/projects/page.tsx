@@ -5,6 +5,7 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import Image from "next/image";
 import { FaProjectDiagram, FaCertificate } from "react-icons/fa";
 import { useState } from "react";
+import { detailedProjects, certificates } from "@/data/resume"; 
 
 interface Project {
   id: number;
@@ -25,107 +26,22 @@ interface Certificate {
   link: string;
 }
 
+function isProject(item: Project | Certificate): item is Project {
+  return (item as Project).technologies !== undefined;
+}
+
+function isCertificate(item: Project | Certificate): item is Certificate {
+  return (item as Certificate).issuedBy !== undefined;
+}
+
 const ProjectsPage = () => {
   const { isDarkMode } = useDarkMode();
   const [activeTab, setActiveTab] = useState<"projects" | "certificates">(
     "projects"
   );
 
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "JokiGames & TopUpGames",
-      description:
-        "This is a website for game jockeys and top ups, equipped with many cool features.",
-      technologies: ["Next.js", "Node.js", "PostgreSQL", "MidTrans", "Bootstrap"],
-      image: "/projects/jokigames.png",
-      link: "#",
-    },
-    {
-      id: 2,
-      title: "Ciu Isurannce",
-      description:
-        "Insurance bank handling application with attractive design and complete features.",
-      technologies: ["Next.js","PostgreSQL", "Bootstrap", "Golang", "Node.js"],
-      image: "/projects/ciudigital.png",
-      link: "#",
-    },
-  ];
-
-  const certificates: Certificate[] = [
-    {
-      id: 1,
-      title: "PT NARANTRAYA TEKNOLOGI DIGITAL",
-      description: "Telah menyelesaikan Praktik Kerja Industri",
-      issuedBy: "PT Narantraya",
-      date: "2024-07-21",
-      image: "/certificates/pkl.png",
-      link: "https://drive.google.com/file/d/1-91o_3jpjzmoUKd3mXWoFsixi5HwYR8G/view?usp=drive_link",
-    },
-    {
-      id: 2,
-      title: "IGDX Career Seminar",
-      description: "Career Guidance For Aspiring Game Developer.",
-      issuedBy: "IGDX Career",
-      date: "2024-12-18",
-      image: "/certificates/igdx.png",
-      link: "https://drive.google.com/file/d/1H4aCas-yLXKmizrN3QaRJSN3az9B1KC_/view?usp=drive_link",
-    },
-    {
-      id: 3,
-      title: "Front-End with VUE JS",
-      description: "Front-end Development with The Progressive JavaScript Framework Vue.js",
-      issuedBy: "Wanteknologi",
-      date: "2023-10-30",
-      image: "/certificates/vuejs.png",
-      link: "https://drive.google.com/file/d/1BZ3ccpGrEE_2IZWN9KDVR7c1yPTVC-Fx/view?usp=drive_link",
-    },
-    {
-      id: 4,
-      title: "Back-End with JavaScript Framework",
-      description: "Joining the Backend Development with Javascript Framework Training with PT.Laskar Teknologi Mulia (Cyberlabs).",
-      issuedBy: "PT Laskar Teknologi Mulia",
-      date: "2023-11-10",
-      image: "/certificates/express.png",
-      link: "https://drive.google.com/file/d/12W30fxT1vpU0nziuJVKOL38qBadhumrg/view?usp=drive_link",
-    },
-    {
-      id: 5,
-      title: "Belajar Dasar AI",
-      description: "Certification for completing the AI course Dicoding.",
-      issuedBy: "Dicoding",
-      date: "2024-11-30",
-      image: "/certificates/dicai.png",
-      link: "https://drive.google.com/file/d/1Q59lDUnG8LaOrxpwZ5RvG_SQCmEzvF_E/view?usp=drive_link",
-    },
-    {
-      id: 6,
-      title: "Belajar Membuat Front-End Web untuk Pemula",
-      description: "Certification for completing the Frontend Web course Dicoding.",
-      issuedBy: "Dicoding",
-      date: "2023-11-24",
-      image: "/certificates/dicfepml.png",
-      link: "https://drive.google.com/file/d/1moE3wdslssz-TDvWTeP0tqq5URyqv9S5/view?usp=drive_link",
-    },
-    {
-      id: 7,
-      title: "Cloud Practitioner Essentials (Belajar Dasar AWS Cloud)",
-      description: "Certification for completing the AWS course Dicoding.",
-      issuedBy: "Dicoding",
-      date: "2023-11-25",
-      image: "/certificates/dicaws.png",
-      link: "https://drive.google.com/file/d/1i89m11ZocSTqaQk8AhiPsxFJ6HxYZ3xq/view?usp=drive_link",
-    },
-    {
-      id: 8,
-      title: "Belajar Dasar Pemrograman JavaScript",
-      description: "Certification for completing the JS course Dicoding.",
-      issuedBy: "Dicoding",
-      date: "2025-01-24",
-      image: "/certificates/dicjs.png",
-      link: "https://drive.google.com/file/d/1D8sIA-4zFwJpjtkPoI_LbADspGeRBZzG/view?usp=drive_link",
-    },
-  ];
+  // Gunakan detailedProjects dan certificates berdasarkan activeTab
+  const displayedItems = activeTab === "projects" ? detailedProjects : certificates;
 
   return (
     <div
@@ -211,8 +127,10 @@ const ProjectsPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {activeTab === "projects"
-              ? projects.map((project) => (
+            {displayedItems.map((item) => {
+              if (isProject(item)) {
+                const project = item as Project;
+                return (
                   <motion.div
                     key={project.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -223,7 +141,9 @@ const ProjectsPage = () => {
                       isDarkMode
                         ? "bg-neutral-900 hover:bg-neutral-800"
                         : "bg-white hover:bg-gray-50"
-                    } transition-all duration-300 border border-neutral-600 dark:border-neutral-800`}
+                    } transition-all duration-300 border ${
+                      isDarkMode ? "border-neutral-800" : "border-gray-200"
+                    }`}
                   >
                     <div className="w-full h-48 relative group">
                       <Image
@@ -235,6 +155,8 @@ const ProjectsPage = () => {
                       />
                       <a
                         href={project.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
                       >
                         <svg
@@ -253,10 +175,8 @@ const ProjectsPage = () => {
                         </svg>
                       </a>
                     </div>
-                    <div className="p-3">
-                      <h2 className="text-xl font-bold mb-2">
-                        {project.title}
-                      </h2>
+                    <div className="p-4">
+                      <h2 className="text-xl font-bold mb-2">{project.title}</h2>
                       <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                         {project.description}
                       </p>
@@ -276,8 +196,10 @@ const ProjectsPage = () => {
                       </div>
                     </div>
                   </motion.div>
-                ))
-              : certificates.map((certificate) => (
+                );
+              } else if (isCertificate(item)) {
+                const certificate = item as Certificate;
+                return (
                   <motion.div
                     key={certificate.id}
                     initial={{ opacity: 0, y: 20 }}
@@ -288,7 +210,9 @@ const ProjectsPage = () => {
                       isDarkMode
                         ? "bg-neutral-900 hover:bg-neutral-800"
                         : "bg-white hover:bg-gray-50"
-                    } transition-all duration-300 border border-neutral-600 dark:border-neutral-800`}
+                    } transition-all duration-300 border ${
+                      isDarkMode ? "border-neutral-800" : "border-gray-200"
+                    }`}
                   >
                     <div className="w-full h-48 relative group">
                       <Image
@@ -300,6 +224,8 @@ const ProjectsPage = () => {
                       />
                       <a
                         href={certificate.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-50"
                       >
                         <svg
@@ -318,10 +244,8 @@ const ProjectsPage = () => {
                         </svg>
                       </a>
                     </div>
-                    <div className="p-3">
-                      <h2 className="text-xl font-bold mb-2">
-                        {certificate.title}
-                      </h2>
+                    <div className="p-4">
+                      <h2 className="text-xl font-bold mb-2">{certificate.title}</h2>
                       <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                         {certificate.description}
                       </p>
@@ -347,7 +271,10 @@ const ProjectsPage = () => {
                       </div>
                     </div>
                   </motion.div>
-                ))}
+                );
+              }
+              return null; // Fallback untuk tipe data yang tidak dikenali
+            })}
           </div>
         </div>
       </main>

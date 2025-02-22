@@ -58,7 +58,7 @@ const DashboardPage = () => {
           {/* Pagespeed Insight Card */}
           <div
             className={`mb-6 p-6 rounded-lg ${
-              isDarkMode ? "bg-stone-800" : "bg-stone-100"
+              isDarkMode ? "bg-neutral-800" : "bg-stone-100"
             }`}
           >
             <div className="flex items-center space-x-3 mb-4">
@@ -153,7 +153,7 @@ const DashboardPage = () => {
           {/* Codewars Statistic Card */}
           <div
             className={`mb-6 p-6 rounded-lg ${
-              isDarkMode ? "bg-stone-800" : "bg-stone-100"
+              isDarkMode ? "bg-neutral-800" : "bg-stone-100"
             }`}
           >
             <div className="flex items-center space-x-3 mb-4">
@@ -216,7 +216,7 @@ const DashboardPage = () => {
           {/* Contributions Card */}
           <div
             className={`mb-6 p-6 rounded-lg ${
-              isDarkMode ? "bg-stone-800" : "bg-stone-100"
+              isDarkMode ? "bg-neutral-800" : "bg-stone-100"
             }`}
           >
             <div className="flex items-center space-x-3 mb-4">
