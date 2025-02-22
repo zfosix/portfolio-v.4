@@ -102,11 +102,11 @@ export default function Sidebar() {
           animate={{
             opacity: !isMobile && !isOpen ? 0 : 1,
             x: !isMobile && !isOpen ? -20 : 0,
-            width: !isMobile && !isOpen ? 0 : "auto"
+            width: !isMobile && !isOpen ? 0 : "auto",
           }}
           transition={{
             duration: 0.3,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
           className={`${
             pathname === item.href
@@ -135,7 +135,11 @@ export default function Sidebar() {
         }}
         transition={{ duration: 0.2 }}
       >
-        {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        {isMobileOpen ? (
+          <X className="h-6 w-6" />
+        ) : (
+          <Menu className="h-6 w-6" />
+        )}
       </motion.button>
 
       <motion.div
@@ -143,14 +147,14 @@ export default function Sidebar() {
           isDarkMode
             ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
             : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
-        } border-r backdrop-blur-md`}
+        } border-r backdrop-blur-md rounded-tr-xl rounded-br-xl`} 
         initial={false}
         animate={{
-          width: isSidebarOpen ? "240px" : "64px"
+          width: isSidebarOpen ? "240px" : "64px",
         }}
         transition={{
           duration: 0.3,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
         onMouseEnter={() => setIsSidebarOpen(true)}
         onMouseLeave={() => setIsSidebarOpen(false)}
@@ -165,18 +169,18 @@ export default function Sidebar() {
           {/* Border Bawah Tidak Full */}
           <div
             className="absolute bottom-0 left-4 right-4 h-px bg-neutral-700"
-            style={{ width: "calc(100% - 32px)" }} 
+            style={{ width: "calc(100% - 32px)" }}
           />
         </div>
 
         {/* Menu Section */}
-        <motion.nav 
+        <motion.nav
           className="flex-grow py-4 px-3" // Mengurangi padding-top dan padding-bottom
           animate={{
-            opacity: 1
+            opacity: 1,
           }}
           transition={{
-            delay: 0.1
+            delay: 0.1,
           }}
         >
           <motion.div
@@ -186,8 +190,8 @@ export default function Sidebar() {
               opacity: 1,
               transition: {
                 staggerChildren: 0.05,
-                delayChildren: 0.1
-              }
+                delayChildren: 0.1,
+              },
             }}
           >
             {menuItems.map((item) => (

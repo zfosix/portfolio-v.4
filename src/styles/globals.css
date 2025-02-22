@@ -25,45 +25,6 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Animasi RGB Outline */
-@keyframes rgbOutlineMulti {
-  0% {
-    box-shadow:
-      -4px -4px 10px #ff0000,
-      4px -4px 10px #0000ff,
-      4px 4px 10px #00ff00,
-      -4px 4px 10px #ff00ff;
-  }
-  25% {
-    box-shadow:
-      -4px -4px 10px #00ff00,
-      4px -4px 10px #ff0000,
-      4px 4px 10px #ff00ff,
-      -4px 4px 10px #0000ff;
-  }
-  50% {
-    box-shadow:
-      -4px -4px 10px #0000ff,
-      4px -4px 10px #ff00ff,
-      4px 4px 10px #ff0000,
-      -4px 4px 10px #00ff00;
-  }
-  75% {
-    box-shadow:
-      -4px -4px 10px #ff00ff,
-      4px -4px 10px #00ff00,
-      4px 4px 10px #0000ff,
-      -4px 4px 10px #ff0000;
-  }
-  100% {
-    box-shadow:
-      -4px -4px 10px #ff0000,
-      4px -4px 10px #0000ff,
-      4px 4px 10px #00ff00,
-      -4px 4px 10px #ff00ff;
-  }
-}
-
 /* Class untuk animasi RGB Outline */
 .animate-glow {
   animation: rgbOutlineMulti 1.5s infinite alternate;
