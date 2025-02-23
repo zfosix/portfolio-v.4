@@ -6,11 +6,11 @@ import "@/styles/globals.css";
 import { useDarkMode } from "@/context/DarkModeContext";
 import { FaCode, FaProjectDiagram, FaBullhorn } from "react-icons/fa";
 import { FaDonate } from "react-icons/fa";
-import WebIlustration from "@/components/about/WebIlustration";
-import MobileIlustration from "@/components/about/MobileIlustration";
+import WebIlustration from "@/components/home/WebIlustration";
+import MobileIlustration from "@/components/home/MobileIlustration";
 import "react-multi-carousel/lib/styles.css";
-import LandingIllustration from "@/components/about/LandingIlustration";
-import DashboardIllustration from "@/components/about/DashboardIlustration";
+import LandingIllustration from "@/components/home/LandingIlustration";
+import DashboardIllustration from "@/components/home/DashboardIlustration";
 import { useEffect, useState } from "react";
 import { projects } from "@/data/resume";
 import { motion } from "framer-motion";
@@ -100,7 +100,7 @@ export default function Home() {
               </p>
 
               <div className="ml-4">
-                <Link href="/donate">
+                <Link href="https://saweria.co/zfosix">
                   <FaDonate
                     className={`text-xl ${
                       isDarkMode
@@ -156,16 +156,16 @@ export default function Home() {
               </div>
               <Link href="https://www.dicoding.com/academies/my" passHref>
                 <motion.button
-                  className={`px-4 py-2 rounded-full text-sm flex items-center gap-2 mt-4 md:mt-0 ${
+                  className={`px-4 py-2 rounded-full border border-neutral-400 dark:border-neutral-800 text-sm flex items-center gap-2 mt-4 md:mt-0 ${
                     isDarkMode
-                      ? "bg-neutral-900 text-stone-200 hover:bg-neutral-700"
+                      ? "bg-neutral-950 text-stone-200 hover:bg-neutral-800"
                       : "bg-neutral-200 text-stone-800 hover:bg-neutral-300"
                   } transition-colors shadow-lg hover:shadow-xl active:scale-95`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
                   <FaBullhorn className="w-5 h-5" />{" "}
-                  <span>Recent Projects from dicoding.com</span>
+                  <span>Projects from dicoding.com</span>
                 </motion.button>
               </Link>
             </div>

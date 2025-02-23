@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   FaCloudMoon,
@@ -8,7 +8,7 @@ import {
   FaCheckCircle,
   FaCircle,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface ProfileProps {
   isDarkMode: boolean;
@@ -21,24 +21,43 @@ export default function Profile({
   toggleDarkMode,
   isSidebarOpen,
 }: ProfileProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [showText, setShowText] = useState(false);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isSidebarOpen) {
+      timer = setTimeout(() => {
+        setShowText(true);
+      }, 300);
+    } else {
+      setShowText(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isSidebarOpen]);
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
-
+  
   return (
-    <div className="flex flex-col items-center justify-center py-6 relative transition-all">
+    <div
+      className="flex flex-col items-center justify-center py-6 relative transition-all"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {isSidebarOpen && (
         <>
           <div
             className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-t-lg"
-            style={{ 
+            style={{
               backgroundImage: "url('/image/bg.jpg')",
-              margin: "10px", // Memberikan jarak pada background
+              margin: "10px",
             }}
           />
-          <div 
-            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-t-lg" 
-            style={{ margin: "10px" }} // Memberikan jarak pada overlay
+          <div
+            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-t-lg"
+            style={{ margin: "10px" }}
           />
         </>
       )}
@@ -48,11 +67,11 @@ export default function Profile({
         initial={false}
         animate={{
           width: isSidebarOpen ? "100px" : "40px",
-          height: isSidebarOpen ? "100px" : "40px"
+          height: isSidebarOpen ? "100px" : "40px",
         }}
         transition={{
           duration: 0.3,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
       >
         <Image
@@ -65,56 +84,123 @@ export default function Profile({
         />
       </motion.div>
 
-      {isSidebarOpen && (
-        <button className="absolute top-4 left-4 flex items-center space-x-1 px-2 py-1 bg-transparent border border-white text-white rounded-full z-10 hover:bg-white hover:text-black transition-all">
+      <AnimatePresence>
+        {(isHovered || isSidebarOpen) && (
           <motion.div
-            initial={{ opacity: 1 }}
-            animate={{ opacity: [1, 0.7, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-4 left-4 flex items-center space-x-1 z-10"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              backgroundColor: "transparent",
+              border: showText ? "1px solid white" : "none",
+              padding: showText ? "4px 8px" : "0",
+              borderRadius: "9999px",
+            }}
+            exit={{ opacity: 0 }}
+            whileHover={{
+              backgroundColor: showText ? "white" : "transparent",
+              color: showText ? "black" : "white",
+            }}
+            transition={{
+              duration: 0.2,
+              ease: "easeInOut",
+            }}
           >
-            <FaCircle className="text-green-500" size={12} />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FaCircle className="text-green-500" size={12} />
+            </motion.div>
+
+            <AnimatePresence>
+              {showText && (
+                <motion.span
+                  className="text-sm whitespace-nowrap"
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: "auto" }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{
+                    opacity: { duration: 0.2 },
+                    width: { duration: 0.2 },
+                  }}
+                >
+                  Hire Me
+                </motion.span>
+              )}
+            </AnimatePresence>
           </motion.div>
-          <span className="text-sm">Hire Me</span>
-        </button>
-      )}
+        )}
+      </AnimatePresence>
 
       <button
         className={`${
           isSidebarOpen ? "absolute top-4 right-4" : "mt-4"
-        } w-8 h-8 bg-neutral-200 dark:bg-neutral-800 text-gray-800 dark:text-white rounded-xl flex items-center justify-center z-10 transition-all hover:bg-neutral-300 dark:hover:bg-neutral-700`}
+        } w-8 h-8 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white rounded-xl flex items-center justify-center z-10 transition-all hover:bg-neutral-100 dark:hover:bg-neutral-700`}
         onClick={toggleDarkMode}
         aria-label="Toggle dark mode"
       >
         {isDarkMode ? (
-          <FaCloudSun size={16} className="text-yellow-400" />
+          <FaCloudMoon size={16} className="text-neutral-800 dark:text-white" />
         ) : (
-          <FaCloudMoon size={16} className="text-gray-700" />
+          <FaCloudSun size={16} className="text-yellow-500" />
         )}
       </button>
 
-      {isSidebarOpen && (
-        <motion.div
-          className="text-center mt-4 z-10"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="font-normal text-lg text-gray-800 dark:text-white flex items-center justify-center">
-            Fajar Fauzian
+      <AnimatePresence mode="wait">
+        {isSidebarOpen && (
+          <motion.div
+            className="text-center mt-4 z-10"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ 
+              opacity: 0,
+              y: -10,
+              transition: {
+                duration: 0.2,
+                ease: "easeInOut"
+              }
+            }}
+            transition={{ duration: 0.3 }}
+          >
             <motion.div
-              initial={{ opacity: 0.8 }}
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="ml-2"
+              className="font-medium text-lg text-neutral-800 dark:text-white flex items-center justify-center gap-2"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              <FaCheckCircle className="text-blue-500" />
+              <span className="flex items-center gap-2">
+                Fajar Fauzian
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0.8 }}
+                  animate={{ 
+                    scale: [0.8, 1, 0.8],
+                    opacity: [0.8, 1, 0.8]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <FaCheckCircle className="text-blue-500" size={16} />
+                </motion.div>
+              </span>
             </motion.div>
-          </div>
-          <div className="text-gray-600 dark:text-gray-400 text-sm">
-            @zfosix
-          </div>
-        </motion.div>
-      )}
+            <motion.div
+              className="text-neutral-600 dark:text-neutral-300 text-sm mt-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              @zfosix
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

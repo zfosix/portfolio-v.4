@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import LandingContainer from "@/components/about/LandingContainer";
+import LandingContainer from "@/components/home/LandingContainer";
 
 export default function LandingIlustration() {
   const cardVariants = {
@@ -17,13 +17,14 @@ export default function LandingIlustration() {
           initial={{ width: 0 }}
           animate={{ 
             width: "100%",
-            y: [-5, 5, -5] 
+            y: [0, 5] // Hanya dua keyframes
           }}
           transition={{ 
             duration: 0.8,
             ease: "easeInOut",
             repeat: Infinity,
-            repeatType: "mirror"
+            repeatType: "mirror",
+            type: "tween" // Ganti ke tween
           }}
         />
         
@@ -33,12 +34,12 @@ export default function LandingIlustration() {
           animate={{ 
             opacity: 1, 
             scaleX: 1,
-            x: [-5, 5, -5] 
+            x: [0, 5] // Hanya dua keyframes
           }}
           transition={{ 
             delay: 0.5,
             duration: 0.6,
-            type: "spring",
+            type: "tween", // Ganti ke tween
             repeat: Infinity,
             repeatType: "mirror"
           }}
@@ -47,19 +48,19 @@ export default function LandingIlustration() {
         <motion.div
           className="w-16 h-4 rounded-lg bg-blue-500 mx-auto mt-1"
           animate={{
-            scale: [1, 1.05, 1],
+            scale: [1, 1.05], // Hanya dua keyframes
             boxShadow: [
               "0 2px 8px rgba(0,0,0,0.1)",
-              "0 4px 12px rgba(59,130,246,0.4)",
-              "0 2px 8px rgba(0,0,0,0.1)"
+              "0 4px 12px rgba(59,130,246,0.4)"
             ],
-            y: [-3, 3, -3] 
+            y: [0, 3] // Hanya dua keyframes
           }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           transition={{
             duration: 2,
             repeat: Infinity,
+            type: "tween", // Ganti ke tween
             hover: { duration: 0.2 }
           }}
         />
@@ -84,12 +85,13 @@ export default function LandingIlustration() {
               <motion.div
                 className="w-full h-full bg-neutral-100 dark:bg-neutral-800 rounded-[inherit]"
                 animate={{
-                  opacity: [1, 0.8, 1],
-                  y: [-2, 2, -2] 
+                  opacity: [1, 0.8], // Hanya dua keyframes
+                  y: [0, 2] // Hanya dua keyframes
                 }}
                 transition={{
                   duration: 2 + item * 0.3,
-                  repeat: Infinity
+                  repeat: Infinity,
+                  type: "tween" // Ganti ke tween
                 }}
               />
             </motion.div>
@@ -100,30 +102,32 @@ export default function LandingIlustration() {
       <motion.div
         className="absolute top-1/4 left-1/4 w-8 h-8 rounded-full bg-purple-400/20 blur-md"
         animate={{
-          x: [-10, 10, -10],
-          y: [0, 15, 0],
-          rotate: [0, 180],
-          scale: [1, 1.2, 1]
+          x: [0, 10], // Hanya dua keyframes
+          y: [0, 15], // Hanya dua keyframes
+          rotate: [0, 180], // Hanya dua keyframes
+          scale: [1, 1.2] // Hanya dua keyframes
         }}
         transition={{
           duration: 8,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
+          type: "tween" // Ganti ke tween
         }}
       />
 
       <motion.div
         className="absolute top-1/3 right-1/4 w-6 h-6 rounded-full bg-blue-400/20 blur-sm"
         animate={{
-          y: [-10, 10, -10],
-          x: [0, 15, 0],
-          rotate: [180, 360],
-          scale: [1, 1.1, 1] 
+          y: [0, 10], // Hanya dua keyframes
+          x: [0, 15], // Hanya dua keyframes
+          rotate: [180, 360], // Hanya dua keyframes
+          scale: [1, 1.1] // Hanya dua keyframes
         }}
         transition={{
           duration: 6,
           repeat: Infinity,
-          delay: 0.5
+          delay: 0.5,
+          type: "tween" // Ganti ke tween
         }}
       />
     </LandingContainer>

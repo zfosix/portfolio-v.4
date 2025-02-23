@@ -14,10 +14,18 @@ import "@/styles/globals.css";
 import { frontendSkills, backendSkills } from "@/data/resume";
 import Marquee from "react-fast-marquee";
 import { useMediaQuery } from "react-responsive";
-
+import { TikTokAuth } from "@/components/about/TikTokAuth";
+import { TikTokProfile } from "@/components/about/TikTokProfile";
+import { useState, useEffect } from "react";
 export default function AboutPage() {
   const { isDarkMode } = useDarkMode();
   const isMobile = useMediaQuery({ maxWidth: 768 });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("tiktok_token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   return (
     <div
@@ -428,7 +436,7 @@ export default function AboutPage() {
                   style={{ paddingBottom: "56.25%", height: 0 }}
                 >
                   <iframe
-                    src="https://www.youtube.com/embed/XHb0alogjv0?si=frjsyDSxz0iNcqg2"
+                    src="https://www.youtube.com/embed/prViRqgo4BM?si=Smct-RKNDrVLY0G4"
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
@@ -470,6 +478,9 @@ export default function AboutPage() {
               >
                 Find me on Tiktok
               </p>
+            </div>
+            <div className="container mx-auto p-4">
+              {!isAuthenticated ? <TikTokAuth /> : <TikTokProfile />}
             </div>
             <div className="mt-2 flex justify-between items-center">
               <a

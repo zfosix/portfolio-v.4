@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-import MobileContainer from "@/components/about/MobileContainer";
+import MobileContainer from "@/components/home/MobileContainer";
 
 export default function MobileIlustration() {
   return (

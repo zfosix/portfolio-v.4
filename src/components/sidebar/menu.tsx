@@ -5,25 +5,21 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import Profile from "@/components/sidebar/profile";
 import Footer from "@/components/sidebar/footer";
 import Link from "next/link";
-import {
-  Home,
-  Feather,
-  PenTool,
-  ClipboardList,
-  MessageCircle,
-  Mail,
-  LayoutDashboard,
-  MapPin,
-  Menu,
-  X,
-  LucideIcon,
-} from "lucide-react";
-import { usePathname } from "next/navigation";
+// Import new icons from react-icons
+import { HiOutlineHome } from "react-icons/hi";
+import { PiLeaf } from "react-icons/pi";
+import { LuPencil } from "react-icons/lu";
+import { HiOutlineInbox } from "react-icons/hi2";
+import { LuLayoutGrid } from "react-icons/lu";
+import { BsChatSquare } from "react-icons/bs";
+import { HiOutlinePaperAirplane } from "react-icons/hi2";
+import { LuLayoutGrid as Apps } from "react-icons/lu";
+import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { usePathname } from 'next/navigation';
 interface MenuItem {
   name: string;
-  icon: LucideIcon;
+  icon: React.ComponentType<{ className?: string }>;
   href: string;
 }
 
@@ -41,18 +37,19 @@ export default function Sidebar() {
 
   const menuItems = useMemo(
     () => [
-      { name: "Home", icon: Home, href: "/" },
-      { name: "About", icon: Feather, href: "/about" },
-      { name: "Blog", icon: PenTool, href: "/blog" },
-      { name: "Projects", icon: ClipboardList, href: "/projects" },
-      { name: "Roadmap", icon: MapPin, href: "/roadmap" },
-      { name: "Chat Room", icon: MessageCircle, href: "/chatroom" },
-      { name: "Contact", icon: Mail, href: "/contact" },
-      { name: "Dashboard", icon: LayoutDashboard, href: "/dashboard" },
+      { name: "Home", icon: HiOutlineHome, href: "/" },
+      { name: "About", icon: PiLeaf, href: "/about" },
+      { name: "Blog", icon: LuPencil, href: "/blog" },
+      { name: "Projects", icon: HiOutlineInbox, href: "/projects" },
+      { name: "Roadmap", icon: LuLayoutGrid, href: "/roadmap" },
+      { name: "Chat Room", icon: BsChatSquare, href: "/chatroom" },
+      { name: "Contact", icon: HiOutlinePaperAirplane, href: "/contact" },
+      { name: "Dashboard", icon: Apps, href: "/dashboard" },
     ],
     []
   );
 
+  // Rest of the component remains the same
   const prefetchNextPages = useCallback(() => {
     menuItems.forEach((item) => {
       if (item.href !== pathname) {
@@ -124,6 +121,7 @@ export default function Sidebar() {
 
   return (
     <>
+      {/* Rest of the component JSX remains the same */}
       {/* Hamburger Button for Mobile */}
       <motion.button
         className="fixed top-4 right-4 z-50 md:hidden p-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-stone-800 dark:text-stone-200"
@@ -136,7 +134,7 @@ export default function Sidebar() {
         }}
         transition={{ duration: 0.2 }}
       >
-        {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        {isMobileOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
       </motion.button>
 
       {/* Desktop Sidebar */}
@@ -164,7 +162,6 @@ export default function Sidebar() {
             toggleDarkMode={toggleDarkMode}
             isSidebarOpen={isSidebarOpen}
           />
-          {/* Border Bawah Tidak Full */}
           <div
             className="absolute bottom-0 left-4 right-4 h-px bg-neutral-700"
             style={{ width: "calc(100% - 32px)" }}

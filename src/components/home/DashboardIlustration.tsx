@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import DashboardContainer from "@/components/about/LandingContainer";
+import DashboardContainer from "@/components/home/LandingContainer";
 
 export default function DashboardIllustration() {
   const sidebarItemVariants = {
@@ -71,12 +71,13 @@ export default function DashboardIllustration() {
                 key={i}
                 className="h-2 bg-neutral-500 rounded-full"
                 initial={{ width: 0 }}
-                animate={{ width: ["40%", "60%", "40%"] }}
+                animate={{ width: "60%" }} // Hanya dua keyframes (0% ke 60%)
                 transition={{
                   delay: 0.8 + i * 0.2,
                   duration: 1.5,
                   repeat: Infinity,
-                  repeatType: "mirror"
+                  repeatType: "mirror",
+                  type: "tween" // Ganti ke tween
                 }}
               />
             ))}
@@ -86,20 +87,21 @@ export default function DashboardIllustration() {
         <motion.div
           className="absolute bottom-2 right-2 w-3 h-3 bg-blue-500 rounded-full"
           animate={{
-            y: [-3, 3, -3],
-            scale: [0.9, 1.1, 0.9]
+            y: [0, 3], // Hanya dua keyframes
+            scale: [0.9, 1.1] // Hanya dua keyframes
           }}
           transition={{
             duration: 1.5,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
+            type: "tween" // Ganti ke tween
           }}
         />
         <motion.div
           className="absolute bottom-4 left-4 w-2 h-2 bg-purple-500 rounded-full"
           animate={{
-            rotate: [0, 360],
-            scale: [0.8, 1.2, 0.8]
+            rotate: [0, 360], // Hanya dua keyframes
+            scale: [0.8, 1.2] // Hanya dua keyframes
           }}
           transition={{
             duration: 3,

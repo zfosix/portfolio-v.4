@@ -25,11 +25,6 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Class untuk animasi RGB Outline */
-.animate-glow {
-  animation: rgbOutlineMulti 1.5s infinite alternate;
-}
-
 /* Animasi Fade In */
 @keyframes fadeIn {
   from {

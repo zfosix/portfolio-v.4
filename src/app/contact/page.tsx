@@ -5,7 +5,7 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import { IoMdContacts } from "react-icons/io";
 import { FaGithub, FaLinkedin, FaSpotify, FaDiscord } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
