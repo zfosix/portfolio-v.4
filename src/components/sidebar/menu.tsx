@@ -5,7 +5,6 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import Profile from "@/components/sidebar/profile";
 import Footer from "@/components/sidebar/footer";
 import Link from "next/link";
-// Import new icons from react-icons
 import { HiOutlineHome } from "react-icons/hi";
 import { PiLeaf } from "react-icons/pi";
 import { LuPencil } from "react-icons/lu";
@@ -17,6 +16,7 @@ import { LuLayoutGrid as Apps } from "react-icons/lu";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from 'next/navigation';
+
 interface MenuItem {
   name: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -49,7 +49,6 @@ export default function Sidebar() {
     []
   );
 
-  // Rest of the component remains the same
   const prefetchNextPages = useCallback(() => {
     menuItems.forEach((item) => {
       if (item.href !== pathname) {
@@ -121,7 +120,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Rest of the component JSX remains the same */}
       {/* Hamburger Button for Mobile */}
       <motion.button
         className="fixed top-4 right-4 z-50 md:hidden p-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-stone-800 dark:text-stone-200"
@@ -224,33 +222,67 @@ export default function Sidebar() {
             {/* Mobile Sidebar */}
             <motion.div
               key="mobile-sidebar"
-              className="fixed left-0 top-0 h-screen w-64 p-3 flex flex-col bg-neutral-100/50 dark:bg-[#0B0A0A]/50 text-stone-800 dark:text-stone-200 shadow-lg z-50 backdrop-blur-md"
+              className={`fixed left-0 top-0 h-screen w-64 p-3 flex flex-col ${
+                isDarkMode
+                  ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
+                  : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
+              } border-r backdrop-blur-md rounded-tr-xl rounded-br-xl z-50`}
               initial={{ x: -300 }}
               animate={{ x: 0 }}
               exit={{ x: -300 }}
               transition={{ duration: 0.3 }}
             >
-              <Profile
-                isDarkMode={isDarkMode}
-                toggleDarkMode={toggleDarkMode}
-                isSidebarOpen={true}
-              />
+              {/* Profile Section */}
+              <div className="flex-shrink-0 relative mb-9">
+                <Profile
+                  isDarkMode={isDarkMode}
+                  toggleDarkMode={toggleDarkMode}
+                  isSidebarOpen={true}
+                />
+                <div
+                  className="absolute bottom-0 left-4 right-4 h-px bg-neutral-700"
+                  style={{ width: "calc(100% - 32px)" }}
+                />
+              </div>
 
-              <nav className="flex-grow py-4">
-                {menuItems.map((item) => (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="mb-4"
-                  >
-                    <MenuItem item={item} isMobile={true} isOpen={true} />
-                  </motion.div>
-                ))}
-              </nav>
+              {/* Menu Section */}
+              <motion.nav
+                className="flex-grow py-4 px-3"
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  delay: 0.1,
+                }}
+              >
+                <motion.div
+                  className="space-y-3"
+                  initial={false}
+                  animate={{
+                    opacity: 1,
+                    transition: {
+                      staggerChildren: 0.05,
+                      delayChildren: 0.1,
+                    },
+                  }}
+                >
+                  {menuItems.map((item) => (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <MenuItem item={item} isMobile={true} isOpen={true} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </motion.nav>
 
-              <Footer isSidebarOpen={true} />
+              {/* Footer Section */}
+              <div className="flex-shrink-1">
+                <Footer isSidebarOpen={true} />
+              </div>
             </motion.div>
           </>
         )}
