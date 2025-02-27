@@ -9,8 +9,6 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/index";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleBackground from "@/components/ParticleBackground";
-// Remove Head import as it's not used in app router
-// import Head from 'next/head';
 
 const poppins = Poppins({
   weight: ["400", "600"],

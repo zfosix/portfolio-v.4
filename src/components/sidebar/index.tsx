@@ -2,8 +2,8 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
-import DesktopMenu from "./DesktopMenu";
-import MobileMenu from "./MobileMenu";
+import DesktopMenu from "@/components/sidebar/DesktopMenu";
+import MobileMenu from "@/components/sidebar/MobileMenu";
 import { usePathname } from "next/navigation";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion } from "framer-motion";

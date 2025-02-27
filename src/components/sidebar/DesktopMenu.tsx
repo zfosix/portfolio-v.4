@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
-import Profile from "../sidebar/Profile";
-import FooterItem from "../sidebar/FooterItem";
-import MenuItem from "../sidebar/MenuItem";
+import Profile from "@/components/sidebar/Profile";
+import FooterItem from "@/components/sidebar/FooterItem";
+import MenuItem from "@/components/sidebar/MenuItem";
 import { motion } from "framer-motion";
 import { HiOutlineHome } from "react-icons/hi";
 import { PiLeaf } from "react-icons/pi";
