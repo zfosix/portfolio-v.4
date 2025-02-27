@@ -13,6 +13,8 @@
     "@heroui/react": "^2.6.14",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tsparticles/plugin-easing-quad": "^3.0.0",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.8.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "firebase": "^11.3.1",
