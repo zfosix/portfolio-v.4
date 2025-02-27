@@ -6,7 +6,7 @@ import "../styles/globals.css";
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import Sidebar from "@/components/sidebar/menu";
+import Sidebar from "@/components/sidebar/index";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleBackground from "@/components/ParticleBackground";
 import Head from 'next/head'; 

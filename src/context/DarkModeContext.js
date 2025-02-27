@@ -3,16 +3,15 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const DarkModeContext = createContext({
-  isDarkMode: false, // Nilai default untuk mencegah undefined
-  toggleDarkMode: () => {}, // Placeholder function
+  isDarkMode: false, 
+  toggleDarkMode: () => {},
 });
 
 export function DarkModeProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(false); // Default ke false agar tidak null
+  const [isDarkMode, setIsDarkMode] = useState(false); 
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      // Cek apakah ada nilai tersimpan di localStorage
       const savedMode = localStorage.getItem("darkMode");
       if (savedMode !== null) {
         setIsDarkMode(JSON.parse(savedMode));

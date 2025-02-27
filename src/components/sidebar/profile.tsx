@@ -6,9 +6,9 @@ import {
   FaCloudMoon,
   FaCloudSun,
   FaCheckCircle,
-  FaCircle,
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import ProfileHeader from "./ProfileHeader";
 
 interface ProfileProps {
   isDarkMode: boolean;
@@ -46,21 +46,11 @@ export default function Profile({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {isSidebarOpen && (
-        <>
-          <div
-            className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-t-lg"
-            style={{
-              backgroundImage: "url('/image/bg.jpg')",
-              margin: "10px",
-            }}
-          />
-          <div
-            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-t-lg"
-            style={{ margin: "10px" }}
-          />
-        </>
-      )}
+      <ProfileHeader 
+        isSidebarOpen={isSidebarOpen} 
+        isHovered={isHovered} 
+        showText={showText} 
+      />
 
       <motion.div
         className="relative mt-12 rounded-full overflow-hidden border-2 border-neutral-700 transition-all z-10"
@@ -83,56 +73,6 @@ export default function Profile({
           className="object-cover w-full h-full"
         />
       </motion.div>
-
-      <AnimatePresence>
-        {(isHovered || isSidebarOpen) && (
-          <motion.div
-            className="absolute top-4 left-4 flex items-center space-x-1 z-10"
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              backgroundColor: "transparent",
-              border: showText ? "1px solid white" : "none",
-              padding: showText ? "4px 8px" : "0",
-              borderRadius: "9999px",
-            }}
-            exit={{ opacity: 0 }}
-            whileHover={{
-              backgroundColor: showText ? "white" : "transparent",
-              color: showText ? "black" : "white",
-            }}
-            transition={{
-              duration: 0.2,
-              ease: "easeInOut",
-            }}
-          >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              <FaCircle className="text-green-500" size={12} />
-            </motion.div>
-
-            <AnimatePresence>
-              {showText && (
-                <motion.span
-                  className="text-sm whitespace-nowrap"
-                  initial={{ opacity: 0, width: 0 }}
-                  animate={{ opacity: 1, width: "auto" }}
-                  exit={{ opacity: 0, width: 0 }}
-                  transition={{
-                    opacity: { duration: 0.2 },
-                    width: { duration: 0.2 },
-                  }}
-                >
-                  Hire Me
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       <button
         className={`${
