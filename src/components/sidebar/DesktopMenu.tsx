@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import Profile from "@/components/sidebar/Profile";
+import Profile from '@/components/sidebar/Profile';
 import FooterItem from "@/components/sidebar/FooterItem";
 import MenuItem from "@/components/sidebar/MenuItem";
 import { motion } from "framer-motion";
