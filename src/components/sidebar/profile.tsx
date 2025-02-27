@@ -8,7 +8,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import ProfileHeader from "@/components/sidebar/ProfileHeader";
+import ProfileHeader from "./ProfileHeader";
 
 interface ProfileProps {
   isDarkMode: boolean;

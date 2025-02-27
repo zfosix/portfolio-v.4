@@ -9,6 +9,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/index";
 import { motion, AnimatePresence } from "framer-motion";
 import ParticleBackground from "@/components/ParticleBackground";
+// Remove Head import as it's not used in app router
+// import Head from 'next/head';
 
 const poppins = Poppins({
   weight: ["400", "600"],
@@ -28,7 +30,7 @@ const PAGE_TITLES = {
 
 const LOADING_DURATION = 3000;
 const DEFAULT_TITLE = "Zian's Code";
-const DEFAULT_FAVICON = "/icon_title.png";
+const DEFAULT_FAVICON = "/icon_title.png"; 
 
 export default function RootLayout({
   children,
@@ -50,12 +52,17 @@ export default function RootLayout({
     }
   }, []);
 
+  // Using useEffect for document.title is fine for client components
   useEffect(() => {
-    document.title = getPageTitle(pathname);
+    if (typeof document !== 'undefined') {
+      document.title = getPageTitle(pathname);
+    }
   }, [pathname, getPageTitle]);
 
   useEffect(() => {
-    updateFavicon(DEFAULT_FAVICON);
+    if (typeof document !== 'undefined') {
+      updateFavicon(DEFAULT_FAVICON);
+    }
   }, [pathname, updateFavicon]);
 
   useEffect(() => {
@@ -74,6 +81,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="icon" href={DEFAULT_FAVICON} />
+        <title>{getPageTitle(pathname)}</title>
       </head>
       <body className={`${poppins.variable} antialiased`}>
         <DarkModeProvider>
