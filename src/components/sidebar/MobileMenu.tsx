@@ -1,6 +1,6 @@
 "use client";
 
-import Profile from '@/components/sidebar/Profile';
+import Profile from "@/components/sidebar/Profile";
 import FooterItem from "@/components/sidebar/FooterItem";
 import MenuItem from "@/components/sidebar/MenuItem";
 import { motion, AnimatePresence } from "framer-motion";
