@@ -19,14 +19,14 @@ export default function ProfileHeader({
       {isSidebarOpen && (
         <>
           <div
-            className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-t-lg"
+            className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-lg"
             style={{
               backgroundImage: "url('/image/bg.jpg')",
               margin: "10px",
             }}
           />
           <div
-            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-t-lg"
+            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-lg"
             style={{ margin: "10px" }}
           />
         </>
@@ -43,11 +43,12 @@ export default function ProfileHeader({
               border: showText ? "1px solid white" : "none",
               padding: showText ? "4px 8px" : "0",
               borderRadius: "9999px",
+              color: "white", // Warna default putih
             }}
             exit={{ opacity: 0 }}
             whileHover={{
               backgroundColor: showText ? "white" : "transparent",
-              color: showText ? "black" : "white",
+              color: showText ? "black" : "white", 
             }}
             transition={{
               duration: 0.2,

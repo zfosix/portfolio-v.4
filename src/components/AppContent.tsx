@@ -4,7 +4,7 @@ import { useDarkMode } from "@/context/DarkModeContext";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import Sidebar from "@/components/sidebar/index";
 import { motion, AnimatePresence } from "framer-motion";
-import ParticleBackground from "@/components/ParticleBackground";
+// import ParticleBackground from "@/components/ParticleBackground";
 
 interface AppContentProps {
   isLoading: boolean;
@@ -32,7 +32,7 @@ export default function AppContent({ isLoading, isInitialLoad, children }: AppCo
         )}
       </AnimatePresence>
 
-      <ParticleBackground />
+      {/* <ParticleBackground /> */}
 
       <div className="flex" style={{ backgroundColor }}>
         <div className="relative z-[1001]">

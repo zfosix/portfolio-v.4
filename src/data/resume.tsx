@@ -58,18 +58,6 @@ export const projects = [
     date: "2023-09-15",
     isNew: false,
   },
-  {
-    src: "/studycourse/bannercom.png",
-    title: "Coming Soon - NextJS",
-    date: "2023-09-15",
-    isNew: true,
-  },
-  {
-    src: "/studycourse/bannercom.png",
-    title: "Coming Soon - NextJS",
-    date: "2023-09-15",
-    isNew: false,
-  },
   // {
   //   src: "/studycourse/banner3d.png",
   //   title: "Draw SVG - GSAP",

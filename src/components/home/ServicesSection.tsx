@@ -1,6 +1,6 @@
 import { FaProjectDiagram } from "react-icons/fa";
 import { useDarkMode } from "@/context/DarkModeContext";
-import WebIllustration from "@/components/home/WebIlustration";
+import WebIlustration from "@/components/home/WebIlustration";
 import MobileIllustration from "@/components/home/MobileIlustration";
 import LandingIllustration from "@/components/home/LandingIlustration";
 import DashboardIllustration from "@/components/home/DashboardIlustration";
@@ -12,7 +12,7 @@ const ServicesSection = () => {
     {
       title: "Website Development",
       description: "Build responsive and scalable websites tailored to your business needs, using the latest web technologies.",
-      Illustration: WebIllustration
+      Illustration: WebIlustration
     },
     {
       title: "Mobile Development",
@@ -83,7 +83,7 @@ interface ServiceCardProps {
 const ServiceCard = ({ title, description, isDarkMode, Illustration }: ServiceCardProps) => (
   <div
     className={`p-6 rounded-lg border border-neutral-300 dark:border-neutral-800 ${
-      isDarkMode ? "bg-neutral-950/70" : "bg-neutral"
+      isDarkMode ? "bg-neutral-950/70" : "bg-neutral-50"
     } transition-all duration-300 cursor-pointer relative overflow-hidden group`}
   >
     <div className="flex justify-center relative">

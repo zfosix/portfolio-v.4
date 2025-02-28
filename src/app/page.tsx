@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
 import IntroSection from "@/components/home/IntroSection";
 import ProjectsSection from "@/components/home/ProjectsSection";
@@ -7,11 +6,6 @@ import ServicesSection from "@/components/home/ServicesSection";
 
 export default function Home() {
   const { isDarkMode } = useDarkMode();
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
     <div
@@ -25,7 +19,7 @@ export default function Home() {
           <IntroSection />
 
           {/* Section 2: Recent Projects (Carousel) */}
-          {isClient && <ProjectsSection />}
+          {<ProjectsSection />}
 
           {/* Section 3: Services */}
           <ServicesSection />
