@@ -1,7 +1,7 @@
 // MobileMenu.tsx
 "use client";
 
-import Profile from "@/components/sidebar/Profile"; 
+import ProfileItem from "@/components/sidebar/ProfileItem"; 
 import FooterItem from "@/components/sidebar/FooterItem";
 import MenuItem from "@/components/sidebar/MenuItem";
 import { motion, AnimatePresence } from "framer-motion";
@@ -81,7 +81,7 @@ export default function MobileMenu({
           >
             {/* Profile Section */}
             <div className="flex-shrink-0 relative mb-9">
-              <Profile
+              <ProfileItem
                 isDarkMode={isDarkMode}
                 toggleDarkMode={toggleDarkMode}
                 isSidebarOpen={true}

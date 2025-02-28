@@ -16,7 +16,7 @@ interface ProfileProps {
   isSidebarOpen: boolean;
 }
 
-export default function Profile({
+export default function ProfileItem({
   isDarkMode,
   toggleDarkMode,
   isSidebarOpen,
