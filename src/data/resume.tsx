@@ -35,41 +35,71 @@ import {
 // Data projects
 export const projects = [
   {
-    src: "/studycourse/gsap.png",
-    title: "Draw SVG - GSAP",
-    date: "2023-10-01",
+    src: "/studycourse/bannercom.png",
+    title: "Coming Soon - NextJS",
+    date: "2023-09-15",
     isNew: true,
   },
   {
-    src: "/studycourse/android.png",
-    title: "State - Next Js App Libary",
+    src: "/studycourse/bannercom.png",
+    title: "Coming Soon - NextJS",
     date: "2023-09-15",
-    isNew: false,
-  },
-  {
-    src: "/studycourse/gsap.png",
-    title: "Draw SVG - GSAP",
-    date: "2023-10-01",
     isNew: true,
   },
   {
-    src: "/studycourse/kotlin.png",
-    title: "Props and State Next Js",
-    date: "2023-08-20",
-    isNew: false,
-  },
-  {
-    src: "/studycourse/android.png",
-    title: "State - Next Js App Libary",
+    src: "/studycourse/bannercom.png",
+    title: "Coming Soon - NextJS",
     date: "2023-09-15",
-    isNew: false,
+    isNew: true,
   },
   {
-    src: "/studycourse/kotlin.png",
-    title: "Props and State Next Js",
-    date: "2023-08-20",
-    isNew: false,
+    src: "/studycourse/bannercom.png",
+    title: "Coming Soon - NextJS",
+    date: "2023-09-15",
+    isNew: true,
   },
+  {
+    src: "/studycourse/bannercom.png",
+    title: "Coming Soon - NextJS",
+    date: "2023-09-15",
+    isNew: true,
+  },
+  {
+    src: "/studycourse/bannercom.png",
+    title: "Coming Soon - NextJS",
+    date: "2023-09-15",
+    isNew: true,
+  },
+  // {
+  //   src: "/studycourse/banner3d.png",
+  //   title: "Draw SVG - GSAP",
+  //   date: "2023-10-01",
+  //   isNew: true,
+  // },
+  // {
+  //   src: "/studycourse/bannercyber.png",
+  //   title: "Draw SVG - GSAP",
+  //   date: "2023-10-01",
+  //   isNew: true,
+  // },
+  // {
+  //   src: "/studycourse/bannerkey.png",
+  //   title: "Props and State Next Js",
+  //   date: "2023-08-20",
+  //   isNew: false,
+  // },
+  // {
+  //   src: "/studycourse/bannershop.png",
+  //   title: "State - Next Js App Libary",
+  //   date: "2023-09-15",
+  //   isNew: false,
+  // },
+  // {
+  //   src: "/studycourse/bannerweb.png",
+  //   title: "Props and State Next Js",
+  //   date: "2023-08-20",
+  //   isNew: false,
+  // },
 ];
 
 export const frontendSkills = [

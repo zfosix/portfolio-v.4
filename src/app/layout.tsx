@@ -1,14 +1,12 @@
 "use client";
 
 import { Poppins } from "next/font/google";
-import { DarkModeProvider, useDarkMode } from "@/context/DarkModeContext";
+import { DarkModeProvider } from "@/context/DarkModeContext";
 import "../styles/globals.css";
-import { useState, useEffect, useCallback } from "react";
+import AppContent from "@/components/AppContent";
+import Favicon from "@/components/Favicon";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import LoadingSpinner from "@/components/LoadingSpinner";
-import Sidebar from "@/components/sidebar/index";
-import { motion, AnimatePresence } from "framer-motion";
-import ParticleBackground from "@/components/ParticleBackground";
 
 const poppins = Poppins({
   weight: ["400", "600"],
@@ -28,7 +26,6 @@ const PAGE_TITLES = {
 
 const LOADING_DURATION = 3000;
 const DEFAULT_TITLE = "Zian's Code";
-const DEFAULT_FAVICON = "/icon_title.png"; 
 
 export default function RootLayout({
   children,
@@ -43,25 +40,11 @@ export default function RootLayout({
     return PAGE_TITLES[path as keyof typeof PAGE_TITLES] || DEFAULT_TITLE;
   }, []);
 
-  const updateFavicon = useCallback((href: string) => {
-    const favicon = document.querySelector("link[rel*='icon']") as HTMLLinkElement;
-    if (favicon) {
-      favicon.href = href;
-    }
-  }, []);
-
-  // Using useEffect for document.title is fine for client components
   useEffect(() => {
     if (typeof document !== 'undefined') {
       document.title = getPageTitle(pathname);
     }
   }, [pathname, getPageTitle]);
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      updateFavicon(DEFAULT_FAVICON);
-    }
-  }, [pathname, updateFavicon]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -78,8 +61,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href={DEFAULT_FAVICON} />
         <title>{getPageTitle(pathname)}</title>
+        <Favicon />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className={`${poppins.variable} antialiased`}>
         <DarkModeProvider>
@@ -89,50 +73,5 @@ export default function RootLayout({
         </DarkModeProvider>
       </body>
     </html>
-  );
-}
-
-interface AppContentProps {
-  isLoading: boolean;
-  isInitialLoad: boolean;
-  children: React.ReactNode;
-}
-
-function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
-  const { isDarkMode } = useDarkMode();
-  const backgroundColor = isDarkMode ? "#0B0A0A" : "#FFFFFF";
-
-  return (
-    <>
-      <AnimatePresence>
-        {!isInitialLoad && isLoading && (
-          <motion.div
-            className="fixed inset-0 flex items-center justify-center z-[1000]"
-            style={{ backgroundColor }}
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <LoadingSpinner />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <ParticleBackground />
-
-      <div className="flex" style={{ backgroundColor }}>
-        <div className="relative z-[1001]">
-          <Sidebar />
-        </div>
-        <motion.div
-          className="flex-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-        >
-          {children}
-        </motion.div>
-      </div>
-    </>
   );
 }

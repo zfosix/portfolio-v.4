@@ -128,7 +128,7 @@ const ProjectCard = ({ project, windowWidth, visibleCards, isDarkMode }: Project
     className="w-full flex-shrink-0 px-2"
     style={{
       width: `${
-        windowWidth < 350
+        windowWidth < 768
           ? 300 / visibleCards
           : 100 / visibleCards
       }%`,
