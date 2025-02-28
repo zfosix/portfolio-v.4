@@ -44,7 +44,7 @@ export const projects = [
     src: "/studycourse/bannercom.png",
     title: "Coming Soon - NextJS",
     date: "2023-09-15",
-    isNew: true,
+    isNew: false,
   },
   {
     src: "/studycourse/bannercom.png",
@@ -56,7 +56,7 @@ export const projects = [
     src: "/studycourse/bannercom.png",
     title: "Coming Soon - NextJS",
     date: "2023-09-15",
-    isNew: true,
+    isNew: false,
   },
   {
     src: "/studycourse/bannercom.png",
@@ -68,7 +68,7 @@ export const projects = [
     src: "/studycourse/bannercom.png",
     title: "Coming Soon - NextJS",
     date: "2023-09-15",
-    isNew: true,
+    isNew: false,
   },
   // {
   //   src: "/studycourse/banner3d.png",

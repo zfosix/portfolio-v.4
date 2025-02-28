@@ -23,7 +23,7 @@ const IntroSection = () => {
             options={{
               strings: [
                 "Fajar Fauzian",
-                "Front-End Development",
+                "Frontend Developer",
                 "Web Development",
                 "UI/UX Design",
               ],

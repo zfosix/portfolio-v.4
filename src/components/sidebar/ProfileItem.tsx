@@ -65,7 +65,7 @@ export default function ProfileItem({
         }}
       >
         <Image
-          src="/image/profile2.jpg"
+          src="/image/programmer.jpeg"
           alt="zfosix"
           width={100}
           height={100}
