@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
 import DesktopMenu from "@/components/sidebar/DesktopMenu";
 import MobileMenu from "@/components/sidebar/MobileMenu";
@@ -19,6 +19,11 @@ export default function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const menuItems = useMemo(
     () => [
@@ -35,38 +40,45 @@ export default function Sidebar() {
   );
 
   const prefetchNextPages = useCallback(() => {
-    menuItems.forEach((item) => {
-      if (item.href !== pathname) {
-        const link = document.createElement("link");
-        link.rel = "prefetch";
-        link.href = item.href;
-        document.head.appendChild(link);
-      }
-    });
+    if (typeof document !== "undefined") {
+      menuItems.forEach((item) => {
+        if (item.href !== pathname) {
+          const link = document.createElement("link");
+          link.rel = "prefetch";
+          link.href = item.href;
+          document.head.appendChild(link);
+        }
+      });
+    }
   }, [pathname, menuItems]);
+
+  // Call prefetchNextPages on mount (optional, remove if not needed)
+  useEffect(() => {
+    if (isClient) {
+      prefetchNextPages();
+    }
+  }, [isClient, prefetchNextPages]);
 
   return (
     <div className="sticky top-0 z-10 flex flex-col transition-all duration-300 lg:py-8">
-      {/* Hamburger Button for Mobile */}
-      <motion.button
-        className="fixed top-4 right-4 z-50 md:hidden p-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-stone-800 dark:text-stone-200"
-        onClick={() => setIsMobileOpen(!isMobileOpen)}
-        initial={false}
-        animate={isMobileOpen ? "open" : "closed"}
-        variants={{
-          open: { rotate: 90 },
-          closed: { rotate: 0 },
-        }}
-        transition={{ duration: 0.2 }}
-      >
-        {isMobileOpen ? (
-          <FiX className="h-6 w-6" />
-        ) : (
-          <FiMenu className="h-6 w-6" />
-        )}
-      </motion.button>
+      {/* Hamburger Button for Mobile - Always rendered, visibility controlled by CSS */}
+      {isClient && (
+        <motion.button
+          className="fixed top-4 right-4 z-50 md:hidden p-2 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-stone-800 dark:text-stone-200"
+          onClick={() => setIsMobileOpen(!isMobileOpen)}
+          initial={false}
+          animate={isMobileOpen ? "open" : "closed"}
+          variants={{
+            open: { rotate: 90 },
+            closed: { rotate: 0 },
+          }}
+          transition={{ duration: 0.2 }}
+        >
+          {isMobileOpen ? <FiX className="h-6 w-6" /> : <FiMenu className="h-6 w-6" />}
+        </motion.button>
+      )}
 
-      {/* Desktop Menu */}
+      {/* Desktop Menu - Always rendered, visibility controlled by CSS */}
       <div className="hidden md:block">
         <DesktopMenu
           isDarkMode={isDarkMode}
@@ -79,7 +91,7 @@ export default function Sidebar() {
         />
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - Always rendered, controlled by state */}
       <MobileMenu
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}

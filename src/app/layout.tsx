@@ -24,6 +24,8 @@ const PAGE_TITLES = {
   "/roadmap": "Roadmap | Zian's Code",
 } as const;
 
+type PagePath = keyof typeof PAGE_TITLES;
+
 const LOADING_DURATION = 3000;
 const DEFAULT_TITLE = "Zian's Code";
 
@@ -36,35 +38,21 @@ export default function RootLayout({
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const pathname = usePathname();
 
-  const getPageTitle = useCallback((path: string) => {
-    return PAGE_TITLES[path as keyof typeof PAGE_TITLES] || DEFAULT_TITLE;
+  const getPageTitle = useCallback((path: string): string => {
+    return PAGE_TITLES[path as PagePath] || DEFAULT_TITLE;
   }, []);
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.title = getPageTitle(pathname);
-    }
-  }, [pathname, getPageTitle]);
-
-  useEffect(() => {
+    document.title = getPageTitle(pathname ?? "/");
     setIsLoading(true);
-    const timeout = setTimeout(() => {
-      setIsLoading(false);
-    }, LOADING_DURATION);
-    return () => clearTimeout(timeout);
-  }, [pathname]);
-
-  useEffect(() => {
+    const timeout = setTimeout(() => setIsLoading(false), LOADING_DURATION);
     setIsInitialLoad(false);
-  }, []);
+    return () => clearTimeout(timeout);
+  }, [pathname, getPageTitle]);
 
   return (
     <html lang="en">
-      <head>
-        <title>{getPageTitle(pathname)}</title>
-        <Favicon />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
+      <head><title>{getPageTitle(pathname ?? "/")}</title><Favicon /><meta name="format-detection" content="telephone=no, date=no, email=no, address=no" /></head>
       <body className={`${poppins.variable} antialiased`}>
         <DarkModeProvider>
           <AppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>

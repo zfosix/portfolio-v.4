@@ -7,52 +7,50 @@ import { motion, useAnimation } from "framer-motion";
 import { FaCode, FaBullhorn } from "react-icons/fa";
 import { useDarkMode } from "@/context/DarkModeContext";
 import { projects } from "@/data/resume";
-import "react-multi-carousel/lib/styles.css";
 
 const ProjectsSection = () => {
   const { isDarkMode } = useDarkMode();
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState<number | null>(null); // Null for SSR
   const controls = useAnimation();
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setWindowWidth(window.innerWidth);
-      const handleResize = () => {
-        setWindowWidth(window.innerWidth);
-      };
-
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    }
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    setWindowWidth(window.innerWidth); // Set initial width on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
-    if (windowWidth > 0 && carouselRef.current) {
+    if (windowWidth !== null && carouselRef.current) {
       const carouselWidth = carouselRef.current.scrollWidth / 2;
+      const isMobile = windowWidth < 640;
+
       controls.start({
-        x: [0, -carouselWidth],
-        transition: {
-          x: {
-            repeat: Infinity,
-            repeatType: "loop",
-            duration: windowWidth < 768 ? 15 : 20,
-            ease: "linear",
-          },
-        },
+        x: isMobile ? 0 : [0, -carouselWidth],
+        transition: isMobile
+          ? { duration: 0 }
+          : {
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: windowWidth < 768 ? 15 : 20,
+                ease: "linear",
+              },
+            },
       });
     }
   }, [windowWidth, controls]);
 
   const truncateTitle = (title: string) => {
-    const limit = windowWidth < 640 ? 20 : 30;
+    const limit = windowWidth && windowWidth < 640 ? 20 : 30;
     return title.length > limit ? title.slice(0, limit) + "..." : title;
   };
 
-  // Define card width percentages with spacing considered
   const getCardWidthClass = () => {
-    // Slightly reduce width to accommodate for margin/padding
-    return "w-[calc(100%-32px)] sm:w-[calc(33.333%-24px)] md:w-[calc(33.333%-32px)]";
+    return windowWidth && windowWidth < 640
+      ? "w-full mx-0"
+      : "w-[calc(100%-16px)] sm:w-[calc(33.333%-12px)] md:w-[calc(33.333%-16px)] mx-1 sm:mx-2";
   };
 
   const renderProject = (
@@ -61,7 +59,7 @@ const ProjectsSection = () => {
     offset: number = 0
   ) => (
     <div
-      key={index + offset}
+      key={`project-${index}-${offset}`}
       className={`transition hover:scale-95 hover:duration-500 flex-shrink-0 relative ${getCardWidthClass()}`}
     >
       <div className="flex flex-col items-start space-y-1">
@@ -71,7 +69,7 @@ const ProjectsSection = () => {
             alt={project.title}
             width={250}
             height={250}
-            className="h-32 w-lvh rounded-md object-cover"
+            className="h-32 w-full rounded-md object-cover"
             priority
           />
         </div>
@@ -101,13 +99,24 @@ const ProjectsSection = () => {
     </div>
   );
 
+  // Static fallback for SSR
+  const content =
+    windowWidth === null || windowWidth < 640
+      ? renderProject(projects[0], 0)
+      : [
+          projects.map((project, index) => renderProject(project, index)),
+          projects.map((project, index) =>
+            renderProject(project, index, projects.length)
+          ),
+        ];
+
   return (
     <section
       className={`flex flex-col text-start border-b ${
         isDarkMode ? "border-stone-700" : "border-stone-300"
       } py-6 w-full`}
     >
-      <div className="flex flex-col sm:flex-row justify-between items-start ">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 px-2 sm:px-0">
         <div>
           <div className="flex items-center gap-2">
             <FaCode
@@ -131,33 +140,25 @@ const ProjectsSection = () => {
             course by dicoding.com
           </p>
         </div>
-        <Link
-          href="https://www.dicoding.com/academies/my"
-          passHref
-          legacyBehavior
-        >
-          <motion.a
+        <Link href="https://www.dicoding.com/academies/my" passHref>
+          <motion.div
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-neutral-400 dark:border-neutral-800 text-xs sm:text-sm flex items-center gap-2 ${
               isDarkMode
                 ? "bg-neutral-950 text-stone-200 hover:bg-neutral-800"
                 : "bg-neutral-200 text-stone-800 hover:bg-neutral-300"
-            } transition-colors shadow-lg hover:shadow-xl active:scale-95 whitespace-nowrap`}
+            } transition-colors shadow-lg hover:shadow-xl active:scale-95 whitespace-nowrap cursor-pointer`}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <FaBullhorn className="w-4 h-4 sm:w-5 sm:h-5" />{" "}
             <span>Projects from dicoding.com</span>
-          </motion.a>
+          </motion.div>
         </Link>
       </div>
 
-      <div className="mt-4 overflow-hidden relative w-full">
-        <motion.div ref={carouselRef} className="flex" animate={controls}>
-          {projects.map((project, index) => renderProject(project, index))}
-
-          {projects.map((project, index) =>
-            renderProject(project, index, projects.length)
-          )}
+      <div className="mt-4 overflow-hidden relative w-full px-2 sm:px-0">
+        <motion.div ref={carouselRef} className="flex gap-2 sm:gap-1" animate={controls}>
+          {content}
         </motion.div>
       </div>
     </section>
