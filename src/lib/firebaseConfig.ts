@@ -1,8 +1,7 @@
-"use client";
-
-import { initializeApp, getApps } from "firebase/app";
-import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, limit } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+// lib/firebaseConfig.ts
+import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { getFirestore, Firestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, limit, DocumentData, QuerySnapshot } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, User, Auth } from "firebase/auth";
 import { toast } from "react-hot-toast";
 
 // Firebase configuration
@@ -17,17 +16,17 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-const db = getFirestore(app);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+const app: FirebaseApp = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+const db: Firestore = getFirestore(app);
+const auth: Auth = getAuth(app);
+const provider: GoogleAuthProvider = new GoogleAuthProvider();
 
 // Auth functions
-const loginWithGoogle = async () => {
+const loginWithGoogle = async (): Promise<User> => {
   try {
     const result = await signInWithPopup(auth, provider);
     toast.success("Successfully logged in!");
-    return result;
+    return result.user;
   } catch (error) {
     console.error("Login error:", error);
     toast.error("Failed to login. Please try again.");
@@ -35,7 +34,7 @@ const loginWithGoogle = async () => {
   }
 };
 
-const logout = async () => {
+const logout = async (): Promise<void> => {
   try {
     await signOut(auth);
     toast.success("Logged out successfully");
@@ -47,23 +46,31 @@ const logout = async () => {
 };
 
 // Firestore functions
-const getMessages = (callback) => {
+interface Message {
+  id: string;
+  username: string;
+  message: string;
+  photo?: string;
+  timestamp: Date;
+}
+
+const getMessages = (callback: (messages: Message[]) => void): (() => void) => {
   const messagesQuery = query(
     collection(db, "messages"), 
     orderBy("timestamp", "desc"),
     limit(100)
   );
   
-  return onSnapshot(messagesQuery, (snapshot) => {
+  return onSnapshot(messagesQuery, (snapshot: QuerySnapshot<DocumentData>) => {
     const messages = snapshot.docs
-      .map((doc) => ({ id: doc.id, ...doc.data() }))
+      .map((doc) => ({ id: doc.id, ...doc.data() } as Message))
       .reverse();
     callback(messages);
   });
 };
 
-const sendMessage = async (userName, message, photo) => {
-  if (!message.trim()) return;
+const sendMessage = async (userName: string, message: string, photo?: string): Promise<boolean> => {
+  if (!message.trim()) return false;
   
   try {
     await addDoc(collection(db, "messages"), {

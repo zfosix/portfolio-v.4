@@ -1,6 +1,7 @@
 // MobileMenu.tsx
 "use client";
 
+import { useEffect } from "react";
 import ProfileItem from "@/components/sidebar/ProfileItem"; 
 import FooterItem from "@/components/sidebar/FooterItem";
 import MenuItem from "@/components/sidebar/MenuItem";
@@ -22,6 +23,7 @@ interface MobileMenuProps {
   setIsMobileOpen: (isOpen: boolean) => void;
   menuItems: MenuItemType[];
   pathname: string;
+  prefetchNextPages?: () => void;
 }
 
 interface IconMap {
@@ -34,7 +36,8 @@ export default function MobileMenu({
   isMobileOpen,
   setIsMobileOpen,
   menuItems,
-  pathname
+  pathname,
+  prefetchNextPages
 }: MobileMenuProps) {
   
   const iconMap: IconMap = {
@@ -53,6 +56,13 @@ export default function MobileMenu({
     icon: iconMap[item.icon]
   }));
 
+  // Add the prefetch effect similar to desktop menu
+  useEffect(() => {
+    if (isMobileOpen && prefetchNextPages) {
+      prefetchNextPages();
+    }
+  }, [isMobileOpen, prefetchNextPages]);
+
   return (
     <AnimatePresence>
       {isMobileOpen && (
@@ -66,18 +76,18 @@ export default function MobileMenu({
             onClick={() => setIsMobileOpen(false)}
           />
 
-          {/* Mobile Sidebar */}
+          {/* Mobile Sidebar - now styled more like desktop */}
           <motion.div
             key="mobile-sidebar"
-            className={`fixed left-0 top-0 h-screen w-64 p-3 flex flex-col ${
+            className={`fixed left-0 top-0 h-screen flex flex-col transition-all duration-500 ease-in-out ${
               isDarkMode
                 ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)] border-stone-700"
                 : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)] border-stone-300"
             } border-r backdrop-blur-md rounded-tr-xl rounded-br-xl z-50`}
             initial={{ x: -300 }}
-            animate={{ x: 0 }}
+            animate={{ x: 0, width: "240px" }}
             exit={{ x: -300 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
             {/* Profile Section */}
             <div className="flex-shrink-0 relative mb-9">
@@ -119,13 +129,13 @@ export default function MobileMenu({
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2 }}
+                    onClick={() => setIsMobileOpen(false)}
                   >
                     <MenuItem 
-                      item={item} 
-                      isMobile={true} 
-                      isOpen={true} 
-                      isDarkMode={isDarkMode} 
-                      pathname={pathname} 
+                      item={item}
+                      isOpen={true}
+                      isDarkMode={isDarkMode}
+                      pathname={pathname}
                       setIsMobileOpen={setIsMobileOpen}
                     />
                   </motion.div>

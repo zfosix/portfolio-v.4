@@ -1,6 +1,6 @@
 // MessagesList.tsx
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Message, User } from "@/types/chatroom";
 import MessageItem from "./MessageItem";
 
@@ -35,6 +35,12 @@ const MessagesList = ({
 }: MessagesListProps) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-32">
@@ -67,7 +73,7 @@ const MessagesList = ({
   }
 
   return (
-    <>
+    <div className="overflow-y-auto p-4">
       {messages.map((message) => (
         <MessageItem
           key={message.id}
@@ -84,7 +90,7 @@ const MessagesList = ({
         />
       ))}
       <div ref={messagesEndRef} />
-    </>
+    </div>
   );
 };
 

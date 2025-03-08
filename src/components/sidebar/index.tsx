@@ -19,7 +19,6 @@ export default function Sidebar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const pathname = usePathname();
-  // Client-side only rendering
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -41,11 +40,10 @@ export default function Sidebar() {
   );
 
   const prefetchNextPages = useCallback(() => {
-    // Only run on client-side and after mounting
-    if (!mounted) return;
-
+    if (!mounted || !pathname) return;
+  
     menuItems.forEach((item) => {
-      if (item.href !== pathname) {
+      if (item.href && item.href !== pathname) {
         const link = document.createElement("link");
         link.rel = "prefetch";
         link.href = item.href;
@@ -60,7 +58,6 @@ export default function Sidebar() {
     }
   }, [prefetchNextPages, mounted]);
 
-  // Return minimal content during SSR
   if (!mounted) {
     return <div className="sticky top-0 z-10 flex flex-col"></div>;
   }

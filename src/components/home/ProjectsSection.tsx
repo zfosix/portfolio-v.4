@@ -10,13 +10,13 @@ import { projects } from "@/data/resume";
 
 const ProjectsSection = () => {
   const { isDarkMode } = useDarkMode();
-  const [windowWidth, setWindowWidth] = useState<number | null>(null); // Null for SSR
+  const [windowWidth, setWindowWidth] = useState<number | null>(null); 
   const controls = useAnimation();
   const carouselRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
-    setWindowWidth(window.innerWidth); // Set initial width on mount
+    setWindowWidth(window.innerWidth); 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -63,7 +63,7 @@ const ProjectsSection = () => {
       className={`transition hover:scale-95 hover:duration-500 flex-shrink-0 relative ${getCardWidthClass()}`}
     >
       <div className="flex flex-col items-start space-y-1">
-        <div className="h-44 sm:h-32 md:h-36 w-full overflow-hidden rounded-md">
+        <div className="h-44 sm:h-32 md:h-36 w-full overflow-hidden rounded-md relative">
           <Image
             src={project.src}
             alt={project.title}
@@ -72,6 +72,13 @@ const ProjectsSection = () => {
             className="h-32 w-full rounded-md object-cover"
             priority
           />
+          {project.isNew && (
+            <div className="absolute top-0 right-0 origin-top-right">
+              <div className="bg-yellow-400 text-black text-xs font-bold py-1 px-9 transform rotate-45 translate-y-3 translate-x-6 shadow-md">
+                NEW
+              </div>
+            </div>
+          )}
         </div>
         <p
           className={`text-sm ${
@@ -88,14 +95,6 @@ const ProjectsSection = () => {
           Started on: {project.date}
         </span>
       </div>
-      {project.isNew && (
-        <div className="absolute -right-6 sm:-right-5 top-4 w-20 sm:w-16 md:w-20 bg-yellow-400 text-center text-black text-xs font-bold py-1 transform rotate-45 z-10 shadow-md pointer-events-none">
-          <span className="relative">
-            NEW
-            <div className="absolute -left-4 top-0 w-4 h-full bg-yellow-500/30 transform skew-x-45"></div>
-          </span>
-        </div>
-      )}
     </div>
   );
 

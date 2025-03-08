@@ -5,15 +5,12 @@ import { useDarkMode } from "@/context/DarkModeContext";
 
 const SolarSystem = () => {
   const { isDarkMode } = useDarkMode();
-  // Add client-side only rendering to prevent hydration mismatch
   const [isClient, setIsClient] = useState(false);
 
-  // Set isClient to true after component mounts
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  // Memoize stars to avoid regenerating on every render
   const stars = useMemo(() => {
     return Array.from({ length: 150 }).map(() => ({
       x: Math.random() * 100,
@@ -24,7 +21,6 @@ const SolarSystem = () => {
     }));
   }, []);
 
-  // Planet data
   const planets = useMemo(
     () => [
       { name: "Mercury", color: "#A0522D", size: 12, orbit: 80, speed: 8 },
@@ -39,7 +35,6 @@ const SolarSystem = () => {
     []
   );
 
-  // If not client yet, return a placeholder or nothing to prevent hydration mismatch
   if (!isClient) {
     return (
       <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-white dark:bg-black">
@@ -67,7 +62,6 @@ const SolarSystem = () => {
             width: `${star.size}px`,
             height: `${star.size}px`,
             opacity: 0.7,
-            // Fix: Separate animation properties instead of using the shorthand
             animationName: "twinkle",
             animationDuration: `${star.duration}s`,
             animationIterationCount: "infinite",
@@ -92,7 +86,6 @@ const SolarSystem = () => {
             border: `1px solid ${
               isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.1)"
             }`,
-            // Fix: Separate animation properties
             animationName: "orbit",
             animationDuration: `${planet.speed}s`,
             animationTimingFunction: "linear",
@@ -108,7 +101,6 @@ const SolarSystem = () => {
               boxShadow: `0 0 20px ${
                 isDarkMode ? "rgba(255, 255, 255, 0.3)" : "rgba(0, 0, 0, 0.3)"
               }`,
-              // Fix: Separate animation properties
               animationName: "rotate",
               animationDuration: `${planet.speed * 2}s`,
               animationTimingFunction: "linear",
@@ -128,7 +120,7 @@ const SolarSystem = () => {
         </div>
       ))}
 
-      {/* CSS Keyframes */}
+      {/* CSS Keyframes and Responsive Styles */}
       <style jsx global>{`
         @keyframes orbit {
           from {
@@ -166,6 +158,28 @@ const SolarSystem = () => {
           }
           100% {
             opacity: 0.3;
+          }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+          .solar-system {
+            transform: scale(0.7);
+          }
+
+          .orbit {
+            width: ${planets.map((planet) => `${planet.orbit * 1.2}px`).join(", ")};
+            height: ${planets.map((planet) => `${planet.orbit * 1.2}px`).join(", ")};
+          }
+
+          .planet {
+            width: ${planets.map((planet) => `${planet.size * 0.8}px`).join(", ")};
+            height: ${planets.map((planet) => `${planet.size * 0.8}px`).join(", ")};
+          }
+
+          .sun {
+            width: 70px;
+            height: 70px;
           }
         }
       `}</style>
