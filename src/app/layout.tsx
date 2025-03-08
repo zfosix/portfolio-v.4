@@ -5,7 +5,7 @@ import { DarkModeProvider } from "@/context/DarkModeContext";
 import "../styles/globals.css";
 import AppContent from "@/components/AppContent";
 import Favicon from "@/components/Favicon";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const poppins = Poppins({
@@ -34,26 +34,39 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Initialize with false to match SSR
   const [isLoading, setIsLoading] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const pathname = usePathname();
-
-  const getPageTitle = useCallback((path: string): string => {
-    return PAGE_TITLES[path as PagePath] || DEFAULT_TITLE;
-  }, []);
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname() || "/";
 
   useEffect(() => {
-    document.title = getPageTitle(pathname ?? "/");
-    setIsLoading(true);
-    const timeout = setTimeout(() => setIsLoading(false), LOADING_DURATION);
-    setIsInitialLoad(false);
-    return () => clearTimeout(timeout);
-  }, [pathname, getPageTitle]);
+    // Mark as mounted first
+    setMounted(true);
+    
+    // Then set loading states
+    if (mounted) {
+      setIsLoading(true);
+      setIsInitialLoad(true);
+      
+      document.title = PAGE_TITLES[pathname as PagePath] || DEFAULT_TITLE;
+      
+      const timeout = setTimeout(() => {
+        setIsLoading(false);
+        setIsInitialLoad(false);
+      }, LOADING_DURATION);
+      
+      return () => clearTimeout(timeout);
+    }
+  }, [pathname, mounted]);
 
   return (
-    <html lang="en">
-      <head><title>{getPageTitle(pathname ?? "/")}</title><Favicon /><meta name="format-detection" content="telephone=no, date=no, email=no, address=no" /></head>
-      <body className={`${poppins.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning={true}>
+      <head>
+        <Favicon />
+        <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
+      </head>
+      <body className={`${poppins.variable} antialiased`} suppressHydrationWarning={true}>
         <DarkModeProvider>
           <AppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>
             {children}
