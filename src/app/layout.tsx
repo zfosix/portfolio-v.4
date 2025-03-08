@@ -3,10 +3,16 @@
 import { Poppins } from "next/font/google";
 import { DarkModeProvider } from "@/context/DarkModeContext";
 import "../styles/globals.css";
-import AppContent from "@/components/AppContent";
+import dynamic from "next/dynamic";
 import Favicon from "@/components/Favicon";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+
+// Import AppContent with client-side only rendering
+const ClientOnlyAppContent = dynamic(() => import("@/components/AppContent"), {
+  ssr: false,
+  loading: () => <div className="min-h-screen"></div>
+});
 
 const poppins = Poppins({
   weight: ["400", "600"],
@@ -34,43 +40,36 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Initialize with false to match SSR
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname() || "/";
 
   useEffect(() => {
-    // Mark as mounted first
-    setMounted(true);
+    // Set loading states only after client-side hydration
+    setIsLoading(true);
+    setIsInitialLoad(true);
     
-    // Then set loading states
-    if (mounted) {
-      setIsLoading(true);
-      setIsInitialLoad(true);
-      
-      document.title = PAGE_TITLES[pathname as PagePath] || DEFAULT_TITLE;
-      
-      const timeout = setTimeout(() => {
-        setIsLoading(false);
-        setIsInitialLoad(false);
-      }, LOADING_DURATION);
-      
-      return () => clearTimeout(timeout);
-    }
-  }, [pathname, mounted]);
+    document.title = PAGE_TITLES[pathname as PagePath] || DEFAULT_TITLE;
+    
+    const timeout = setTimeout(() => {
+      setIsLoading(false);
+      setIsInitialLoad(false);
+    }, LOADING_DURATION);
+    
+    return () => clearTimeout(timeout);
+  }, [pathname]);
 
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="en">
       <head>
         <Favicon />
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
       </head>
-      <body className={`${poppins.variable} antialiased`} suppressHydrationWarning={true}>
+      <body className={`${poppins.variable} antialiased`}>
         <DarkModeProvider>
-          <AppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>
+          <ClientOnlyAppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>
             {children}
-          </AppContent>
+          </ClientOnlyAppContent>
         </DarkModeProvider>
       </body>
     </html>

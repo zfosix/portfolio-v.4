@@ -1,10 +1,15 @@
+// File: components/ClientOnlyAppContent.tsx
 "use client";
 
 import { useDarkMode } from "@/context/DarkModeContext";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import Sidebar from "@/components/sidebar/index";
+import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+
+// Import Sidebar with client-side only rendering
+const ClientOnlySidebar = dynamic(() => import("@/components/sidebar/index"), { 
+  ssr: false 
+});
 
 interface AppContentProps {
   isLoading: boolean;
@@ -12,25 +17,13 @@ interface AppContentProps {
   children: React.ReactNode;
 }
 
-export default function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
+function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
   const { isDarkMode } = useDarkMode();
-  // Use internal state to avoid SSR/CSR mismatches
-  const [mounted, setMounted] = useState(false);
-
-  // Only enable functionality after component has mounted on client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Only render content when mounted (client-side only)
-  if (!mounted) {
-    return <div className="min-h-screen"></div>; // Empty placeholder for SSR
-  }
 
   return (
     <>
       <AnimatePresence>
-        {isLoading && mounted && (
+        {isLoading && (
           <motion.div
             className="fixed inset-0 flex items-center justify-center z-[1000]"
             style={{ 
@@ -46,20 +39,15 @@ export default function AppContent({ isLoading, isInitialLoad, children }: AppCo
         )}
       </AnimatePresence>
 
-      <div 
-        className="flex" 
-        style={{ backgroundColor: isDarkMode ? "#0B0A0A" : "#FFFFFF" }}
-        suppressHydrationWarning={true}  // Add this to suppress hydration warnings
-      >
+      <div className="flex" style={{ backgroundColor: isDarkMode ? "#0B0A0A" : "#FFFFFF" }}>
         <div className="relative z-[1001]">
-          <Sidebar />
+          <ClientOnlySidebar />
         </div>
         <motion.div
           className="flex-1"
-          initial={{ opacity: isInitialLoad && mounted ? 0 : 1 }}
+          initial={{ opacity: isInitialLoad ? 0 : 1 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
-          suppressHydrationWarning={true}
         >
           {children}
         </motion.div>
@@ -67,3 +55,6 @@ export default function AppContent({ isLoading, isInitialLoad, children }: AppCo
     </>
   );
 }
+
+// Export as a client-only component
+export default dynamic(() => Promise.resolve(AppContent), { ssr: false });
