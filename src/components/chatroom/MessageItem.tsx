@@ -1,4 +1,3 @@
-// MessageItem.tsx
 "use client";
 import { useState } from "react";
 import Image from "next/image";
@@ -58,7 +57,7 @@ const MessageItem = ({
       </div>
 
       {/* Konten Pesan */}
-      <div className="flex-1 w-full">
+      <div className="flex-1 w-full overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex items-center justify-between">
           {/* Username dan Timestamp */}
           <div className="flex items-center">
