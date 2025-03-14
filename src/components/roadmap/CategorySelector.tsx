@@ -25,7 +25,7 @@ export default function CategorySelector({
               : "bg-gray-200 hover:bg-gray-700"
         }`}
       >
-        Frontend Developer
+        Frontend
       </button>
       <button
         onClick={() => setActiveCategory("backend")}
@@ -37,7 +37,7 @@ export default function CategorySelector({
               : "bg-gray-200 hover:bg-gray-700"
         }`}
       >
-        Backend Developer
+        Backend
       </button>
     </div>
   );
