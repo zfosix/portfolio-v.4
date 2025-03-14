@@ -1,9 +1,9 @@
 import { FaProjectDiagram } from "react-icons/fa";
 import { useDarkMode } from "@/context/DarkModeContext";
-import WebIlustration from "@/components/home/WebIlustration";
-import MobileIllustration from "@/components/home/MobileIlustration";
-import LandingIllustration from "@/components/home/LandingIlustration";
-import DashboardIllustration from "@/components/home/DashboardIlustration";
+import WebIlustration from "@/components/WebIlustration";
+import MobileIllustration from "@/components/MobileIlustration";
+import LandingIllustration from "@/components/LandingIlustration";
+import DashboardIllustration from "@/components/DashboardIlustration";
 
 const ServicesSection = () => {
   const { isDarkMode } = useDarkMode();
@@ -33,7 +33,7 @@ const ServicesSection = () => {
 
   return (
     <section
-      className={`flex flex-col text-start border-b ${
+      className={`flex flex-col text-start ${
         isDarkMode ? "border-stone-700" : "border-stone-300"
       } py-6`}
     >

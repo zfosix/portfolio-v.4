@@ -8,7 +8,6 @@ import Favicon from "@/components/Favicon";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-// Import AppContent with client-side only rendering
 const ClientOnlyAppContent = dynamic(() => import("@/components/AppContent"), {
   ssr: false,
   loading: () => <div className="min-h-screen"></div>
@@ -33,7 +32,7 @@ const PAGE_TITLES = {
 type PagePath = keyof typeof PAGE_TITLES;
 
 const LOADING_DURATION = 3000;
-const DEFAULT_TITLE = "Zian's Code";
+const DEFAULT_TITLE = "Zian's Code | Personal Website";
 
 export default function RootLayout({
   children,
@@ -45,7 +44,6 @@ export default function RootLayout({
   const pathname = usePathname() || "/";
 
   useEffect(() => {
-    // Set loading states only after client-side hydration
     setIsLoading(true);
     setIsInitialLoad(true);
     

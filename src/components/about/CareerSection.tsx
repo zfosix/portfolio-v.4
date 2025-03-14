@@ -5,7 +5,7 @@ import { FaBriefcase, FaDownload } from "react-icons/fa";
 
 const CareerSection = ({ isDarkMode }: { isDarkMode: boolean }) => {  return (
     <section
-      className={`border-b ${
+      className={`${
         isDarkMode ? "border-stone-700" : "border-stone-300"
       } py-6`}
     >
@@ -33,7 +33,7 @@ const CareerSection = ({ isDarkMode }: { isDarkMode: boolean }) => {  return (
           My professional career journey
         </p>
         <a
-          href="https://drive.google.com/file/d/1f2xO5Wvr69sgknCjADti-JoWGrMJmbE6/view?usp=drive_link"
+          href="https://drive.google.com/file/d/1ASjtYR4bd3-YmsUA3e2tlMlTa9e8Mlyd/view?usp=drive_link"
           target="_blank"
           rel="noopener noreferrer"
           className={`text-sm flex items-center space-x-2 ${

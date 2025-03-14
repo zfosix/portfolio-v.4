@@ -1,8 +1,9 @@
 "use client";
 import { useDarkMode } from "@/context/DarkModeContext";
 import IntroSection from "@/components/home/IntroSection";
-import ProjectsSection from "@/components/home/ProjectsSection";
+import LatestProject from "@/components/home/LatestProject";
 import ServicesSection from "@/components/home/ServicesSection";
+import Breakline from "@/components/Breakline";
 
 export default function Home() {
   const { isDarkMode } = useDarkMode();
@@ -17,12 +18,15 @@ export default function Home() {
         <div className="w-full max-w-4xl transition-all duration-500 ease-in-out">
           {/* Section 1: Introduction */}
           <IntroSection />
+          <Breakline />
 
           {/* Section 2: Recent Projects (Carousel) */}
-          {<ProjectsSection />}
+          {<LatestProject />}
+          <Breakline />
 
           {/* Section 3: Services */}
           <ServicesSection />
+          <Breakline />
         </div>
       </main>
     </div>

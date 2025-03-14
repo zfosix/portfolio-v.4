@@ -4,7 +4,7 @@ import { FaYoutube } from "react-icons/fa";
 const YouTubeSection = ({ isDarkMode }: { isDarkMode: boolean }) => {
     return (
     <section
-      className={`border-b ${
+      className={`${
         isDarkMode ? "border-stone-700" : "border-stone-300"
       } py-6`}
     >

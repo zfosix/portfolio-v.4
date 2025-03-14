@@ -35,113 +35,56 @@ import {
 // Data projects
 export const projects = [
   {
-    src: "/studycourse/bannercom.png",
-    title: "Coming Soon - NextJS",
+    src: "/studycourse/nextapp.png",
+    title: "State App Directory - NextJS",
     date: "2023-09-15",
     isNew: true,
   },
   {
-    src: "/studycourse/bannercom.png",
-    title: "Coming Soon - NextJS",
-    date: "2023-09-15",
-    isNew: false,
-  },
-  {
-    src: "/studycourse/bannercom.png",
-    title: "Coming Soon - NextJS",
+    src: "/studycourse/reactlist.png",
+    title: "List on State - ReactJS",
     date: "2023-09-15",
     isNew: true,
   },
   {
-    src: "/studycourse/bannercom.png",
-    title: "Coming Soon - NextJS",
+    src: "/studycourse/angular.png",
+    title: "Angular coding style guide - AngularJS",
     date: "2023-09-15",
     isNew: false,
   },
-  // {
-  //   src: "/studycourse/banner3d.png",
-  //   title: "Draw SVG - GSAP",
-  //   date: "2023-10-01",
-  //   isNew: true,
-  // },
-  // {
-  //   src: "/studycourse/bannercyber.png",
-  //   title: "Draw SVG - GSAP",
-  //   date: "2023-10-01",
-  //   isNew: true,
-  // },
-  // {
-  //   src: "/studycourse/bannerkey.png",
-  //   title: "Props and State Next Js",
-  //   date: "2023-08-20",
-  //   isNew: false,
-  // },
-  // {
-  //   src: "/studycourse/bannershop.png",
-  //   title: "State - Next Js App Libary",
-  //   date: "2023-09-15",
-  //   isNew: false,
-  // },
-  // {
-  //   src: "/studycourse/bannerweb.png",
-  //   title: "Props and State Next Js",
-  //   date: "2023-08-20",
-  //   isNew: false,
-  // },
-];
-
-export const frontendSkills = [
-  { name: "HTML", icon: <FaHtml5 className="text-2xl " /> },
-  { name: "CSS", icon: <FaCss3Alt className="text-2xl " /> },
-  { name: "JavaScript", icon: <FaJs className="text-2xl " /> },
-  { name: "React", icon: <FaReact className="text-2xl " /> },
-  { name: "Redux", icon: <SiRedux className="text-2xl " /> },
-  { name: "SASS", icon: <FaSass className="text-2xl " /> },
   {
-    name: "Next.js",
-    icon: <SiNextdotjs className="text-2xl " />,
-  },
-  {
-    name: "Bootstrap",
-    icon: <FaBootstrap className="text-2xl " />,
-  },
-  {
-    name: "TailwindCSS",
-    icon: <SiTailwindcss className="text-2xl " />,
-  },
-  { name: "Figma", icon: <FaFigma className="text-2xl " /> },
-  {
-    name: "React Query",
-    icon: <SiReactquery className="text-2xl " />,
-  },
-  {
-    name: "TypeScript",
-    icon: <SiTypescript className="text-2xl" />,
+    src: "/studycourse/vue.png",
+    title: "Vue Router - VueJS",
+    date: "2023-09-15",
+    isNew: true,
   },
 ];
 
-export const backendSkills = [
+export const SkillList = [
+  { name: "HTML", icon: <FaHtml5 className="text-2xl" /> },
+  { name: "CSS", icon: <FaCss3Alt className="text-2xl" /> },
+  { name: "JavaScript", icon: <FaJs className="text-2xl" /> },
+  { name: "React", icon: <FaReact className="text-2xl" /> },
+  { name: "Redux", icon: <SiRedux className="text-2xl" /> },
+  { name: "SASS", icon: <FaSass className="text-2xl" /> },
+  { name: "Next.js", icon: <SiNextdotjs className="text-2xl" /> },
+  { name: "Bootstrap", icon: <FaBootstrap className="text-2xl" /> },
+  { name: "TailwindCSS", icon: <SiTailwindcss className="text-2xl" /> },
+  { name: "Figma", icon: <FaFigma className="text-2xl" /> },
+  { name: "React Query", icon: <SiReactquery className="text-2xl" /> },
+  { name: "TypeScript", icon: <SiTypescript className="text-2xl" /> },
   { name: "Node.js", icon: <FaNodeJs className="text-2xl" /> },
-  {
-    name: "Express.js",
-    icon: <SiExpress className="text-2xl " />,
-  },
-  { name: "Laravel", icon: <SiLaravel className="text-2xl " /> },
-  { name: "MySQL", icon: <SiMysql className="text-2xl " /> },
-  {
-    name: "PostgreSQL",
-    icon: <SiPostgresql className="text-2xl " />,
-  },
-  { name: "Java", icon: <FaJava className="text-2xl " /> },
-  { name: "Git", icon: <FaGitAlt className="text-2xl " /> },
-  {
-    name: "GitHub",
-    icon: <FaGithubAlt className="text-2xl " />,
-  },
-  { name: "GitLab", icon: <FaGitlab className="text-2xl " /> },
-  { name: "Prisma", icon: <SiPrisma className="text-2xl " /> },
-  { name: "GraphQL", icon: <SiGraphql className="text-2xl " /> },
-  { name: "Gulp", icon: <SiGulp className="text-2xl " /> },
+  { name: "Express.js", icon: <SiExpress className="text-2xl" /> },
+  { name: "Laravel", icon: <SiLaravel className="text-2xl" /> },
+  { name: "MySQL", icon: <SiMysql className="text-2xl" /> },
+  { name: "PostgreSQL", icon: <SiPostgresql className="text-2xl" /> },
+  { name: "Java", icon: <FaJava className="text-2xl" /> },
+  { name: "Git", icon: <FaGitAlt className="text-2xl" /> },
+  { name: "GitHub", icon: <FaGithubAlt className="text-2xl" /> },
+  { name: "GitLab", icon: <FaGitlab className="text-2xl" /> },
+  { name: "Prisma", icon: <SiPrisma className="text-2xl" /> },
+  { name: "GraphQL", icon: <SiGraphql className="text-2xl" /> },
+  { name: "Gulp", icon: <SiGulp className="text-2xl" /> },
 ];
 
 // Data categories
