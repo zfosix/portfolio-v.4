@@ -1,4 +1,3 @@
-// MessageInput.tsx
 "use client";
 import { useState } from "react";
 import { FaPaperPlane } from "react-icons/fa";
@@ -37,6 +36,7 @@ const MessageInput = ({ isDarkMode, onSendMessage, isSending }: MessageInputProp
             ? "bg-neutral-700 text-white placeholder-gray-400"
             : "bg-neutral-200 text-black placeholder-gray-600"
         }`}
+        aria-label="Type your message"
       />
       <button
         onClick={handleSend}
@@ -46,6 +46,7 @@ const MessageInput = ({ isDarkMode, onSendMessage, isSending }: MessageInputProp
             ? "bg-blue-600 hover:bg-blue-700 text-white"
             : "bg-blue-500 hover:bg-blue-600 text-white"
         }`}
+        aria-label="Send message"
       >
         <FaPaperPlane className="text-lg" />
       </button>

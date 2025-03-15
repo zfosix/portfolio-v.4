@@ -28,26 +28,14 @@ export default function AboutPage() {
     >
       <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16 overflow-hidden">
         <div className="max-w-4xl w-full mx-auto">
-          {/* Section 1: Introduction */}
           <IntroductionSection isDarkMode={isDarkMode} />
-
           <Breakline/>
-
-          {/* Section 2: Career */}
           <CareerSection isDarkMode={isDarkMode} />
-
           <Breakline/>
-
-          {/* Section 3: Skills */}
           <SkillList isDarkMode={isDarkMode}  />
-
           <Breakline/>
-          {/* Section 4: YouTube Channel */}
-          <YouTubeSection isDarkMode={isDarkMode} />
-          
+          <YouTubeSection isDarkMode={isDarkMode} />          
           <Breakline/>
-
-          {/* Section 5: Tiktok */}
           <TikTokSection 
             isDarkMode={isDarkMode} 
             isAuthenticated={isAuthenticated} 

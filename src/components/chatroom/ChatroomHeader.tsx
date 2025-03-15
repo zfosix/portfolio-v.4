@@ -1,4 +1,3 @@
-// ChatroomHeader.tsx
 "use client";
 import { motion } from "framer-motion";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";

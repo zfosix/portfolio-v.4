@@ -1,4 +1,3 @@
-// UserProfile.tsx
 "use client";
 import Image from "next/image";
 import { User } from "@/types/chatroom";
@@ -26,6 +25,7 @@ const UserProfile = ({ user, handleLogout }: UserProfileProps) => {
         <button
           onClick={handleLogout}
           className="bg-red-900 hover:bg-red-800 transition-colors text-white py-1 px-4 rounded-lg"
+          aria-label="Logout"
         >
           Logout
         </button>

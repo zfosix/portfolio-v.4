@@ -1,4 +1,3 @@
-// LoginButton.tsx
 "use client";
 import Image from "next/image";
 
@@ -19,6 +18,7 @@ const LoginButton = ({ isDarkMode, onLogin, isLoggingIn }: LoginButtonProps) => 
             : "bg-white hover:bg-gray-50 text-black border border-gray-300"
         }`}
         disabled={isLoggingIn}
+        aria-label={isLoggingIn ? "Logging in..." : "Login with Google to Chat"}
       >
         <Image
           src="/google.png"

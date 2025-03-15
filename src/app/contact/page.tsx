@@ -17,7 +17,6 @@ const ContactPage = () => {
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
-      {/* Toast Notification Container */}
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -67,10 +66,7 @@ const ContactPage = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 gap-8">
-            {/* Social Cards Section */}
             <SocialCards />
-
-            {/* Form Section */}
             <ContactForm />
           </div>
         </div>

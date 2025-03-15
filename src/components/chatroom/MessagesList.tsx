@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { Message, User } from "@/types/chatroom";
 import MessageItem from "./MessageItem";
+import { Timestamp } from 'firebase/firestore'; // or wherever the Timestamp type is defined
 
 interface MessagesListProps {
   messages: Message[];
@@ -17,6 +18,7 @@ interface MessagesListProps {
   onEditTextChange: (text: string) => void;
   onSaveEdit: () => Promise<void>;
   onCancelEdit: () => void;
+  formatTimestamp: (timestamp: Timestamp) => Date | null;
 }
 
 const MessagesList = ({
@@ -73,7 +75,7 @@ const MessagesList = ({
   }
 
   return (
-    <div className="overflow-y-auto p-4">
+    <div className="overflow-y-auto">
       {messages.map((message) => (
         <MessageItem
           key={message.id}

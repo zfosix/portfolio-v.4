@@ -2,7 +2,12 @@
 "use client";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
-import { db, auth, loginWithGoogle } from "@/lib/firebaseConfig";
+import {
+  db,
+  auth,
+  loginWithGoogle,
+  formatTimestamp as libFormatTimestamp,
+} from "@/lib/firebaseConfig";
 import {
   collection,
   addDoc,
@@ -24,6 +29,7 @@ import UserProfile from "@/components/chatroom/UserProfile";
 import MessagesList from "@/components/chatroom/MessagesList";
 import MessageInput from "@/components/chatroom/MessageInput";
 import LoginButton from "@/components/chatroom/LoginButton";
+import CustomAlert from "@/components/chatroom/CustomAlert"; // Import the CustomAlert component
 
 // Import types
 import { Message, User } from "@/types/chatroom";
@@ -39,8 +45,18 @@ const ChatroomPage = () => {
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editMessageText, setEditMessageText] = useState("");
   const unsubscribeRef = useRef<(() => void) | null>(null);
+  
+  // Alert state
+  const [alertConfig, setAlertConfig] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    confirmText: "",
+    cancelText: "Cancel",
+    type: "warning" as "warning" | "delete" | "edit" | "success",
+    onConfirm: () => {},
+  });
 
-  // Handle auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -58,7 +74,6 @@ const ChatroomPage = () => {
     return () => unsubscribe();
   }, []);
 
-  // Subscribe to messages
   useEffect(() => {
     setIsLoading(true);
     setError(null);
@@ -70,14 +85,19 @@ const ChatroomPage = () => {
       q,
       (snapshot) => {
         const fetchedMessages: Message[] = snapshot.docs
-          .map((doc) => ({
-            id: doc.id,
-            username: doc.data().username,
-            message: doc.data().message,
-            photo: doc.data().photo || "/default-profile.png",
-            timestamp: doc.data().timestamp,
-            userId: doc.data().userId,
-          }))
+          .map((doc) => {
+            const data = doc.data();
+
+            // Use raw timestamp data - MessageItem will handle formatting
+            return {
+              id: doc.id,
+              username: data.username,
+              message: data.message,
+              photo: data.photo || "/default-profile.png",
+              timestamp: data.timestamp, // Keep as raw timestamp
+              userId: data.userId,
+            };
+          })
           .reverse();
 
         setMessages(fetchedMessages);
@@ -101,16 +121,24 @@ const ChatroomPage = () => {
   }, []);
 
   const handleLogout = async () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (!confirmLogout) return;
-
-    try {
-      await signOut(auth);
-      toast.success("Logged out successfully");
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast.error("Failed to logout. Please try again.");
-    }
+    // Show custom alert instead of window.confirm
+    setAlertConfig({
+      isOpen: true,
+      title: "Sign Out",
+      message: "Are you sure you want to sign out from the chatroom?",
+      confirmText: "Sign Out",
+      cancelText: "Cancel",
+      type: "warning",
+      onConfirm: async () => {
+        try {
+          await signOut(auth);
+          toast.success("Logged out successfully");
+        } catch (error) {
+          console.error("Logout error:", error);
+          toast.error("Failed to logout. Please try again.");
+        }
+      },
+    });
   };
 
   const handleLogin = async () => {
@@ -135,18 +163,24 @@ const ChatroomPage = () => {
       return;
     }
 
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this message?"
-    );
-    if (!confirmDelete) return;
-
-    try {
-      await deleteDoc(doc(db, "messages", messageId));
-      toast.success("Message deleted successfully");
-    } catch (error) {
-      console.error("Error deleting message: ", error);
-      toast.error("Failed to delete message");
-    }
+    // Show custom delete confirmation
+    setAlertConfig({
+      isOpen: true,
+      title: "Delete Message",
+      message: "Are you sure you want to delete this message? This action cannot be undone.",
+      confirmText: "Delete",
+      cancelText: "Cancel",
+      type: "delete",
+      onConfirm: async () => {
+        try {
+          await deleteDoc(doc(db, "messages", messageId));
+          toast.success("Message deleted successfully");
+        } catch (error) {
+          console.error("Error deleting message: ", error);
+          toast.error("Failed to delete message");
+        }
+      },
+    });
   };
 
   // Handle message editing
@@ -185,28 +219,31 @@ const ChatroomPage = () => {
   };
 
   // Handle sending a new message
-  const handleSendMessage = useCallback(async (message: string) => {
-    if (!user || !message.trim() || isSending) return;
+  const handleSendMessage = useCallback(
+    async (message: string) => {
+      if (!user || !message.trim() || isSending) return;
 
-    setIsSending(true);
+      setIsSending(true);
 
-    try {
-      const messageData = {
-        username: user.name,
-        message: message.trim(),
-        photo: user.photo,
-        timestamp: serverTimestamp(),
-        userId: user.uid,
-      };
+      try {
+        const messageData = {
+          username: user.name,
+          message: message.trim(),
+          photo: user.photo,
+          timestamp: serverTimestamp(),
+          userId: user.uid,
+        };
 
-      await addDoc(collection(db, "messages"), messageData);
-    } catch (error) {
-      console.error("Error sending message: ", error);
-      toast.error("Failed to send message. Please try again.");
-    } finally {
-      setIsSending(false);
-    }
-  }, [user, isSending]);
+        await addDoc(collection(db, "messages"), messageData);
+      } catch (error) {
+        console.error("Error sending message: ", error);
+        toast.error("Failed to send message. Please try again.");
+      } finally {
+        setIsSending(false);
+      }
+    },
+    [user, isSending]
+  );
 
   return (
     <div
@@ -241,16 +278,17 @@ const ChatroomPage = () => {
               onEditTextChange={setEditMessageText}
               onSaveEdit={handleSaveEdit}
               onCancelEdit={() => setEditingMessageId(null)}
+              formatTimestamp={libFormatTimestamp}
             />
           </div>
 
           {/* Login Button */}
           {!user && (
             <LoginButton
-              isDarkMode={isDarkMode}
-              onLogin={handleLogin}
-              isLoggingIn={isLoggingIn}
-            />
+            isDarkMode={isDarkMode}
+            onLogin={handleLogin}
+            isLoggingIn={isLoggingIn}
+          />
           )}
 
           {/* Message Input */}
@@ -263,6 +301,19 @@ const ChatroomPage = () => {
           )}
         </div>
       </main>
+
+      {/* Custom Alert Dialog */}
+      <CustomAlert
+        isOpen={alertConfig.isOpen}
+        onClose={() => setAlertConfig({ ...alertConfig, isOpen: false })}
+        onConfirm={alertConfig.onConfirm}
+        title={alertConfig.title}
+        message={alertConfig.message}
+        confirmText={alertConfig.confirmText}
+        cancelText={alertConfig.cancelText}
+        type={alertConfig.type}
+        isDarkMode={isDarkMode}
+      />
     </div>
   );
 };
