@@ -1,18 +1,13 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
 import DesktopMenu from "@/components/sidebar/DesktopMenu";
 import MobileMenu from "@/components/sidebar/MobileMenu";
 import { usePathname } from "next/navigation";
 import { FiMenu, FiX } from "react-icons/fi";
 import { motion } from "framer-motion";
-
-export interface MenuItem {
-  name: string;
-  icon: string;
-  href: string;
-}
+import { MENU_ITEMS } from "@/data/resume";
 
 export default function Sidebar() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
@@ -21,42 +16,15 @@ export default function Sidebar() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
+  // Optional: Implement prefetch function for both menus
+  const prefetchNextPages = () => {
+    // Your prefetch logic here
+    console.log("Prefetching next pages...");
+  };
+
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const menuItems = useMemo(
-    () => [
-      { name: "Home", icon: "HiOutlineHome", href: "/" },
-      { name: "About", icon: "PiLeaf", href: "/about" },
-      { name: "Blog", icon: "LuPencil", href: "/blog" },
-      { name: "Projects", icon: "HiOutlineInbox", href: "/projects" },
-      { name: "Roadmap", icon: "LuLayoutGrid", href: "/roadmap" },
-      { name: "Chat Room", icon: "BsChatSquare", href: "/chatroom" },
-      { name: "Contact", icon: "HiOutlinePaperAirplane", href: "/contact" },
-      { name: "Dashboard", icon: "Apps", href: "/dashboard" },
-    ],
-    []
-  );
-
-  const prefetchNextPages = useCallback(() => {
-    if (!mounted || !pathname) return;
-  
-    menuItems.forEach((item) => {
-      if (item.href && item.href !== pathname) {
-        const link = document.createElement("link");
-        link.rel = "prefetch";
-        link.href = item.href;
-        document.head.appendChild(link);
-      }
-    });
-  }, [pathname, menuItems, mounted]);
-
-  useEffect(() => {
-    if (mounted) {
-      prefetchNextPages();
-    }
-  }, [prefetchNextPages, mounted]);
 
   if (!mounted) {
     return <div className="sticky top-0 z-10 flex flex-col"></div>;
@@ -86,7 +54,7 @@ export default function Sidebar() {
           toggleDarkMode={toggleDarkMode}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
-          menuItems={menuItems}
+          menuItems={MENU_ITEMS}
           pathname={pathname}
           prefetchNextPages={prefetchNextPages}
         />
@@ -98,8 +66,9 @@ export default function Sidebar() {
         toggleDarkMode={toggleDarkMode}
         isMobileOpen={isMobileOpen}
         setIsMobileOpen={setIsMobileOpen}
-        menuItems={menuItems}
+        menuItems={MENU_ITEMS}
         pathname={pathname}
+        prefetchNextPages={prefetchNextPages}
       />
     </div>
   );

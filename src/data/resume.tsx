@@ -31,6 +31,85 @@ import {
   SiMongodb,
   SiDocker,
 } from "react-icons/si";
+import {
+  BiEditAlt as BlogIcon,
+  BiPaperPlane as ContactIcon,
+  BiCategoryAlt as DashboardIcon,
+  BiHomeSmile as HomeIcon,
+  BiLeaf as ProfileIcon,
+  BiArchive as ProjectIcon,
+} from 'react-icons/bi';
+import { PiChatTeardropDotsBold as ChatIcon } from 'react-icons/pi';
+import { LuWorkflow } from 'react-icons/lu';
+import { MenuItemType } from '@/types/menu';
+
+// Menu Item
+export const MENU_ITEMS: MenuItemType[] = [
+  {
+    title: 'Home',
+    href: '/',
+    icon: HomeIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Home',
+  },
+  {
+    title: 'About',
+    href: '/about',
+    icon: ProfileIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: About',
+  },
+  {
+    title: 'Blog',
+    href: '/blog?category=home',
+    icon: BlogIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Blog',
+  },
+  {
+    title: 'Projects',
+    href: '/projects',
+    icon: ProjectIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Projects',
+  },  
+  {
+    title: 'Roadmap',
+    href: '/roadmap',
+    icon: LuWorkflow,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Roadmap',
+  },
+  {
+    title: 'Chat Room',
+    href: '/chatroom',
+    icon: ChatIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Chat Room',
+  },
+  {
+    title: 'Contact',
+    href: '/contact',
+    icon: ContactIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Contact',
+  },
+  {
+    title: 'Dashboard',
+    href: '/dashboard',
+    icon: DashboardIcon,
+    isShow: true,
+    isExternal: false,
+    eventName: 'Pages: Dashboard',
+  },
+];
 
 // Data projects
 export const projects = [
@@ -60,6 +139,7 @@ export const projects = [
   },
 ];
 
+// Skill List
 export const SkillList = [
   { name: "HTML", icon: <FaHtml5 className="text-2xl" /> },
   { name: "CSS", icon: <FaCss3Alt className="text-2xl" /> },
@@ -101,7 +181,7 @@ export const categories = {
         views: 2519,
         category: "React",
         readTime: "10 min read",
-        author: "John Doe",
+        author: "Fajar Fauzian",
         authorRole: "React Expert",
       },
       {
@@ -166,23 +246,6 @@ export const categories = {
         readTime: "10 min read",
         author: "Alex Turner",
         authorRole: "Frontend Architect",
-      },
-    ],
-  },
-  Testing: {
-    color: "rose",
-    posts: [
-      {
-        id: 6,
-        title: "Testing React Components with Vitest",
-        excerpt:
-          "Learn how to effectively test your React components using Vitest and React Testing Library.",
-        date: "July 5, 2023",
-        views: 1345,
-        category: "Testing",
-        readTime: "8 min read",
-        author: "David Kim",
-        authorRole: "Test Engineer",
       },
     ],
   },

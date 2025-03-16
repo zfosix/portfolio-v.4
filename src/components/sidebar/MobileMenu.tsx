@@ -1,4 +1,3 @@
-// MobileMenu.tsx
 "use client";
 
 import { useEffect } from "react";
@@ -6,29 +5,7 @@ import ProfileItem from "@/components/sidebar/ProfileItem";
 import FooterItem from "@/components/sidebar/FooterItem";
 import MenuItem from "@/components/sidebar/MenuItem";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiOutlineHome } from "react-icons/hi";
-import { PiLeaf } from "react-icons/pi";
-import { LuPencil } from "react-icons/lu";
-import { HiOutlineInbox } from "react-icons/hi2";
-import { LuLayoutGrid } from "react-icons/lu";
-import { BsChatSquare } from "react-icons/bs";
-import { HiOutlinePaperAirplane } from "react-icons/hi2";
-import { LuLayoutGrid as Apps } from "react-icons/lu";
-import { MenuItem as MenuItemType } from "./index";
-
-interface MobileMenuProps {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
-  isMobileOpen: boolean;
-  setIsMobileOpen: (isOpen: boolean) => void;
-  menuItems: MenuItemType[];
-  pathname: string;
-  prefetchNextPages?: () => void;
-}
-
-interface IconMap {
-  [key: string]: React.ComponentType<{ className?: string }>;
-}
+import { MobileMenuProps } from "@/types/menu";
 
 export default function MobileMenu({
   isDarkMode,
@@ -40,22 +17,8 @@ export default function MobileMenu({
   prefetchNextPages
 }: MobileMenuProps) {
   
-  const iconMap: IconMap = {
-    HiOutlineHome,
-    PiLeaf,
-    LuPencil,
-    HiOutlineInbox,
-    LuLayoutGrid,
-    BsChatSquare,
-    HiOutlinePaperAirplane,
-    Apps
-  };
+  // Remove the iconMap as it's no longer needed - we're using React components directly
   
-  const processedMenuItems = menuItems.map(item => ({
-    ...item,
-    icon: iconMap[item.icon]
-  }));
-
   // Add the prefetch effect similar to desktop menu
   useEffect(() => {
     if (isMobileOpen && prefetchNextPages) {
@@ -150,7 +113,7 @@ export default function MobileMenu({
                   },
                 }}
               >
-                {processedMenuItems.map((item) => (
+                {menuItems.map((item) => (
                   <motion.div
                     key={item.href}
                     initial={{ opacity: 0, x: -20 }}

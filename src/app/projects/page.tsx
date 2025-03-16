@@ -17,11 +17,11 @@ const ProjectsPage = () => {
 
   return (
     <div
-      className={`min-h-screen ${
+      className={`flex min-h-screen ${
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
-      <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
+      <main className="flex-1 flex justify-center pt-8 md:pt-12 px-4 md:px-8 lg:px-12 ml-0 md:ml-8">
         <div className="max-w-4xl mx-auto w-full">
           <TabHeader activeTab={activeTab} isDarkMode={isDarkMode} />
           <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} isDarkMode={isDarkMode} />

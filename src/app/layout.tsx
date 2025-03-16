@@ -1,4 +1,5 @@
-"use client";
+// app/layout.tsx
+"use client"; // Pastikan ini ada di bagian atas
 
 import { Poppins } from "next/font/google";
 import { DarkModeProvider } from "@/context/DarkModeContext";
@@ -7,10 +8,13 @@ import dynamic from "next/dynamic";
 import Favicon from "@/components/Favicon";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import ParticleStars from "@/components/ParticleStars";
+import ChatRoomButton from "@/components/ChatRoomButton"; // Import ChatRoomButton
 
+// Dynamic import untuk ClientOnlyAppContent dengan SSR dinonaktifkan
 const ClientOnlyAppContent = dynamic(() => import("@/components/AppContent"), {
   ssr: false,
-  loading: () => <div className="min-h-screen"></div>
+  loading: () => <div className="min-h-screen"></div>, // Tampilkan loading state
 });
 
 const poppins = Poppins({
@@ -46,14 +50,16 @@ export default function RootLayout({
   useEffect(() => {
     setIsLoading(true);
     setIsInitialLoad(true);
-    
+
+    // Update judul halaman berdasarkan pathname
     document.title = PAGE_TITLES[pathname as PagePath] || DEFAULT_TITLE;
-    
+
+    // Simulasikan loading selama LOADING_DURATION
     const timeout = setTimeout(() => {
       setIsLoading(false);
       setIsInitialLoad(false);
     }, LOADING_DURATION);
-    
+
     return () => clearTimeout(timeout);
   }, [pathname]);
 
@@ -64,10 +70,18 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
       </head>
       <body className={`${poppins.variable} antialiased`}>
+        {/* Komponen ParticleStars */}
+        <ParticleStars />
+
+        {/* Provider untuk Dark Mode */}
         <DarkModeProvider>
+          {/* Render AppContent hanya di sisi klien */}
           <ClientOnlyAppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>
             {children}
           </ClientOnlyAppContent>
+
+          {/* Tombol Chat Room */}
+          <ChatRoomButton />
         </DarkModeProvider>
       </body>
     </html>

@@ -8,7 +8,7 @@ interface SummaryProps {
 const Summary: React.FC<SummaryProps> = ({ isDarkMode }) => {
   return (
     <section
-      className={`pb-6 ${
+      className={`space-y-2 bg-cover bg-no-repeat ${
         isDarkMode ? 'border-stone-700' : 'border-stone-300'
       }`}
     >

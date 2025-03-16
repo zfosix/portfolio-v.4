@@ -13,7 +13,7 @@ const ContactPage = () => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen ${
+      className={`flex min-h-screen ${
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
@@ -29,7 +29,7 @@ const ContactPage = () => {
         pauseOnHover
       />
 
-      <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24">
+      <main className="flex-1 flex justify-center pt-8 md:pt-12 px-4 md:px-8 lg:px-12 ml-0 md:ml-8">
         <div className="max-w-4xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

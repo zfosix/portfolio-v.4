@@ -1,4 +1,3 @@
-// ChatroomPage.tsx
 "use client";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
@@ -29,7 +28,7 @@ import UserProfile from "@/components/chatroom/UserProfile";
 import MessagesList from "@/components/chatroom/MessagesList";
 import MessageInput from "@/components/chatroom/MessageInput";
 import LoginButton from "@/components/chatroom/LoginButton";
-import CustomAlert from "@/components/chatroom/CustomAlert"; // Import the CustomAlert component
+import CustomAlert from "@/components/chatroom/CustomAlert";
 
 // Import types
 import { Message, User } from "@/types/chatroom";
@@ -45,7 +44,7 @@ const ChatroomPage = () => {
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editMessageText, setEditMessageText] = useState("");
   const unsubscribeRef = useRef<(() => void) | null>(null);
-  
+
   // Alert state
   const [alertConfig, setAlertConfig] = useState({
     isOpen: false,
@@ -57,6 +56,7 @@ const ChatroomPage = () => {
     onConfirm: () => {},
   });
 
+  // Handle authentication state changes
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
@@ -74,6 +74,7 @@ const ChatroomPage = () => {
     return () => unsubscribe();
   }, []);
 
+  // Fetch messages from Firestore
   useEffect(() => {
     setIsLoading(true);
     setError(null);
@@ -120,8 +121,8 @@ const ChatroomPage = () => {
     };
   }, []);
 
+  // Handle logout
   const handleLogout = async () => {
-    // Show custom alert instead of window.confirm
     setAlertConfig({
       isOpen: true,
       title: "Sign Out",
@@ -141,6 +142,7 @@ const ChatroomPage = () => {
     });
   };
 
+  // Handle login with Google
   const handleLogin = async () => {
     setIsLoggingIn(true);
     try {
@@ -163,7 +165,6 @@ const ChatroomPage = () => {
       return;
     }
 
-    // Show custom delete confirmation
     setAlertConfig({
       isOpen: true,
       title: "Delete Message",
@@ -247,11 +248,11 @@ const ChatroomPage = () => {
 
   return (
     <div
-      className={`flex flex-col min-h-screen ${
+      className={`flex min-h-screen ${
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
-      <main className="flex-1 flex justify-center p-4 md:p-8 px-4 md:px-12 lg:px-24 ml-0 md:ml-16">
+      <main className="flex-1 flex justify-center pt-8 md:pt-12 px-4 md:px-8 lg:px-12 ml-0 md:ml-8">
         <div className="max-w-4xl mx-auto w-full">
           {/* Header section */}
           <ChatroomHeader isDarkMode={isDarkMode} />
@@ -285,10 +286,10 @@ const ChatroomPage = () => {
           {/* Login Button */}
           {!user && (
             <LoginButton
-            isDarkMode={isDarkMode}
-            onLogin={handleLogin}
-            isLoggingIn={isLoggingIn}
-          />
+              isDarkMode={isDarkMode}
+              onLogin={handleLogin}
+              isLoggingIn={isLoggingIn}
+            />
           )}
 
           {/* Message Input */}

@@ -11,10 +11,12 @@ import {
   limit,
   DocumentData,
   QuerySnapshot,
+  Timestamp,
 } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, User, Auth } from "firebase/auth";
 import { toast } from "react-hot-toast";
 import { FirebaseError } from 'firebase/app';
+
 // Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -43,7 +45,7 @@ if (typeof window !== 'undefined') {
   auth = {} as Auth;
 }
 
-const provider: GoogleAuthProvider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 
 // Auth functions
 const loginWithGoogle = async (): Promise<User | null> => {
@@ -58,9 +60,13 @@ const loginWithGoogle = async (): Promise<User | null> => {
         toast.error("Login cancelled. Please try again.");
       } else if (error.code === 'auth/popup-blocked') {
         toast.error("Login popup was blocked. Please allow popups for this site.");
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        toast.error("Login request cancelled. Please try again.");
+      } else if (error.code === 'auth/network-request-failed') {
+        toast.error("Network error. Please check your connection and try again.");
       } else {
         console.error("Login error:", error);
-        toast.error("Failed to login. Please try again.");
+        toast.error(`Login failed: ${error.message}`);
       }
     } else {
       console.error("Unexpected login error:", error);
@@ -91,14 +97,12 @@ interface Message {
   id: string;
   username: string;
   message: string;
-  photo?: string; 
-  timestamp: Date; 
+  photo?: string;
+  timestamp: Date;
   userId: string;
 }
 
-// Helper function that can be exported for message components to use
-import { Timestamp } from "firebase/firestore";
-
+// Helper function to format timestamp
 export const formatTimestamp = (timestamp: unknown): Date | null => {
   try {
     if (!timestamp) {
@@ -186,7 +190,15 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
 export const getFormattedTimestamp = (timestamp: Date | Timestamp | number | string): string => {
   const date = formatTimestamp(timestamp);
   if (!date) return 'No date';
-  return date.toLocaleString();
+  
+  // Format using Indonesian locale as specified in utils.ts
+  return new Intl.DateTimeFormat("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+    day: "2-digit",
+    month: "short",
+  }).format(date);
 };
 
 const getMessages = (
@@ -250,12 +262,13 @@ const sendMessage = async (
   }
 
   try {
+    // PERBAIKAN: Gunakan parameter yang diberikan, bukan nilai hardcoded
     await addDoc(collection(db, "messages"), {
       username: userName,
-      message: message.trim(),
-      photo: photo,
-      timestamp: serverTimestamp(), // Gunakan serverTimestamp() untuk timestamp
+      message: message,
+      photo: photo || "/default-profile.png",
       userId: userId,
+      timestamp: serverTimestamp(),
     });
     toast.success("Message sent successfully!");
     return true;

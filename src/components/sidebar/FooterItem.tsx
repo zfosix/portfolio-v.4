@@ -8,49 +8,72 @@ interface FooterProps {
 
 export default function FooterItem({ isSidebarOpen }: FooterProps) {
   return (
-    <div className="border-neutral-700 py-4 text-stone-400 mt-auto text-center">
+    <div className=" py-5 text-stone-400 mt-auto text-center backdrop-blur-sm">
       <AnimatePresence mode="wait">
         {isSidebarOpen ? (
-          <motion.span
+          <motion.div
             key="full-text"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 10 }}
+            className="flex items-center justify-center gap-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ type: "spring", stiffness: 100, damping: 15 }}
           >
-            © 2025 with{" "}
+            <span className="text-sm font-medium">© 2025</span>
+            <motion.div
+              className="flex items-center gap-1"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <span>with</span>
+              <motion.span
+                className="text-red-500 text-lg"
+                animate={{
+                  scale: [1, 1.2, 1],
+                  transition: {
+                    duration: 1.8,
+                    repeat: Infinity,
+                    repeatType: "mirror",
+                  },
+                }}
+              >
+                ❤
+              </motion.span>
+              <span>by</span>
+            </motion.div>
             <motion.span
-              style={{ color: "red" }}
+              className="font-semibold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              zfosix
+            </motion.span>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="heart-icon"
+            className="flex justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.span
+              className="text-red-500 text-xl"
               animate={{
-                opacity: [1, 0.5, 1],
+                scale: [1, 1.3, 1],
+                y: [0, -5, 0],
                 transition: {
-                  duration: 1.5,
+                  duration: 2,
                   repeat: Infinity,
                   repeatType: "mirror",
                 },
               }}
             >
               ❤
-            </motion.span>{" "}
-            by zfosix
-          </motion.span>
-        ) : (
-          <motion.span
-            key="heart-icon"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{
-              opacity: [1, 0.5, 1],
-              y: [0, -10, 0],
-              transition: {
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "mirror",
-              },
-            }}
-            exit={{ opacity: 0, y: -20 }}
-            style={{ color: "red" }}
-          >
-            ❤
-          </motion.span>
+            </motion.span>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
