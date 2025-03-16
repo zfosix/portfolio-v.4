@@ -1,5 +1,4 @@
-// app/layout.tsx
-"use client"; // Pastikan ini ada di bagian atas
+"use client"; 
 
 import { Poppins } from "next/font/google";
 import { DarkModeProvider } from "@/context/DarkModeContext";
@@ -9,12 +8,11 @@ import Favicon from "@/components/Favicon";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import ParticleStars from "@/components/ParticleStars";
-import ChatRoomButton from "@/components/ChatRoomButton"; // Import ChatRoomButton
+import ChatRoomButton from "@/components/ChatRoomButton"; 
 
-// Dynamic import untuk ClientOnlyAppContent dengan SSR dinonaktifkan
 const ClientOnlyAppContent = dynamic(() => import("@/components/AppContent"), {
   ssr: false,
-  loading: () => <div className="min-h-screen"></div>, // Tampilkan loading state
+  loading: () => <div className="min-h-screen"></div>, 
 });
 
 const poppins = Poppins({
@@ -45,6 +43,7 @@ export default function RootLayout({
 }>) {
   const [isLoading, setIsLoading] = useState(false);
   const [isInitialLoad, setIsInitialLoad] = useState(false);
+  const [showChatRoomButton, setShowChatRoomButton] = useState(false);
   const pathname = usePathname() || "/";
 
   useEffect(() => {
@@ -63,6 +62,13 @@ export default function RootLayout({
     return () => clearTimeout(timeout);
   }, [pathname]);
 
+  useEffect(() => {
+    // Setelah loading selesai, tampilkan tombol chat room
+    if (!isLoading) {
+      setShowChatRoomButton(true);
+    }
+  }, [isLoading]);
+
   return (
     <html lang="en">
       <head>
@@ -75,13 +81,13 @@ export default function RootLayout({
 
         {/* Provider untuk Dark Mode */}
         <DarkModeProvider>
+          {/* Render tombol chat room hanya jika showChatRoomButton bernilai true */}
+          {showChatRoomButton && <ChatRoomButton />}
+
           {/* Render AppContent hanya di sisi klien */}
           <ClientOnlyAppContent isLoading={isLoading} isInitialLoad={isInitialLoad}>
             {children}
           </ClientOnlyAppContent>
-
-          {/* Tombol Chat Room */}
-          <ChatRoomButton />
         </DarkModeProvider>
       </body>
     </html>
