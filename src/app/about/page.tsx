@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useDarkMode } from "@/context/DarkModeContext";
-// import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from "react-responsive";
 import "@/styles/globals.css";
 import IntroductionSection from "@/components/about/IntroductionSection";
 import CareerSection from "@/components/about/CareerSection";
@@ -12,7 +12,7 @@ import Breakline from "@/components/Breakline";
 
 export default function AboutPage() {
   const { isDarkMode } = useDarkMode();
-  // const isMobile = useMediaQuery({ maxWidth: 768 });
+  const isMobile = useMediaQuery({ maxWidth: 768 });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function AboutPage() {
           <Breakline/>
           <CareerSection isDarkMode={isDarkMode} />
           <Breakline/>
-          <SkillList isDarkMode={isDarkMode}  />
+          <SkillList isDarkMode={isDarkMode}  isMobile={isMobile} />
           <Breakline/>
           <YouTubeSection isDarkMode={isDarkMode} />          
           <Breakline/>

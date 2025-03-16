@@ -6,6 +6,7 @@ import { SkillList } from "@/data/resume";
 interface SkillsListProps {
   isDarkMode?: boolean;
   direction?: "left" | "right";
+  isMobile: boolean; 
 }
 
 const SkillsList = ({ direction = "left" }: SkillsListProps) => {
