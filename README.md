@@ -65,7 +65,7 @@ Portfolio ini sudah di-deploy di Vercel:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-Atau kunjungi demo langsung di: [https://portfolio-v4.vercel.app](https://portfolio-v4.vercel.app)
+Atau kunjungi demo langsung di: [https://zianscode.vercel.app ](https://zianscode.vercel.app/)
 
 ## 🤝 Kontribusi
 
