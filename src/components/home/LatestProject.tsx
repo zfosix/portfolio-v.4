@@ -71,7 +71,7 @@ const LatestProject = () => {
             The project I created
           </p>
         </div>
-        <Link href="https://www.dicoding.com/academies/my" passHref>
+        <Link href="/projects" passHref>
           <motion.div
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full border border-neutral-400 dark:border-neutral-800 text-xs sm:text-sm flex items-center gap-2 ${
               isDarkMode
