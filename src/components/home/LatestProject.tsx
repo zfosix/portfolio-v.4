@@ -68,7 +68,7 @@ const LatestProject = () => {
               isDarkMode ? "text-neutral-400" : "text-neutral-600"
             }`}
           >
-            Course by dicoding.com
+            The project I created
           </p>
         </div>
         <Link href="https://www.dicoding.com/academies/my" passHref>
@@ -82,7 +82,7 @@ const LatestProject = () => {
             whileTap={{ scale: 0.95 }}
           >
             <FaBullhorn className="w-4 h-4 sm:w-5 sm:h-5" />
-            <span>Projects from dicoding.com</span>
+            <span>The project I created</span>
           </motion.div>
         </Link>
       </div>

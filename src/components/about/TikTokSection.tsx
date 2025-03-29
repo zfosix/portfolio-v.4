@@ -1,12 +1,15 @@
 import React from "react";
 import { FaTiktok as FaTiktokIcon } from "react-icons/fa";
-import { TikTokAuth } from "@/components/about/TikTokAuth";
-import { TikTokProfile } from "@/components/about/TikTokProfile";
+// import { TikTokAuth } from "@/components/about/TikTokAuth";
+// import { TikTokProfile } from "@/components/about/TikTokProfile";
 interface TikTokSectionProps {
     isDarkMode: boolean;
     isAuthenticated: boolean;
   }
-  const TikTokSection = ({ isDarkMode, isAuthenticated }: TikTokSectionProps) => {
+  const TikTokSection = ({ 
+    isDarkMode, 
+    // isAuthenticated 
+  }: TikTokSectionProps) => {
     return (
     <section className="py-6">
       <div className="flex items-center space-x-3">
@@ -32,9 +35,9 @@ interface TikTokSectionProps {
           Find me on Tiktok
         </p>
       </div>
-      <div className="container mx-auto p-4">
+      {/* <div className="container mx-auto p-4">
         {!isAuthenticated ? <TikTokAuth /> : <TikTokProfile />}
-      </div>
+      </div> */}
       <div className="mt-2 flex justify-between items-center">
         <a
           href="https://www.tiktok.com/@zfosix"

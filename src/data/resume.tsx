@@ -295,7 +295,7 @@ export const certificates = [
   {
     id: 1,
     title: "PT NARANTRAYA TEKNOLOGI DIGITAL",
-    description: "Telah menyelesaikan Praktik Kerja Industri",
+    description: "Certificate of completion of Industrial Work Practice",
     issuedBy: "PT Narantraya",
     date: "2024-07-21",
     image: "/certificates/pkl.png",
@@ -303,6 +303,15 @@ export const certificates = [
   },
   {
     id: 2,
+    title: " UI-UX RESEARCH AND DESIGN",
+    description: "Certificate of Professional Skill",
+    issuedBy: "MySkill",
+    date: "2025-03-11",
+    image: "/certificates/myskill.png",
+    link: "https://drive.google.com/file/d/1lx5ePQXxgSrFGlFzEnAiMoaPp98ioHeP/view?usp=drive_link",
+  },
+  {
+    id: 3,
     title: "IGDX Career Seminar",
     description: "Career Guidance For Aspiring Game Developer.",
     issuedBy: "IGDX Career",
@@ -311,7 +320,7 @@ export const certificates = [
     link: "https://drive.google.com/file/d/1H4aCas-yLXKmizrN3QaRJSN3az9B1KC_/view?usp=drive_link",
   },
   {
-    id: 3,
+    id: 4,
     title: "Front-End with VUE JS",
     description:
       "Front-end Development with The Progressive JavaScript Framework Vue.js",
@@ -321,7 +330,7 @@ export const certificates = [
     link: "https://drive.google.com/file/d/1BZ3ccpGrEE_2IZWN9KDVR7c1yPTVC-Fx/view?usp=drive_link",
   },
   {
-    id: 4,
+    id: 5,
     title: "Back-End with JavaScript Framework",
     description:
       "Joining the Backend Development with Javascript Framework Training with PT.Laskar Teknologi Mulia (Cyberlabs).",
@@ -331,7 +340,7 @@ export const certificates = [
     link: "https://drive.google.com/file/d/12W30fxT1vpU0nziuJVKOL38qBadhumrg/view?usp=drive_link",
   },
   {
-    id: 5,
+    id: 6,
     title: "Belajar Dasar AI",
     description: "Certification for completing the AI course Dicoding.",
     issuedBy: "Dicoding",
@@ -340,7 +349,7 @@ export const certificates = [
     link: "https://drive.google.com/file/d/1Q59lDUnG8LaOrxpwZ5RvG_SQCmEzvF_E/view?usp=drive_link",
   },
   {
-    id: 6,
+    id: 7,
     title: "Belajar Membuat Front-End Web untuk Pemula",
     description:
       "Certification for completing the Frontend Web course Dicoding.",
@@ -350,7 +359,7 @@ export const certificates = [
     link: "https://drive.google.com/file/d/1moE3wdslssz-TDvWTeP0tqq5URyqv9S5/view?usp=drive_link",
   },
   {
-    id: 7,
+    id: 8,
     title: "Cloud Practitioner Essentials (Belajar Dasar AWS Cloud)",
     description: "Certification for completing the AWS course Dicoding.",
     issuedBy: "Dicoding",
@@ -359,7 +368,7 @@ export const certificates = [
     link: "https://drive.google.com/file/d/1i89m11ZocSTqaQk8AhiPsxFJ6HxYZ3xq/view?usp=drive_link",
   },
   {
-    id: 8,
+    id: 9,
     title: "Belajar Dasar Pemrograman JavaScript",
     description: "Certification for completing the JS course Dicoding.",
     issuedBy: "Dicoding",
@@ -367,6 +376,15 @@ export const certificates = [
     image: "/certificates/dicjs.png",
     link: "https://drive.google.com/file/d/1D8sIA-4zFwJpjtkPoI_LbADspGeRBZzG/view?usp=drive_link",
   },
+  // {
+  //   id: 10,
+  //   title: "Belajar Dasar Pemrograman JavaScript",
+  //   description: "Certification for completing the JS course Dicoding.",
+  //   issuedBy: "Dicoding",
+  //   date: "2025-01-24",
+  //   image: "/certificates/dicjs.png",
+  //   link: "https://drive.google.com/file/d/1D8sIA-4zFwJpjtkPoI_LbADspGeRBZzG/view?usp=drive_link",
+  // },
 ];
 
 // Data skill categories dengan level
