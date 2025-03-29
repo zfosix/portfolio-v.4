@@ -8,7 +8,7 @@ interface FooterProps {
 
 export default function FooterItem({ isSidebarOpen }: FooterProps) {
   return (
-    <div className=" py-5 text-stone-400 mt-auto text-center backdrop-blur-sm">
+    <div className=" py-9 text-stone-400 mt-auto text-center backdrop-blur-sm">
       <AnimatePresence mode="wait">
         {isSidebarOpen ? (
           <motion.div

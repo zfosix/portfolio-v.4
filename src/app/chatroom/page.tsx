@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 // Import components
 import ChatroomHeader from "@/components/chatroom/ChatroomHeader";
@@ -35,6 +36,7 @@ import { Message, User } from "@/types/chatroom";
 
 const ChatroomPage = () => {
   const { isDarkMode } = useDarkMode();
+  const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,6 +46,9 @@ const ChatroomPage = () => {
   const [editingMessageId, setEditingMessageId] = useState<string | null>(null);
   const [editMessageText, setEditMessageText] = useState("");
   const unsubscribeRef = useRef<(() => void) | null>(null);
+
+  // Maintenance mode state
+  const [isUnderMaintenance] = useState(true);
 
   // Alert state
   const [alertConfig, setAlertConfig] = useState({
@@ -76,6 +81,8 @@ const ChatroomPage = () => {
 
   // Fetch messages from Firestore
   useEffect(() => {
+    if (isUnderMaintenance) return;
+
     setIsLoading(true);
     setError(null);
 
@@ -119,10 +126,12 @@ const ChatroomPage = () => {
         unsubscribeRef.current();
       }
     };
-  }, []);
+  }, [isUnderMaintenance]);
 
   // Handle logout
   const handleLogout = async () => {
+    if (isUnderMaintenance) return;
+
     setAlertConfig({
       isOpen: true,
       title: "Sign Out",
@@ -144,6 +153,8 @@ const ChatroomPage = () => {
 
   // Handle login with Google
   const handleLogin = async () => {
+    if (isUnderMaintenance) return;
+
     setIsLoggingIn(true);
     try {
       await loginWithGoogle();
@@ -160,6 +171,7 @@ const ChatroomPage = () => {
     messageId: string,
     messageUserId: string
   ) => {
+    if (isUnderMaintenance) return;
     if (!user || user.uid !== messageUserId) {
       toast.error("You can only delete your own messages");
       return;
@@ -168,7 +180,8 @@ const ChatroomPage = () => {
     setAlertConfig({
       isOpen: true,
       title: "Delete Message",
-      message: "Are you sure you want to delete this message? This action cannot be undone.",
+      message:
+        "Are you sure you want to delete this message? This action cannot be undone.",
       confirmText: "Delete",
       cancelText: "Cancel",
       type: "delete",
@@ -189,6 +202,7 @@ const ChatroomPage = () => {
     messageId: string,
     messageUserId: string
   ) => {
+    if (isUnderMaintenance) return;
     if (!user || user.uid !== messageUserId) {
       toast.error("You can only edit your own messages");
       return;
@@ -203,6 +217,7 @@ const ChatroomPage = () => {
 
   // Save edited message
   const handleSaveEdit = async () => {
+    if (isUnderMaintenance) return;
     if (!editingMessageId || !editMessageText.trim()) return;
 
     try {
@@ -222,6 +237,7 @@ const ChatroomPage = () => {
   // Handle sending a new message
   const handleSendMessage = useCallback(
     async (message: string) => {
+      if (isUnderMaintenance) return;
       if (!user || !message.trim() || isSending) return;
 
       setIsSending(true);
@@ -243,8 +259,13 @@ const ChatroomPage = () => {
         setIsSending(false);
       }
     },
-    [user, isSending]
+    [user, isSending, isUnderMaintenance]
   );
+
+  // Redirect to home page
+  const redirectToHome = () => {
+    router.push("/");
+  };
 
   return (
     <div
@@ -253,7 +274,62 @@ const ChatroomPage = () => {
       }`}
     >
       <main className="flex-1 flex justify-center pt-8 md:pt-12 px-4 md:px-8 lg:px-12 ml-0 md:ml-8">
-        <div className="max-w-4xl mx-auto w-full">
+        <div className="max-w-4xl mx-auto w-full relative">
+          {/* Maintenance Banner */}
+          {isUnderMaintenance && (
+            <div
+              className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md  ${
+                isDarkMode ? "bg-black" : "bg-gray-100"
+              }`}
+            >
+              <div
+                className={`p-8 rounded-xl max-w-md text-center ${
+                  isDarkMode
+                    ? "bg-neutral-900 border border-neutral-700"
+                    : "bg-white shadow-xl"
+                }`}
+              >
+                <div className="flex justify-center mb-4">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`h-16 w-16 ${
+                      isDarkMode ? "text-yellow-400" : "text-yellow-500"
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                    />
+                  </svg>
+                </div>
+                <h2 className="text-2xl font-bold mb-2">
+                  Sedang Dalam Perbaikan
+                </h2>
+                <p className="mb-4">
+                  Halaman chatroom ini sedang dalam perbaikan. Mohon kembali
+                  lagi nanti. Terima kasih atas pengertian Anda.
+                </p>
+                <p className="text-sm text-gray-500">Maintenance in progress</p>
+
+                <button
+                  onClick={redirectToHome}
+                  className={`mt-6 px-4 py-2 rounded-lg ${
+                    isDarkMode
+                      ? "bg-neutral-800 hover:bg-neutral-700 text-white"
+                      : "bg-gray-200 hover:bg-gray-300 text-black"
+                  }`}
+                >
+                  Continue Anyway (Home)
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Header section */}
           <ChatroomHeader isDarkMode={isDarkMode} />
 
