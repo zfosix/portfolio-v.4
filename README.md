@@ -73,4 +73,4 @@ Meskipun ini adalah proyek pribadi, saran dan masukan selalu diterima! Buat issu
 
 ---
 
-© 2024 [Nama Anda] - Dibangun dengan ❤️ dan Next.js
+© 2025 Fajar Fauzian - Dibangun dengan ❤️ dan Next.js
