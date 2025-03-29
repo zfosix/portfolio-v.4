@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Website v.4 🚀
 
-## Getting Started
+Selamat datang di repositori Portfolio Website versi 4! Ini adalah iterasi terbaru dari portfolio pribadi saya yang dibangun dengan teknologi modern.
 
-First, run the development server:
+## ✨ Fitur Unggulan
+
+- **Next.js 14** - Dengan fitur App Router terbaru untuk performa optimal
+- **Desain Modern** - Antarmuka yang elegan dan responsif
+- **Animasi Smooth** - Transisi halus dengan Framer Motion
+- **Dark/Light Mode** - Dukungan tema gelap dan terang
+- **Optimized Performance** - Load cepat dengan optimisasi bawaan Next.js
+
+## 🛠 Teknologi Utama
+
+- ⚛️ Next.js 14 (App Router)
+- 🎨 Tailwind CSS
+- ✨ Framer Motion
+- 📱 Fully Responsive
+- 🌓 Dark Mode Support
+
+## 🚀 Cara Menjalankan
+
+1. Clone repositori ini
+2. Install dependencies:
+
+```bash
+npm install
+# atau
+yarn install
+# atau
+pnpm install
+# atau
+bun install
+```
+
+3. Jalankan server development:
 
 ```bash
 npm run dev
-# or
+# atau
 yarn dev
-# or
+# atau
 pnpm dev
-# or
+# atau
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000) di browser Anda untuk melihat hasilnya.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📂 Struktur Proyek
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+portfolio-v4/
+├── app/            # Routing dengan Next.js App Router
+├── components/     # Komponen UI reusable
+├── lib/            # Utility functions
+├── styles/         # Global styles
+├── public/         # Assets statis
+└── package.json    # Dependencies
+```
 
-## Learn More
+## 🌐 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Portfolio ini sudah di-deploy di Vercel:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Atau kunjungi demo langsung di: [https://zianscode.vercel.app ](https://zianscode.vercel.app/)
 
-## Deploy on Vercel
+## 🤝 Kontribusi
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Meskipun ini adalah proyek pribadi, saran dan masukan selalu diterima! Buat issue atau pull request jika Anda memiliki ide perbaikan.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+© 2025 Fajar Fauzian - Dibangun dengan ❤️ dan Next.js
