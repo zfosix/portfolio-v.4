@@ -8,7 +8,7 @@ interface DarkModeContextType {
 }
 
 const DarkModeContext = createContext<DarkModeContextType>({
-  isDarkMode: false, 
+  isDarkMode: false,
   toggleDarkMode: () => {},
 });
 
@@ -24,9 +24,8 @@ export const DarkModeProvider: React.FC<{
     setMounted(true);
 
     const darkModePreference = localStorage.getItem("darkMode");
-    
     const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    
+
     setIsDarkMode(
       darkModePreference !== null ? JSON.parse(darkModePreference) : prefersDarkMode
     );
@@ -34,11 +33,15 @@ export const DarkModeProvider: React.FC<{
 
   useEffect(() => {
     if (!mounted) return;
-    
+
     if (isDarkMode) {
       document.documentElement.classList.add("dark");
+      document.body.classList.add("bg-neutral-950"); 
+      document.body.classList.remove("bg-white"); 
     } else {
       document.documentElement.classList.remove("dark");
+      document.body.classList.add("bg-white"); 
+      document.body.classList.remove("bg-neutral-950");
     }
 
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
