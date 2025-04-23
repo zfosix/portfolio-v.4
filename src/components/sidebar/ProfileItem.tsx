@@ -41,7 +41,7 @@ export default function ProfileItem({
 
   return (
     <div
-      className="flex flex-col items-center justify-center py-6 relative transition-all"
+      className="flex flex-col items-center justify-center py-4 relative transition-all" // Kurangi py-6 menjadi py-4
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -52,11 +52,11 @@ export default function ProfileItem({
       />
 
       <motion.div
-        className="relative mt-12 rounded-full overflow-hidden border-2 border-neutral-700/50 transition-all z-10 shadow-lg"
+        className="relative mt-6 rounded-full overflow-hidden border-2 border-neutral-700/50 transition-all z-10 shadow-lg" 
         initial={false}
         animate={{
-          width: isSidebarOpen ? "100px" : "40px",
-          height: isSidebarOpen ? "100px" : "40px",
+          width: isSidebarOpen ? "80px" : "32px",
+          height: isSidebarOpen ? "80px" : "32px",
           borderWidth: isSidebarOpen ? "3px" : "2px",
         }}
         whileHover={{
@@ -73,8 +73,8 @@ export default function ProfileItem({
         <Image
           src="/image/profile1.jpeg"
           alt="zfosix"
-          width={100}
-          height={100}
+          width={80} 
+          height={80}
           priority
           className="object-cover w-full h-full"
         />
@@ -88,11 +88,11 @@ export default function ProfileItem({
 
       <motion.button
         className={`
-        ${isSidebarOpen ? "absolute top-4 right-4" : "mt-4"}
-        w-8 h-8 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white
-        rounded-xl flex items-center justify-center z-10 transition-all
-        hover:bg-neutral-100 dark:hover:bg-neutral-700 shadow-md
-      `}
+          ${isSidebarOpen ? "absolute top-2 right-2" : "mt-2"} 
+          w-8 h-8 m-2 bg-white dark:bg-neutral-800 text-neutral-800 dark:text-white
+          rounded-xl flex items-center justify-center z-10 transition-all
+          hover:bg-neutral-100 dark:hover:bg-neutral-700 shadow-md
+        `}
         onClick={toggleDarkMode}
         aria-label="Toggle dark mode"
         whileHover={{ scale: 1.1 }}
@@ -108,7 +108,7 @@ export default function ProfileItem({
       <AnimatePresence mode="wait">
         {isSidebarOpen && (
           <motion.div
-            className="text-center mt-4 z-10 w-full flex flex-col items-center justify-center"
+            className="text-center mt-2 z-10 w-full flex flex-col items-center justify-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{
@@ -122,7 +122,7 @@ export default function ProfileItem({
             transition={{ duration: 0.3 }}
           >
             <motion.div
-              className="font-medium text-lg text-neutral-800 dark:text-white flex items-center justify-center gap-2"
+              className="font-medium text-base text-neutral-800 dark:text-white flex items-center justify-center gap-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -135,7 +135,7 @@ export default function ProfileItem({
                   className="text-neutral-900 dark:text-neutral-200 font-semibold"
                 >
                   <Link href="/" passHref>
-                    <h2 className="font-sora flex-grow whitespace-nowrap text-lg font-medium lg:text-xl">
+                    <h2 className="font-sora flex-grow whitespace-nowrap text-base font-medium lg:text-lg"> 
                       Fajar Fauzian
                     </h2>
                   </Link>
@@ -152,12 +152,12 @@ export default function ProfileItem({
                     ease: "easeInOut",
                   }}
                 >
-                  <RiVerifiedBadgeFill className="text-blue-500" size={16} />
+                  <RiVerifiedBadgeFill className="text-blue-500" size={14} /> 
                 </motion.div>
               </span>
             </motion.div>
             <motion.div
-              className="text-neutral-600 dark:text-white text-sm mt-1 font-medium w-full flex justify-center" // Tambahkan flex dan justify-center
+              className="text-neutral-600 dark:text-white text-xs mt-1 font-medium w-full flex justify-center" 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -166,7 +166,7 @@ export default function ProfileItem({
               <Link
                 href={DEVTO_PROFILE}
                 target="_blank"
-                className="font-sora text-sm text-neutral-600 transition-all duration-300 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400"
+                className="font-sora text-xs text-neutral-600 transition-all duration-300 hover:text-neutral-700 dark:text-neutral-500 dark:hover:text-neutral-400" 
               >
                 @zianscode
               </Link>

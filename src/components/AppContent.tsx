@@ -41,7 +41,7 @@ function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
 
       {/* Konten utama */}
       <div
-        className="flex"
+        className="flex flex-1 overflow-hidden pt-12 md:pt-0 "
         style={{
           backgroundColor: isDarkMode ? "#0B0A0A" : "#FFFFFF", // Sesuaikan dengan tema
         }}

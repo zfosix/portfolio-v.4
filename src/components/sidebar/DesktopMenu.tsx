@@ -6,7 +6,7 @@ import FooterItem from "@/components/sidebar/FooterItem";
 import MenuItem from "@/components/sidebar/MenuItem";
 import { motion } from "framer-motion";
 import Breakline from "@/components/Breakline";
-import { DesktopMenuProps } from '@/types/menu';
+import { DesktopMenuProps } from "@/types/menu";
 
 export default function DesktopMenu({
   isDarkMode,
@@ -25,11 +25,11 @@ export default function DesktopMenu({
 
   return (
     <motion.div
-      className={`fixed left-0 top-0 h-screen flex flex-col transition-all duration-500 ease-in-out ${
+      className={`fixed left-0 top-0 h-[100dvh] flex flex-col transition-all duration-500 ease-in-out ${
         isDarkMode
           ? "bg-neutral-950/20 text-stone-200 shadow-[0_0_10px_2px_rgba(255,255,255,0.1)]"
           : "bg-neutral-100/20 text-stone-800 shadow-[0_0_10px_2px_rgba(0,0,0,0.1)]"
-      } backdrop-blur-md rounded-tr-xl rounded-br-xl`}
+      } backdrop-blur-md rounded-tr-xl rounded-br-xl overflow-hidden`}
       initial={false}
       animate={{
         width: isSidebarOpen ? "250px" : "68px",
@@ -96,7 +96,7 @@ export default function DesktopMenu({
       </motion.nav>
 
       {/* Footer Section */}
-      <div className="flex-shrink-3">
+      <div className="flex-shrink-0 px-3 pb-4">
         <FooterItem isSidebarOpen={isSidebarOpen} />
       </div>
     </motion.div>

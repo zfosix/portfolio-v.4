@@ -20,10 +20,10 @@ export default function ProfileHeader({
         <>
           {/* Background Image */}
           <motion.div
-            className="absolute inset-x-0 top-0 h-1/2 bg-cover bg-center z-0 rounded-lg overflow-hidden"
+            className="absolute inset-x-0 top-0 h-20 bg-cover bg-center z-0 rounded-lg overflow-hidden" // Ganti h-1/2 ke h-20
             style={{
               backgroundImage: "url('/image/backdrop.webp')",
-              margin: "12px",
+              margin: "8px", // Kurangi margin dari 12px ke 8px
             }}
             initial={{ opacity: 0, scale: 1.1 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -32,8 +32,8 @@ export default function ProfileHeader({
 
           {/* Overlay */}
           <motion.div
-            className="absolute inset-x-0 top-0 h-1/2 bg-black/50 z-0 rounded-lg"
-            style={{ margin: "12px" }}
+            className="absolute inset-x-0 top-0 h-20 bg-black/50 z-0 rounded-lg"
+            style={{ margin: "8px" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -43,17 +43,17 @@ export default function ProfileHeader({
       <AnimatePresence>
         {(isHovered || isSidebarOpen) && (
           <motion.div
-            className="absolute top-4 left-4 flex items-center space-x-1 z-10"
+            className="absolute top-2 left-2 flex items-center space-x-1 z-10 m-2" 
             initial={{ opacity: 0, y: -10 }}
             animate={{
               opacity: 1,
               y: 0,
               backgroundColor: showText ? "rgba(0, 0, 0, 0.3)" : "transparent",
               border: showText ? "1px solid rgba(255, 255, 255, 0.6)" : "none",
-              padding: showText ? "4px 10px" : "0",
+              padding: showText ? "3px 8px" : "0", 
               borderRadius: "9999px",
               color: "white",
-              boxShadow: showText ? "0 2px 10px rgba(0, 0, 0, 0.15)" : "none",
+              boxShadow: showText ? "0 2px 8px rgba(0, 0, 0, 0.15)" : "none", 
             }}
             exit={{ opacity: 0, y: -10 }}
             whileHover={{
@@ -62,7 +62,7 @@ export default function ProfileHeader({
                 : "transparent",
               color: showText ? "black" : "white",
               scale: 1.05,
-              boxShadow: showText ? "0 4px 12px rgba(0, 0, 0, 0.2)" : "none",
+              boxShadow: showText ? "0 4px 10px rgba(0, 0, 0, 0.2)" : "none",
             }}
             transition={{
               duration: 0.3,
@@ -75,7 +75,7 @@ export default function ProfileHeader({
               transition={{ duration: 0.3 }}
               className="relative"
             >
-              <FaCircle className="text-green-500" size={12} />
+              <FaCircle className="text-green-500" size={10} /> 
               <motion.div
                 className="absolute top-0 left-0 w-full h-full rounded-full bg-green-500/40"
                 animate={{
@@ -93,7 +93,7 @@ export default function ProfileHeader({
             <AnimatePresence>
               {showText && (
                 <motion.span
-                  className="text-sm font-medium whitespace-nowrap"
+                  className="text-xs font-medium whitespace-nowrap" 
                   initial={{ opacity: 0, width: 0, x: -10 }}
                   animate={{ opacity: 1, width: "auto", x: 0 }}
                   exit={{ opacity: 0, width: 0, x: -10 }}
