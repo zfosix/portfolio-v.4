@@ -1,8 +1,7 @@
-// File: components/ClientOnlyAppContent.tsx
 "use client";
 
 import { useDarkMode } from "@/context/DarkModeContext";
-import LoadingSpinner from "@/components/LoadingSpinner"; // Pastikan nama file dan import benar
+import LoadingSpinner from "@/components/LoadingSpinner";
 import dynamic from "next/dynamic";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,13 +11,13 @@ const ClientOnlySidebar = dynamic(() => import("@/components/sidebar/index"), {
 });
 
 interface AppContentProps {
-  isLoading: boolean; // Prop untuk menampilkan loading state
-  isInitialLoad: boolean; // Prop untuk animasi awal
-  children: React.ReactNode; // Konten utama
+  isLoading: boolean;
+  isInitialLoad: boolean;
+  children: React.ReactNode;
 }
 
 function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
-  const { isDarkMode } = useDarkMode(); // Ambil tema gelap/terang dari context
+  const { isDarkMode } = useDarkMode();
 
   return (
     <>
@@ -28,7 +27,7 @@ function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
           <motion.div
             className="fixed inset-0 flex items-center justify-center z-[1000]"
             style={{
-              backgroundColor: isDarkMode ? "#0B0A0A" : "#FFFFFF", // Sesuaikan dengan tema
+              backgroundColor: isDarkMode ? "#171717" : "#ffffff",
             }}
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -41,20 +40,28 @@ function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
 
       {/* Konten utama */}
       <div
-        className="flex flex-1 overflow-hidden pt-12 md:pt-0 "
+        className="flex flex-1 overflow-hidden pt-12 md:pt-0"
         style={{
-          backgroundColor: isDarkMode ? "#0B0A0A" : "#FFFFFF", // Sesuaikan dengan tema
+          backgroundColor: isDarkMode ? "bg-neutral-950" : "bg-white",
         }}
       >
-        {/* Sidebar */}
-        <div className="relative z-[1001]">
-          <ClientOnlySidebar />
-        </div>
+        {/* Sidebar dengan animasi masuk/keluar */}
+        <AnimatePresence>
+          <motion.div
+            className="relative z-[1001]"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <ClientOnlySidebar isLoading={isLoading} />
+          </motion.div>
+        </AnimatePresence>
 
         {/* Konten anak (children) dengan animasi */}
         <motion.div
           className="flex-1"
-          initial={{ opacity: isInitialLoad ? 0 : 1 }} // Animasi opacity saat awal load
+          initial={{ opacity: isInitialLoad ? 0 : 1 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}
         >
@@ -65,5 +72,4 @@ function AppContent({ isLoading, isInitialLoad, children }: AppContentProps) {
   );
 }
 
-// Ekspor langsung sebagai client component (tidak perlu dynamic)
 export default AppContent;

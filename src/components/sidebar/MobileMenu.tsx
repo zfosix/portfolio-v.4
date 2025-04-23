@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect } from "react";
 import MenuItem from "@/components/sidebar/MenuItem";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,7 +26,6 @@ export default function MobileMenu({
         setIsMobileOpen(false);
       }
     };
-
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [isMobileOpen, setIsMobileOpen]);
@@ -39,7 +37,6 @@ export default function MobileMenu({
     } else {
       document.body.style.overflow = "";
     }
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -50,26 +47,26 @@ export default function MobileMenu({
       {isMobileOpen && (
         <motion.div
           key="mobile-sidebar"
-          className={`fixed left-0 right-0 top-[64px] w-full flex rounded-b-xl flex-col transition-all duration-500 ease-in-out ${
+          className={`fixed left-0 right-0 top-0 w-full h-full flex flex-col transition-all duration-500 ease-in-out ${
             isDarkMode
               ? "bg-neutral-950/95 text-stone-200 opacity-100"
               : "bg-neutral-100/95 text-stone-800 opacity-100"
           } backdrop-blur-sm z-40 overflow-y-auto`}
-          initial={{ y: "-100%" }}
-          animate={{ y: 0 }} 
-          exit={{ y: "-100%" }} 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }} 
+          exit={{ opacity: 0 }} 
           transition={{ duration: 0.3, ease: "easeInOut" }}
           role="navigation"
           aria-label="Mobile Navigation"
         >
           {/* Menu Section */}
           <motion.nav
-            className="flex-grow my-6 px-3 overflow-y-auto"
+            className="flex-grow mt-20 px-5 overflow-y-auto"
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
           >
             <motion.div
-              className="space-y-2"
+              className="space-y-4"
               initial={false}
               animate={{
                 opacity: 1,
@@ -84,16 +81,34 @@ export default function MobileMenu({
                   key={item.href}
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
+                  whileHover={{ 
+                    scale: 1.03,
+                    transition: { duration: 0.2 }
+                  }}
+                  className={`rounded-lg ${
+                    isDarkMode
+                      ? "hover:bg-neutral-800"
+                      : "hover:bg-neutral-200"
+                  } transition-all duration-300`}
                   transition={{ duration: 0.2 }}
                   onClick={() => setIsMobileOpen(false)}
                 >
-                  <MenuItem
-                    item={item}
-                    isOpen={true}
-                    isDarkMode={isDarkMode}
-                    pathname={pathname}
-                    setIsMobileOpen={setIsMobileOpen}
-                  />
+                  <div className="relative overflow-hidden rounded-lg">
+                    <motion.div
+                      className="absolute inset-0 w-full h-full"
+                      whileHover={{
+                        x: 0,
+                        transition: { duration: 0.3 }
+                      }}
+                    />
+                    <MenuItem
+                      item={item}
+                      isOpen={true}
+                      isDarkMode={isDarkMode}
+                      pathname={pathname}
+                      setIsMobileOpen={setIsMobileOpen}
+                    />
+                  </div>
                 </motion.div>
               ))}
             </motion.div>

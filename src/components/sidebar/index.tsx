@@ -8,7 +8,11 @@ import { usePathname } from "next/navigation";
 import MobileProfileItem from "@/components/sidebar/MobileProfileItem";
 import { MENU_ITEMS } from "@/data/resume";
 
-export default function Sidebar() {
+interface SidebarProps {
+  isLoading: boolean;
+}
+
+export default function Sidebar({ isLoading }: SidebarProps) {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -28,15 +32,17 @@ export default function Sidebar() {
       className="sticky top-0 z-10 flex flex-col transition-all duration-300 lg:py-8"
       suppressHydrationWarning={true}
     >
-      {/* Mobile Profile Section - Hanya tampil di mobile */}
-      <div className="md:hidden">
-        <MobileProfileItem
-          isDarkMode={isDarkMode}
-          toggleDarkMode={toggleDarkMode}
-          isMobileOpen={isMobileOpen}
-          setIsMobileOpen={setIsMobileOpen}
-        />
-      </div>
+      {/* Mobile Profile Section - Hanya tampil di mobile dan tidak loading */}
+      {!isLoading && (
+        <div className="md:hidden">
+          <MobileProfileItem
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+            isMobileOpen={isMobileOpen}
+            setIsMobileOpen={setIsMobileOpen}
+          />
+        </div>
+      )}
 
       {/* Desktop Menu - Hanya tampil di desktop */}
       <div className="hidden md:block">

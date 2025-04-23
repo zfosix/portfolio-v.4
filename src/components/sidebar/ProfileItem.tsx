@@ -52,11 +52,11 @@ export default function ProfileItem({
       />
 
       <motion.div
-        className="relative mt-6 rounded-full overflow-hidden border-2 border-neutral-700/50 transition-all z-10 shadow-lg" 
+        className="relative mt-9 rounded-full overflow-hidden border-2 border-neutral-700/50 transition-all z-10 shadow-lg" 
         initial={false}
         animate={{
-          width: isSidebarOpen ? "80px" : "32px",
-          height: isSidebarOpen ? "80px" : "32px",
+          width: isSidebarOpen ? "90px" : "38px",
+          height: isSidebarOpen ? "90px" : "38px",
           borderWidth: isSidebarOpen ? "3px" : "2px",
         }}
         whileHover={{
