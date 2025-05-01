@@ -1,10 +1,10 @@
 export const summaryMock = {
     paragraphOne:
-      'Hi! I am Fajar Fauzian, a student at SMK Wikrama Bogor majoring in Software and Game Development, specializing in Frontend and Web Development. I have developed strong skills in JavaScript, PHP, and various frameworks such as Vue.js, React.js, Next.js, and Laravel, allowing me to build innovative and user-friendly web applications. Currently, I reside in Jakarta, Indonesia 🇮🇩.',
+      'Hi! I’m Fajar Fauzian, a graduate of SMK Wikrama Bogor majoring in Software and Game Development, with a strong focus on Frontend and Web Development. I specialize in JavaScript, PHP, and modern frameworks such as Vue.js, React.js, Next.js, and Laravel, enabling me to develop innovative, responsive, and user-centric web applications.',
     paragraphTwo:
-      'In addition to web development, I am highly interested in designing UI/UX for mobile applications. I focus on creating simple yet functional designs that enhance user experience while maintaining visual appeal. This interest motivates me to continuously explore creative approaches to design challenges.',
+      'Beyond web development, I have a strong interest in UI/UX design for mobile applications. I strive to create clean, intuitive, and functional interfaces that deliver an optimal user experience while maintaining aesthetic consistency.',
     paragraphThree:
-      'To further expand my expertise, I am eager to dive into mobile app development using Flutter and Kotlin. By mastering these technologies, I aim to strengthen my skills and contribute to building versatile applications across different platforms.',
+      'Currently based in Jakarta, Indonesia 🇮🇩, I am also expanding my expertise into mobile app development using Flutter and Kotlin, with the goal of building seamless, cross-platform applications and contributing to impactful digital solutions.',
     paragraphFour: 
-      'Thank you for visiting, and I look forward to embarking on this knowledge-sharing adventure.'
+      'Thank you for stopping by—let’s connect and create something exceptional together.',
   }

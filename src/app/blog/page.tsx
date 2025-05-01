@@ -79,11 +79,11 @@ const BlogPage = () => {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold mb-2">Sedang Dalam Perbaikan</h2>
-            <p className="mb-4">
-              Halaman blog ini sedang dalam perbaikan. Mohon kembali lagi nanti.
-              Terima kasih atas pengertian Anda.
-            </p>
+            <h2 className="text-2xl font-bold mb-2">Under Improvement</h2>
+                <p className="mb-4">
+                  This blog page is undergoing maintenance. Please come back
+                  to again later. Thank you for your understanding.
+                </p>
             <p className="text-sm text-gray-500">Maintenance in progress</p>
 
             <button

@@ -83,7 +83,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-7">
       <h2 className="text-xl font-semibold">Or send me a message</h2>
       <form className="space-y-4" onSubmit={handleSubmit}>
         {/* Container for Name and Email */}

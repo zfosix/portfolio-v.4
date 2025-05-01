@@ -1,26 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaYoutube } from "react-icons/fa";
 import Image from "next/image";
+
 const YouTubeSection = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const [embedError, setEmbedError] = useState(false);
-  const videoId = "prViRqgo4BM"; // Your YouTube video ID
+  const videoId = "XHb0alogjv0"; // Test with a known embeddable video (e.g., "dQw4w9WgXcQ") if needed
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
   const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  const videoLink = `https://www.youtube.com/watch?v=${videoId}`;
 
-  const handleEmbedError = () => {
+  const handleEmbedError = (e: React.SyntheticEvent<HTMLIFrameElement, Event>) => {
+    console.error("YouTube iframe failed to load:", e);
     setEmbedError(true);
   };
 
+  // Reset embedError on mount to ensure fresh attempt
+  useEffect(() => {
+    setEmbedError(false);
+  }, []);
+
   return (
     <section
-      className={`${
+      className={`py-6 border-t ${
         isDarkMode ? "border-stone-700" : "border-stone-300"
-      } py-6`}
+      }`}
     >
       <div className="flex items-center space-x-3">
         <FaYoutube
-          className={`text-2xl ${
-            isDarkMode ? "text-stone-200" : "text-gray-800"
-          }`}
+          className={`text-2xl ${isDarkMode ? "text-stone-200" : "text-gray-800"}`}
         />
         <h3
           className={`text-xl font-bold ${
@@ -41,13 +48,13 @@ const YouTubeSection = ({ isDarkMode }: { isDarkMode: boolean }) => {
         >
           My YouTube channel in 2023
         </p>
-        
+
         <div className="mt-4 w-full overflow-hidden">
           {embedError ? (
             // Fallback when embed fails
             <div className="relative" style={{ paddingBottom: "56.25%", height: 0 }}>
               <a
-                href={`https://www.youtube.com/watch?v=${videoId}`}
+                href={videoLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="absolute top-0 left-0 w-full h-full"
@@ -55,7 +62,10 @@ const YouTubeSection = ({ isDarkMode }: { isDarkMode: boolean }) => {
                 <Image
                   src={thumbnailUrl}
                   alt="YouTube video thumbnail"
+                  width={1280}
+                  height={720}
                   className="w-full h-full object-cover rounded-lg"
+                  priority={false}
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30 hover:bg-opacity-10 transition-all">
                   <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center">
@@ -68,9 +78,10 @@ const YouTubeSection = ({ isDarkMode }: { isDarkMode: boolean }) => {
             // YouTube embed
             <div className="relative" style={{ paddingBottom: "56.25%", height: 0 }}>
               <iframe
-                src={`https://www.youtube.com/embed/${videoId}?rel=0`}
+                src={embedUrl}
                 title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
                 allowFullScreen
                 className="absolute top-0 left-0 w-full h-full rounded-lg"
                 onError={handleEmbedError}
@@ -87,21 +98,6 @@ const YouTubeSection = ({ isDarkMode }: { isDarkMode: boolean }) => {
         >
           THANKS 2024!! THIS IS MY #youtubechannel
         </p>
-
-        {/* Direct link as fallback */}
-        <div className="mt-4">
-          <a
-            href={`https://www.youtube.com/watch?v=${videoId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center px-4 py-2 rounded-md ${
-              isDarkMode ? "bg-neutral-600 hover:bg-red-700" : "bg-red-500 hover:bg-red-600"
-            } text-white text-sm`}
-          >
-            <FaYoutube className="mr-2" />
-            Watch on YouTube
-          </a>
-        </div>
       </div>
     </section>
   );

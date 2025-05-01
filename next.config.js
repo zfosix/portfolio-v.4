@@ -8,38 +8,39 @@ const nextConfig = {
         hostname: 'lh3.googleusercontent.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        pathname: '**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.googleusercontent.com',
+        pathname: '**',
+      },
     ],
   },
   async headers() {
     return [
       {
-        source: "/(.*)",
+        source: '/(.*)',
         headers: [
           {
             key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp',
+            value: 'require-corp', // Less restrictive than credentialless
           },
           {
             key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
+            value: 'same-origin-allow-popups',
           },
           {
             key: 'Cross-Origin-Resource-Policy',
-            value: 'same-origin',
+            value: 'cross-origin',
           },
-          // {
-          //   key: "Content-Security-Policy",
-          //   value: `
-          //     default-src 'self';
-          //     script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://www.gstatic.com;
-          //     style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-          //     img-src 'self' data: https://lh3.googleusercontent.com;
-          //     font-src 'self' https://fonts.gstatic.com;
-          //     connect-src 'self' https://www.googleapis.com;
-          //     frame-src 'self' https://accounts.google.com;
-          //     frame-ancestors 'self' https://accounts.google.com;
-          //   `.replace(/\s+/g, " ").trim(),
-          // },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-src 'self' https://www.youtube.com; img-src 'self' https://img.youtube.com https://lh3.googleusercontent.com https://*.googleusercontent.com;",
+          },
         ],
       },
     ];

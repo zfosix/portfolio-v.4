@@ -47,26 +47,44 @@ if (typeof window !== 'undefined') {
 
 const provider = new GoogleAuthProvider();
 
-// Auth functions
+// Auth functions with postMessage handling
 const loginWithGoogle = async (): Promise<User | null> => {
   try {
+    // Add message listener for popup communication
+    const messageHandler = (event: MessageEvent) => {
+      if (event.data === 'auth-completed') {
+        window.removeEventListener('message', messageHandler);
+      }
+    };
+    window.addEventListener('message', messageHandler);
+
     const result = await signInWithPopup(auth, provider);
+    
+    // Notify parent window that auth is complete
+    if (window.opener) {
+      window.opener.postMessage('auth-completed', window.location.origin);
+    }
+    
     toast.success("Successfully logged in!");
     return result.user;
   } catch (error: unknown) {
-    // Handle specific authentication errors
     if (error instanceof FirebaseError) {
-      if (error.code === 'auth/popup-closed-by-user') {
-        toast.error("Login cancelled. Please try again.");
-      } else if (error.code === 'auth/popup-blocked') {
-        toast.error("Login popup was blocked. Please allow popups for this site.");
-      } else if (error.code === 'auth/cancelled-popup-request') {
-        toast.error("Login request cancelled. Please try again.");
-      } else if (error.code === 'auth/network-request-failed') {
-        toast.error("Network error. Please check your connection and try again.");
-      } else {
-        console.error("Login error:", error);
-        toast.error(`Login failed: ${error.message}`);
+      switch (error.code) {
+        case 'auth/popup-closed-by-user':
+          toast.error("Login cancelled. Please try again.");
+          break;
+        case 'auth/popup-blocked':
+          toast.error("Login popup was blocked. Please allow popups for this site.");
+          break;
+        case 'auth/cancelled-popup-request':
+          toast.error("Login request cancelled. Please try again.");
+          break;
+        case 'auth/network-request-failed':
+          toast.error("Network error. Please check your connection and try again.");
+          break;
+        default:
+          console.error("Login error:", error);
+          toast.error(`Login failed: ${error.message}`);
       }
     } else {
       console.error("Unexpected login error:", error);
@@ -79,6 +97,10 @@ const loginWithGoogle = async (): Promise<User | null> => {
 const logout = async (): Promise<void> => {
   try {
     await signOut(auth);
+    // Notify any listening windows about logout
+    if (window.opener) {
+      window.opener.postMessage('auth-logout', window.location.origin);
+    }
     toast.success("Logged out successfully");
   } catch (error) {
     console.error("Logout error:", error);
@@ -87,12 +109,11 @@ const logout = async (): Promise<void> => {
   }
 };
 
-// Needed for type safety with non-null photo
+// Rest of the code remains the same
 interface MessageWithDefaultPhoto extends Message {
   photo: string;
 }
 
-// Firestore functions
 interface Message {
   id: string;
   username: string;
@@ -102,7 +123,6 @@ interface Message {
   userId: string;
 }
 
-// Helper function to format timestamp
 export const formatTimestamp = (timestamp: unknown): Date | null => {
   try {
     if (!timestamp) {
@@ -110,17 +130,14 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
       return null;
     }
 
-    // Jika timestamp sudah berupa Date
     if (timestamp instanceof Date) {
       return timestamp;
     }
 
-    // Jika timestamp adalah objek Timestamp dari Firestore
     if (timestamp instanceof Timestamp) {
       return timestamp.toDate();
     }
 
-    // Jika timestamp adalah objek Firestore dengan properti seconds dan nanoseconds
     if (
       typeof timestamp === "object" &&
       timestamp !== null &&
@@ -134,7 +151,6 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
       return new Date(seconds * 1000 + nanoseconds / 1000000);
     }
 
-    // Jika timestamp adalah objek Firestore dengan properti _seconds dan _nanoseconds
     if (
       typeof timestamp === "object" &&
       timestamp !== null &&
@@ -148,7 +164,6 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
       return new Date(_seconds * 1000 + _nanoseconds / 1000000);
     }
 
-    // Jika timestamp adalah fungsi yang memiliki metode toDate()
     if (
       typeof timestamp === "object" &&
       timestamp !== null &&
@@ -162,12 +177,10 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
       }
     }
 
-    // Jika timestamp adalah angka (timestamp dalam milidetik)
     if (typeof timestamp === "number") {
       return new Date(timestamp);
     }
 
-    // Jika timestamp adalah string yang dapat diubah menjadi Date
     if (typeof timestamp === "string") {
       const date = new Date(timestamp);
       if (!isNaN(date.getTime())) {
@@ -177,7 +190,6 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
       return null;
     }
 
-    // Jika format timestamp tidak dikenali
     console.warn("Unknown timestamp format:", timestamp);
     return null;
   } catch (error) {
@@ -186,12 +198,10 @@ export const formatTimestamp = (timestamp: unknown): Date | null => {
   }
 };
 
-// Helper function to get formatted string from timestamp
 export const getFormattedTimestamp = (timestamp: Date | Timestamp | number | string): string => {
   const date = formatTimestamp(timestamp);
   if (!date) return 'No date';
   
-  // Format using Indonesian locale as specified in utils.ts
   return new Intl.DateTimeFormat("id-ID", {
     hour: "2-digit",
     minute: "2-digit",
@@ -218,19 +228,17 @@ const getMessages = (
         const messages = snapshot.docs.map((doc) => {
           const data = doc.data();
           
-          // Pastikan semua field yang diperlukan ada
           if (!data.username || !data.message || !data.userId) {
             console.error("Missing required fields in message:", data);
             return null;
           }
 
-          // Pass the raw timestamp - let the component handle formatting
           return {
             id: doc.id,
             username: data.username,
             message: data.message,
-            photo: data.photo || "/default-profile.png", // Default photo jika tidak ada
-            timestamp: data.timestamp, // Don't modify it here
+            photo: data.photo || "/default-profile.png",
+            timestamp: data.timestamp,
             userId: data.userId,
           };
         }).filter((msg): msg is MessageWithDefaultPhoto => msg !== null);
@@ -245,7 +253,6 @@ const getMessages = (
   } catch (error) {
     console.error("Failed to set up message listener:", error);
     if (onError) onError(error as Error);
-    // Return a no-op function in case of setup failure
     return () => {};
   }
 };
@@ -262,7 +269,6 @@ const sendMessage = async (
   }
 
   try {
-    // PERBAIKAN: Gunakan parameter yang diberikan, bukan nilai hardcoded
     await addDoc(collection(db, "messages"), {
       username: userName,
       message: message,

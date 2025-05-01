@@ -6,7 +6,7 @@ import "@/styles/globals.css";
 import IntroductionSection from "@/components/about/IntroductionSection";
 import CareerSection from "@/components/about/CareerSection";
 import SkillList from "@/components/about/SkillList";
-import YouTubeSection from "@/components/about/YouTubeSection";
+// import YouTubeSection from "@/components/about/YouTubeSection";
 import TikTokSection from "@/components/about/TikTokSection";
 import Breakline from "@/components/Breakline";
 
@@ -33,8 +33,8 @@ export default function AboutPage() {
           <CareerSection isDarkMode={isDarkMode} />
           <Breakline/>
           <SkillList isDarkMode={isDarkMode}  isMobile={isMobile} />
-          <Breakline/>
-          <YouTubeSection isDarkMode={isDarkMode} />          
+          {/* <Breakline/> */}
+          {/* <YouTubeSection isDarkMode={isDarkMode} />           */}
           <Breakline/>
           <TikTokSection 
             isDarkMode={isDarkMode} 
