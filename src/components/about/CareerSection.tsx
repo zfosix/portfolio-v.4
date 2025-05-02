@@ -13,11 +13,10 @@ import {
   CareerCardProps,
 } from "@/types/career";
 
-
 const CareerSection = ({ isDarkMode }: CareerSectionProps) => {
   return (
     <section
-      className={`${isDarkMode ? "border-stone-700" : "border-stone-300"} py-8`}
+      className={`${isDarkMode ? "border-stone-700" : "border-stone-300"} py-2`}
     >
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">

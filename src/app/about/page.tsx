@@ -34,7 +34,7 @@ export default function AboutPage() {
           <Breakline/>
           <SkillList isDarkMode={isDarkMode}  isMobile={isMobile} />
           {/* <Breakline/> */}
-          {/* <YouTubeSection isDarkMode={isDarkMode} />           */}
+          {/* <YouTubeSection isDarkMode={isDarkMode} /> */}
           <Breakline/>
           <TikTokSection 
             isDarkMode={isDarkMode} 

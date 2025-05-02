@@ -17,7 +17,7 @@ const ProjectsPage = () => {
 
   return (
     <div
-      className={`flex min-h-screen ${
+      className={`flex min-h-screen pb-8 ${
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
@@ -26,7 +26,7 @@ const ProjectsPage = () => {
           <TabHeader activeTab={activeTab} isDarkMode={isDarkMode} />
           <TabButtons activeTab={activeTab} setActiveTab={setActiveTab} isDarkMode={isDarkMode} />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className={`grid grid-cols-1 ${activeTab === "projects" ? "md:grid-cols-2" : "md:grid-cols-3"} gap-6`}>
             {displayedItems.map((item) => {
               if (isProject(item)) {
                 return (

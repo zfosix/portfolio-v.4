@@ -298,6 +298,24 @@ export const categories = {
 export const detailedProjects = [
   {
     id: 1,
+    title: "Eco Marketplace",
+    description:
+      "This project is based on the big theme of “Green Economy and Green Jobs”, which is the main focus of developing sustainable digital solutions in the era of green economic transformation.",
+    technologies: ["Next.js", "MySQL", "TailwindCss", "Typescript", "Express.js"],
+    image: "/projects/marketplace.png",
+    link: "#",
+  },
+  {
+    id: 2,
+    title: "Studi Pemodelan",
+    description:
+      "This is a modeling case study project for the distribution of goods, there are 4 roles namely Distributor, Staff, System Admin, and Warehouse Management.",
+    technologies: ["Figma"],
+    image: "/projects/studi.png",
+    link: "#",
+  },
+  {
+    id: 3,
     title: "JokiGames & TopUpGames",
     description:
       "This is a website for game jockeys and top ups, equipped with many cool features.",
@@ -306,7 +324,7 @@ export const detailedProjects = [
     link: "#",
   },
   {
-    id: 2,
+    id: 4,
     title: "Ciu Isurannce",
     description:
       "Insurance bank handling application with attractive design and complete features.",
