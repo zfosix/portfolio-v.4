@@ -16,34 +16,32 @@ export default function RoadmapPage() {
   
   return (
     <div
-      className={`flex min-h-screen ${
+      className={`flex min-h-screen pb-8 ${
         isDarkMode ? "bg-[#0B0A0A] text-white" : "bg-white text-black"
       }`}
     >
       <main className="flex-1 flex justify-center pt-8 md:pt-12 px-4 md:px-8 lg:px-12 ml-0 md:ml-8">
         <div className="max-w-4xl mx-auto w-full">
-          <div className="flex-1 p-4">
-            <RoadmapHeader isDarkMode={isDarkMode} />
+          <RoadmapHeader isDarkMode={isDarkMode} />
 
-            <div className="space-y-6">
-              <CategorySelector 
-                activeCategory={activeCategory} 
-                setActiveCategory={setActiveCategory} 
-                isDarkMode={isDarkMode}
+          <div className="space-y-6">
+            <CategorySelector 
+              activeCategory={activeCategory} 
+              setActiveCategory={setActiveCategory} 
+              isDarkMode={isDarkMode}
+            />
+            
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <RoadmapItems 
+                category={activeCategory} 
+                isDarkMode={isDarkMode} 
               />
-              
-              <motion.div
-                key={activeCategory}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <RoadmapItems 
-                  category={activeCategory} 
-                  isDarkMode={isDarkMode} 
-                />
-              </motion.div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </main>

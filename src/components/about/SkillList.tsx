@@ -53,10 +53,12 @@ const SkillsList = ({ direction = "left", isDarkMode = false }: SkillsListProps)
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-2 sm:gap-3 md:gap-4 w-full">
+      <div className="grid grid-cols-1 gap-1 sm:gap-3 md:gap-4 w-full">
         {Array.from({ length: 2 }, (_, index) => {
           const slider = [...shuffledSkills].sort(() => Math.random() - 0.5);
           const marqueeDirection = index % 2 === 0 ? direction : direction === "left" ? "right" : "left";
+
+          const duplicatedSlider = [...slider, ...slider];
 
           return (
             <MarqueeElement
@@ -66,9 +68,15 @@ const SkillsList = ({ direction = "left", isDarkMode = false }: SkillsListProps)
               pauseOnHover={true}
               className="w-full py-1"
             >
-              <div className="flex flex-nowrap gap-2 sm:gap-3 md:gap-4">
-                {slider.map((skill, i) => (
-                  <div className="flex-none" key={i}>
+              <div className="flex flex-nowrap" style={{ gap: '0.1rem' }}>
+                {duplicatedSlider.map((skill, i) => (
+                  <div 
+                    className="flex-none" 
+                    key={i}
+                    style={{ 
+                      marginRight: i === duplicatedSlider.length - 1 ? '0' : '0.1rem'
+                    }}
+                  >
                     <SkillCard
                       name={skill.name}
                       icon={skill.icon}
