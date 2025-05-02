@@ -66,7 +66,7 @@ const SkillsList = ({ direction = "left", isDarkMode = false }: SkillsListProps)
               pauseOnHover={true}
               className="w-full py-1"
             >
-              <div className="flex flex-nowrap gap-3 sm:gap-4 md:gap-6">
+              <div className="flex flex-nowrap gap-2 sm:gap-3 md:gap-4">
                 {slider.map((skill, i) => (
                   <div className="flex-none" key={i}>
                     <SkillCard
