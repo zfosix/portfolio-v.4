@@ -8,26 +8,26 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: ["class"], // Menggunakan class-based dark mode
+  darkMode: ["class"], 
   theme: {
     extend: {
       colors: {
-        background: "var(--background)", // Menggunakan variabel CSS
-        foreground: "var(--foreground)", // Menggunakan variabel CSS
+        background: "var(--background)", 
+        foreground: "var(--foreground)", 
       },
       borderRadius: {
-        lg: "var(--radius)", // Menggunakan variabel CSS
-        md: "calc(var(--radius) - 2px)", // Menggunakan kalkulasi CSS
-        sm: "calc(var(--radius) - 4px)", // Menggunakan kalkulasi CSS
+        lg: "var(--radius)", 
+        md: "calc(var(--radius) - 2px)", 
+        sm: "calc(var(--radius) - 4px)", 
       },
       fontFamily: {
-        sora: ["var(--soraSans-font)", ...fontFamily.sans], // Font Sora
-        robotoCondensed: ["var(--robotoCondensed-font)", ...fontFamily.sans], // Font Roboto Condensed
-        inter: ["var(--inter-font)", ...fontFamily.sans], // Font Inter
+        sora: ["var(--soraSans-font)", ...fontFamily.sans], 
+        robotoCondensed: ["var(--robotoCondensed-font)", ...fontFamily.sans], 
+        inter: ["var(--inter-font)", ...fontFamily.sans], 
       },
     },
   },
-  plugins: [tailwindScrollbar], // Menambahkan plugin scrollbar
+  plugins: [tailwindScrollbar], 
 };
 
 export default config;

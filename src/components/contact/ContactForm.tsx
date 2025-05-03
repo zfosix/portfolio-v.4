@@ -14,7 +14,7 @@ interface FormData {
     replyto: string;
     subject: string;
     message: string;
-  }
+}
 
 const ContactForm = () => {
   const { isDarkMode } = useDarkMode();
@@ -83,118 +83,133 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="space-y-6 pb-7">
-      <h2 className="text-xl font-semibold">Or send me a message</h2>
-      <form className="space-y-4" onSubmit={handleSubmit}>
+    <div className="space-y-8 pb-7">
+      <h2 className={`text-2xl font-bold bg-gradient-to-r ${isDarkMode ? 'from-neutral-400 to-neutral-600' : 'from-neutral-600 to-neutral-800'} bg-clip-text text-transparent`}>
+        Send me a message
+      </h2>
+      <form className="space-y-6" onSubmit={handleSubmit}>
         {/* Container for Name and Email */}
-        <div className="flex flex-col md:flex-row gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Sender Name Input */}
-          <div className="flex-1">
-            <label
-              htmlFor="sendername"
-              className={`block text-sm font-medium ${
-                isDarkMode ? "text-stone-300" : "text-gray-700"
-              }`}
-            >
-              Your Name
-            </label>
+          <div className="relative group">
             <input
               type="text"
               id="sendername"
               name="sendername"
-              placeholder="Enter your name"
+              placeholder=" "
               value={formData.sendername}
               onChange={handleChange}
-              className={`mt-1 block w-full px-3 py-2 border ${
-                isDarkMode
-                  ? "border-neutral-800 bg-neutral-950 text-stone-200"
-                  : "border-gray-300 bg-white text-gray-800"
-              } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+              className={`peer w-full px-4 py-3 rounded-lg border-2 ${
+                isDarkMode 
+                  ? 'border-neutral-700 bg-neutral-900 text-white focus:border-neutral-500' 
+                  : 'border-neutral-300 bg-white text-neutral-900 focus:border-neutral-400'
+              } focus:outline-none transition-all duration-300`}
             />
+            <label
+              htmlFor="sendername"
+              className={`absolute left-4 -top-2.5 px-1 text-sm ${
+                isDarkMode 
+                  ? 'bg-neutral-900 text-neutral-400' 
+                  : 'bg-white text-neutral-600'
+              } transition-all duration-300 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-sm`}
+            >
+              Your Name
+            </label>
           </div>
 
           {/* Reply Email Input */}
-          <div className="flex-1">
-            <label
-              htmlFor="replyto"
-              className={`block text-sm font-medium ${
-                isDarkMode ? "text-stone-300" : "text-gray-700"
-              }`}
-            >
-              Your Email
-            </label>
+          <div className="relative group">
             <input
               type="email"
               id="replyto"
               name="replyto"
-              placeholder="Enter your email"
+              placeholder=" "
               value={formData.replyto}
               onChange={handleChange}
-              className={`mt-1 block w-full px-3 py-2 border ${
-                isDarkMode
-                  ? "border-neutral-800 bg-neutral-950 text-stone-200"
-                  : "border-gray-300 bg-white text-gray-800"
-              } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+              className={`peer w-full px-4 py-3 rounded-lg border-2 ${
+                isDarkMode 
+                  ? 'border-neutral-700 bg-neutral-900 text-white focus:border-neutral-500' 
+                  : 'border-neutral-300 bg-white text-neutral-900 focus:border-neutral-400'
+              } focus:outline-none transition-all duration-300`}
             />
+            <label
+              htmlFor="replyto"
+              className={`absolute left-4 -top-2.5 px-1 text-sm ${
+                isDarkMode 
+                  ? 'bg-neutral-900 text-neutral-400' 
+                  : 'bg-white text-neutral-600'
+              } transition-all duration-300 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-sm`}
+            >
+              Your Email
+            </label>
           </div>
         </div>
 
         {/* Subject Input */}
-        <div>
-          <label
-            htmlFor="subject"
-            className={`block text-sm font-medium ${
-              isDarkMode ? "text-stone-300" : "text-gray-700"
-            }`}
-          >
-            Subject
-          </label>
+        <div className="relative group">
           <input
             type="text"
             id="subject"
             name="subject"
-            placeholder="Enter the subject"
+            placeholder=" "
             value={formData.subject}
             onChange={handleChange}
-            className={`mt-1 block w-full px-3 py-2 border ${
-              isDarkMode
-                ? "border-neutral-800 bg-neutral-950 text-stone-200"
-                : "border-gray-300 bg-white text-gray-800"
-            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`peer w-full px-4 py-3 rounded-lg border-2 ${
+              isDarkMode 
+                ? 'border-neutral-700 bg-neutral-900 text-white focus:border-neutral-500' 
+                : 'border-neutral-300 bg-white text-neutral-900 focus:border-neutral-400'
+            } focus:outline-none transition-all duration-300`}
           />
+          <label
+            htmlFor="subject"
+            className={`absolute left-4 -top-2.5 px-1 text-sm ${
+              isDarkMode 
+                ? 'bg-neutral-900 text-neutral-400' 
+                : 'bg-white text-neutral-600'
+            } transition-all duration-300 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-sm`}
+          >
+            Subject
+          </label>
         </div>
 
         {/* Message Input */}
-        <div>
-          <label
-            htmlFor="message"
-            className={`block text-sm font-medium ${
-              isDarkMode ? "text-stone-300" : "text-gray-700"
-            }`}
-          >
-            Message
-          </label>
+        <div className="relative group">
           <textarea
             id="message"
             name="message"
             rows={4}
-            placeholder="Send your message"
+            placeholder=" "
             value={formData.message}
             onChange={handleChange}
-            className={`mt-1 block w-full px-3 py-2 border ${
-              isDarkMode
-                ? "border-neutral-800 bg-neutral-950 text-stone-200"
-                : "border-gray-300 bg-white text-gray-800"
-            } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            className={`peer w-full px-4 py-3 rounded-lg border-2 ${
+              isDarkMode 
+                ? 'border-neutral-700 bg-neutral-900 text-white focus:border-neutral-500' 
+                : 'border-neutral-300 bg-white text-neutral-900 focus:border-neutral-400'
+            } focus:outline-none transition-all duration-300 resize-none`}
           ></textarea>
+          <label
+            htmlFor="message"
+            className={`absolute left-4 -top-2.5 px-1 text-sm ${
+              isDarkMode 
+                ? 'bg-neutral-900 text-neutral-400' 
+                : 'bg-white text-neutral-600'
+            } transition-all duration-300 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:-top-2.5 peer-focus:text-sm`}
+          >
+            Message
+          </label>
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-slate-800 text-white py-3 px-4 rounded-lg hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className={`w-full py-4 px-6 rounded-lg font-semibold transform hover:scale-[1.02] transition-all duration-300 
+          focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-lg ${
+            isDarkMode
+              ? 'bg-gradient-to-r from-neutral-700 to-neutral-900 text-white hover:from-neutral-800 hover:to-neutral-950 focus:ring-neutral-700'
+              : 'bg-gradient-to-r from-neutral-200 to-neutral-400 text-neutral-900 hover:from-neutral-300 hover:to-neutral-500 focus:ring-neutral-400'
+          }`}
         >
-          Send Email
+          Send Message
         </button>
       </form>
     </div>
