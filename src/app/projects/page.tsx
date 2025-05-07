@@ -38,6 +38,7 @@ const ProjectsPage = () => {
                     technologies={item.technologies}
                     image={item.image}
                     link={item.link}
+                    slug={item.slug}
                     isDarkMode={isDarkMode}
                   />
                 );

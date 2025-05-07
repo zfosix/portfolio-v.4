@@ -2,10 +2,15 @@ export interface Project {
   id: number;
   title: string;
   description: string;
+  detailedDescription: string;
   technologies: string[];
   image: string;
   link: string;
+  slug: string;
+  gallery?: string[];
+  features?: string[];
 }
+
 
 export interface Certificate {
   id: number;

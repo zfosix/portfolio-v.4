@@ -32,9 +32,9 @@ import {
   SiDocker,
 } from "react-icons/si";
 import {
-  BiEditAlt as BlogIcon,
+  // BiEditAlt as BlogIcon,
   BiPaperPlane as ContactIcon,
-  BiCategoryAlt as DashboardIcon,
+  // BiCategoryAlt as DashboardIcon,
   BiHomeSmile as HomeIcon,
   BiLeaf as ProfileIcon,
   BiArchive as ProjectIcon,
@@ -61,14 +61,14 @@ export const MENU_ITEMS: MenuItemType[] = [
     isExternal: false,
     eventName: 'Pages: About',
   },
-  {
-    title: 'Blog',
-    href: '/blog?category=home',
-    icon: BlogIcon,
-    isShow: true,
-    isExternal: false,
-    eventName: 'Pages: Blog',
-  },
+  // {
+  //   title: 'Blog',
+  //   href: '/blog?category=home',
+  //   icon: BlogIcon,
+  //   isShow: true,
+  //   isExternal: false,
+  //   eventName: 'Pages: Blog',
+  // },
   {
     title: 'Projects',
     href: '/projects',
@@ -101,14 +101,14 @@ export const MENU_ITEMS: MenuItemType[] = [
     isExternal: false,
     eventName: 'Pages: Contact',
   },
-  {
-    title: 'Dashboard',
-    href: '/dashboard',
-    icon: DashboardIcon,
-    isShow: true,
-    isExternal: false,
-    eventName: 'Pages: Dashboard',
-  },
+  // {
+  //   title: 'Dashboard',
+  //   href: '/dashboard',
+  //   icon: DashboardIcon,
+  //   isShow: true,
+  //   isExternal: false,
+  //   eventName: 'Pages: Dashboard',
+  // },
 ];
 
 // Data projects
@@ -299,38 +299,99 @@ export const detailedProjects = [
   {
     id: 1,
     title: "Eco Marketplace",
-    description:
-      "This project is based on the big theme of “Green Economy and Green Jobs”, which is the main focus of developing sustainable digital solutions in the era of green economic transformation.",
+    description: "Platform digital untuk mendukung ekonomi hijau dan pekerjaan hijau.",
+    detailedDescription: 'This project is based on the big theme of "Green Economy and Green Jobs", which is the main focus of developing sustainable digital solutions in the era of green economic transformation. Platform ini dirancang untuk menghubungkan produsen produk ramah lingkungan dengan konsumen yang peduli terhadap keberlanjutan. Dengan fitur pencarian canggih, sistem pembayaran yang aman, dan dashboard admin yang komprehensif, Eco Marketplace menjadi solusi lengkap untuk mendukung ekonomi hijau.',
     technologies: ["Next.js", "MySQL", "TailwindCss", "Typescript", "Express.js"],
     image: "/projects/marketplace.png",
     link: "#",
+    slug: "eco-marketplace",
+    gallery: [
+      "/projects/detailsprojects/market/1.png",
+      "/projects/detailsprojects/market/2.png",
+      "/projects/detailsprojects/market/3.png",
+      "/projects/detailsprojects/market/4.png",
+      "/projects/detailsprojects/market/5.png",
+      "/projects/detailsprojects/market/6.png",
+      "/projects/detailsprojects/market/7.png",
+    ],
+    features: [
+      "Sistem pencarian produk yang canggih",
+      "Integrasi pembayaran yang aman",
+      "Dashboard admin yang komprehensif",
+      "Sistem rating dan review",
+      "Fitur wishlist dan keranjang belanja"
+    ]
   },
   {
     id: 2,
     title: "Studi Pemodelan",
-    description:
-      "This is a modeling case study project for the distribution of goods, there are 4 roles namely Distributor, Staff, System Admin, and Warehouse Management.",
+    description: "Studi kasus pemodelan untuk distribusi barang dengan 4 peran utama.",
+    detailedDescription: "This is a modeling case study project for the distribution of goods, there are 4 roles namely Distributor, Staff, System Admin, and Warehouse Management. Proyek ini mengembangkan model komprehensif untuk mengoptimalkan alur distribusi barang dari produsen hingga konsumen. Dengan mempertimbangkan berbagai peran dan tanggung jawab, model ini memberikan solusi efisien untuk manajemen rantai pasok modern.",
     technologies: ["Figma"],
     image: "/projects/studi.png",
     link: "#",
+    slug: "studi-pemodelan",
+    gallery: [
+      "/projects/detailsprojects/studi/1.png",
+      "/projects/detailsprojects/studi/2.png",
+      "/projects/detailsprojects/studi/3.png",
+      "/projects/detailsprojects/studi/4.png",
+      "/projects/detailsprojects/studi/5.png",
+      "/projects/detailsprojects/studi/6.png",
+      "/projects/detailsprojects/studi/7.png",
+      "/projects/detailsprojects/studi/8.png",
+      "/projects/detailsprojects/studi/9.png",
+    ],
+    features: [
+      "Dashboard untuk setiap peran",
+      "Sistem tracking distribusi barang",
+      "Manajemen inventaris",
+      "Laporan analitik"
+    ]
   },
   {
     id: 3,
     title: "JokiGames & TopUpGames",
-    description:
-      "This is a website for game jockeys and top ups, equipped with many cool features.",
+    description: "Website joki game dan top up dengan berbagai fitur menarik.",
+    detailedDescription: "This is a website for game jockeys and top ups, equipped with many cool features. Platform ini menyediakan layanan joki game profesional dan layanan top up untuk berbagai game populer. Dengan sistem pembayaran yang terintegrasi dengan berbagai metode pembayaran, pelanggan dapat dengan mudah menggunakan layanan ini. Fitur tracking progress joki dan live chat memastikan transparansi dan komunikasi yang baik antara pelanggan dan joki.",
     technologies: ["Next.js", "Node.js", "PostgreSQL", "MidTrans", "Bootstrap"],
     image: "/projects/jokigames.png",
     link: "#",
+    slug: "joki-games",
+    gallery: [
+      "/projects/jokigames.png",
+      // "/projects/jokigames-detail1.png",
+      // "/projects/jokigames-detail2.png"
+    ],
+    features: [
+      "Sistem order joki game",
+      "Top up game dengan berbagai metode pembayaran",
+      "Tracking progress joki",
+      "Live chat dengan joki",
+      "History transaksi"
+    ]
   },
   {
     id: 4,
-    title: "Ciu Isurannce",
-    description:
-      "Insurance bank handling application with attractive design and complete features.",
+    title: "Ciu Insurance",
+    description: "Aplikasi penanganan bank asuransi dengan desain menarik.",
+    detailedDescription: "Insurance bank handling application with attractive design and complete features. Aplikasi ini dirancang untuk memudahkan pengelolaan polis asuransi, klaim, dan pembayaran premi. Dengan antarmuka yang intuitif dan fitur yang komprehensif, Ciu Insurance menjadi solusi lengkap untuk industri asuransi modern. Sistem notifikasi real-time dan dashboard analitik membantu pengguna memantau dan mengelola asuransi mereka dengan efisien.",
     technologies: ["Next.js", "PostgreSQL", "Bootstrap", "Golang", "Node.js"],
     image: "/projects/ciudigital.png",
     link: "#",
+    slug: "ciu-insurance",
+    gallery: [
+      "/projects/ciudigital.png",
+      // "/projects/ciudigital-detail1.png",
+      // "/projects/ciudigital-detail2.png"
+    ],
+    features: [
+      "Manajemen polis asuransi",
+      "Klaim online",
+      "Pembayaran premi",
+      "Notifikasi real-time",
+      "Dashboard analitik"
+    ]
   },
 ];
 
